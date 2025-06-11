@@ -1,0 +1,9 @@
+src/
+.storybook/
+stories/
+tests/
+*.test.*
+*.spec.*
+.eslintrc
+.prettierrc
+tsconfig.json

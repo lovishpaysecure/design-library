@@ -1,0 +1,65 @@
+{
+  "name": "@pay-design/design-system",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./Button": {
+      "import": "./dist/Button/index.js",
+      "require": "./dist/Button/index.cjs",
+      "types": "./dist/Button/index.d.ts"
+    },
+    "./Typography": {
+      "import": "./dist/Typography/index.js",
+      "require": "./dist/Typography/index.cjs",
+      "types": "./dist/Typography/index.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "clean": "rm -rf dist",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.0.0",
+    "@storybook/addon-interactions": "^8.0.0",
+    "@storybook/addon-links": "^8.0.0",
+    "@storybook/addon-onboarding": "^8.0.0",
+    "@storybook/blocks": "^8.0.0",
+    "@storybook/builder-vite": "^8.0.0",
+    "@storybook/react": "^8.0.0",
+    "@storybook/react-vite": "^8.0.0",
+    "@storybook/testing-library": "^0.2.2",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "eslint": "^8.42.0",
+    "eslint-config-custom": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^8.0.0",
+    "styled-components": "^6.0.0-rc.1",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4",
+    "vite": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "styled-components": "^6.0.0-rc.1"
+  }
+}

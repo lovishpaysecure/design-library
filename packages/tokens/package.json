@@ -1,0 +1,32 @@
+{
+  "name": "@design-system/tokens",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
+    "lint": "eslint src/**/*.ts*",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "eslint": "^8.0.0",
+    "tsup": "^6.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "comlink": "^4.4.2",
+    "idb": "^7.1.1",
+    "zod": "^3.25.56"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  }
+}
