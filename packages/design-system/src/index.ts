@@ -6,4 +6,6 @@ export * from './components/Typography';
 export * from './hooks/useTokens';
 
 // Types
-export type { TokenConfig, TokenValue } from './hooks/useTokens'; 
+export type { TokenConfig, TokenValue } from './hooks/useTokens';
+
+export { ThemeProvider } from './theme/ThemeProvider'; 

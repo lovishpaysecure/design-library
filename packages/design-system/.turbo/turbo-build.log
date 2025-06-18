@@ -1,6 +1,39 @@
 
-> @design-system/react@0.1.0 build /Users/lovish/Desktop/pay-design/packages/design-system
+> @pay-design/design-system@0.0.0 build /Users/lovish/Desktop/projects/pay-design/packages/design-system
 > tsup
 
-[31mNo input files, try "tsup <your-file>" instead[39m
-[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 1.[39m
+[34mCLI[39m Building entry: {"index":"src/index.ts","Button/index":"src/components/Button/index.ts","Typography/index":"src/components/Typography/index.ts"}
+[34mCLI[39m Using tsconfig: tsconfig.json
+[34mCLI[39m tsup v6.7.0
+[34mCLI[39m Using tsup config: /Users/lovish/Desktop/projects/pay-design/packages/design-system/tsup.config.ts
+[34mCLI[39m Target: es2020
+[34mCLI[39m Cleaning output folder
+[34mESM[39m Build start
+[34mCJS[39m Build start
+[32mESM[39m [1mdist/Button/index.js         [22m[32m112.00 B[39m
+[32mESM[39m [1mdist/chunk-CM26Q5CI.js       [22m[32m6.22 KB[39m
+[32mESM[39m [1mdist/index.js                [22m[32m1001.00 B[39m
+[32mESM[39m [1mdist/Typography/index.js     [22m[32m116.00 B[39m
+[32mESM[39m [1mdist/chunk-7G77ZRSR.js       [22m[32m3.52 KB[39m
+[32mESM[39m [1mdist/Typography/index.js.map [22m[32m51.00 B[39m
+[32mESM[39m [1mdist/Button/index.js.map     [22m[32m51.00 B[39m
+[32mESM[39m [1mdist/index.js.map            [22m[32m1.58 KB[39m
+[32mESM[39m [1mdist/chunk-CM26Q5CI.js.map   [22m[32m11.48 KB[39m
+[32mESM[39m [1mdist/chunk-7G77ZRSR.js.map   [22m[32m5.59 KB[39m
+[32mESM[39m ⚡️ Build success in 56ms
+[32mCJS[39m [1mdist/chunk-3BMWW4FX.cjs       [22m[32m6.50 KB[39m
+[32mCJS[39m [1mdist/Button/index.cjs         [22m[32m265.00 B[39m
+[32mCJS[39m [1mdist/chunk-3Z33FTZD.cjs       [22m[32m3.79 KB[39m
+[32mCJS[39m [1mdist/index.cjs                [22m[32m1.55 KB[39m
+[32mCJS[39m [1mdist/Typography/index.cjs     [22m[32m273.00 B[39m
+[32mCJS[39m [1mdist/Button/index.cjs.map     [22m[32m51.00 B[39m
+[32mCJS[39m [1mdist/chunk-3Z33FTZD.cjs.map   [22m[32m5.59 KB[39m
+[32mCJS[39m [1mdist/index.cjs.map            [22m[32m1.58 KB[39m
+[32mCJS[39m [1mdist/chunk-3BMWW4FX.cjs.map   [22m[32m11.48 KB[39m
+[32mCJS[39m [1mdist/Typography/index.cjs.map [22m[32m51.00 B[39m
+[32mCJS[39m ⚡️ Build success in 56ms
+[34mDTS[39m Build start
+[32mDTS[39m ⚡️ Build success in 1014ms
+[32mDTS[39m [1mdist/index.d.ts            [22m[32m579.00 B[39m
+[32mDTS[39m [1mdist/Button/index.d.ts     [22m[32m432.00 B[39m
+[32mDTS[39m [1mdist/Typography/index.d.ts [22m[32m651.00 B[39m

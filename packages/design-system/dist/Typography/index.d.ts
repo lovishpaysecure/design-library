@@ -9,6 +9,7 @@ interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
     align?: TypographyAlign;
     component?: keyof JSX.IntrinsicElements;
 }
+
 declare const Typography: React.ForwardRefExoticComponent<TypographyProps & React.RefAttributes<HTMLDivElement>>;
 
-export { Typography, TypographyAlign, TypographyProps, TypographyVariant, TypographyWeight };
+export { Typography };

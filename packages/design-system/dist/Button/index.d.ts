@@ -7,6 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     size?: ButtonSize;
     fullWidth?: boolean;
 }
+
 declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>;
 
-export { Button, ButtonProps, ButtonSize, ButtonVariant };
+export { Button };

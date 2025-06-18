@@ -1,11 +1,11 @@
 
-> @design-system/tokens@1.0.0 build /Users/lovish/Desktop/pay-design/packages/tokens
+> @design-system/tokens@1.0.0 build /Users/lovish/Desktop/projects/pay-design/packages/tokens
 > tsup src/index.ts --format esm,cjs --dts --external react
 
 [34mCLI[39m Building entry: src/index.ts
 [34mCLI[39m Using tsconfig: tsconfig.json
 [34mCLI[39m tsup v6.7.0
-[34mCLI[39m Using tsup config: /Users/lovish/Desktop/pay-design/packages/tokens/tsup.config.ts
+[34mCLI[39m Using tsup config: /Users/lovish/Desktop/projects/pay-design/packages/tokens/tsup.config.ts
 [34mCLI[39m Target: es2020
 [34mCLI[39m Cleaning output folder
 [34mESM[39m Build start
@@ -21,8 +21,10 @@
 
 
 
-[32mCJS[39m [1mdist/index.js [22m[32m7.29 KB[39m
-[32mCJS[39m ⚡️ Build success in 8ms
-[32mESM[39m [1mdist/index.mjs [22m[32m5.81 KB[39m
-[32mESM[39m ⚡️ Build success in 8ms
+[32mESM[39m [1mdist/index.mjs [22m[32m6.01 KB[39m
+[32mESM[39m ⚡️ Build success in 9ms
+[32mCJS[39m [1mdist/index.js [22m[32m7.49 KB[39m
+[32mCJS[39m ⚡️ Build success in 9ms
 [34mDTS[39m Build start
+[32mDTS[39m ⚡️ Build success in 479ms
+[32mDTS[39m [1mdist/index.d.ts [22m[32m4.48 KB[39m
