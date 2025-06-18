@@ -1,5 +1,5 @@
 
-> @paysecure-design/tokens@1.0.0 build /Users/lovish/Desktop/workspace/design-library/packages/tokens
+> @paysecure-design/tokens@1.0.2 build /Users/lovish/Desktop/workspace/design-library/packages/tokens
 > tsup src/index.ts --format esm,cjs --dts --external react && pnpm copy-worker
 
 [34mCLI[39m Building entry: src/index.ts
@@ -22,13 +22,13 @@
 
 
 [32mCJS[39m [1mdist/index.js [22m[32m7.49 KB[39m
-[32mCJS[39m ⚡️ Build success in 7ms
+[32mCJS[39m ⚡️ Build success in 11ms
 [32mESM[39m [1mdist/index.mjs [22m[32m6.01 KB[39m
-[32mESM[39m ⚡️ Build success in 8ms
+[32mESM[39m ⚡️ Build success in 12ms
 [34mDTS[39m Build start
-[32mDTS[39m ⚡️ Build success in 422ms
+[32mDTS[39m ⚡️ Build success in 443ms
 [32mDTS[39m [1mdist/index.d.ts [22m[32m4.48 KB[39m
 
-> @paysecure-design/tokens@1.0.0 copy-worker /Users/lovish/Desktop/workspace/design-library/packages/tokens
+> @paysecure-design/tokens@1.0.2 copy-worker /Users/lovish/Desktop/workspace/design-library/packages/tokens
 > mkdir -p dist/worker && cp src/worker/token.worker.ts dist/worker/token.worker.ts
 

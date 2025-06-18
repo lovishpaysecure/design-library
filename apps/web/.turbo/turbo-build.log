@@ -3,8 +3,13 @@
 > tsc && vite build
 
 [36mvite v4.5.14 [32mbuilding for production...[36m[39m
-[2K[1Gtransforming (1) [2mindex.html[22m[2K[1Gtransforming (28) [2m../../node_modules/.pnpm/@emotion+memoize@0.8.1/node_modules/@emotion/memoize/dist/em[2K[1Gtransforming (63) [2m../../node_modules/.pnpm/zod@3.25.56/node_modules/zod/dist/esm/v3/helpers/errorUtil.j[2K[1G[32m✓[39m 64 modules transformed.
-[2K[1Grendering chunks (1)...[2K[1G[2K[1Gcomputing gzip size (0)...[2K[1Gcomputing gzip size (1)...[2K[1Gcomputing gzip size (2)...[2K[1G[2mdist/[22m[32mindex.html                       [39m[1m[2m  0.33 kB[22m[1m[22m[2m │ gzip:  0.25 kB[22m
-[2mdist/[22m[2massets/[22m[32mtoken.worker-1b056505.js  [39m[1m[2m  4.31 kB[22m[1m[22m
-[2mdist/[22m[2massets/[22m[36mindex-ff146ab4.js         [39m[1m[2m241.45 kB[22m[1m[22m[2m │ gzip: 73.61 kB[22m
-[32m✓ built in 386ms[39m
+[2K[1Gtransforming (1) [2mindex.html[22m[2K[1G[32m✓[39m 5 modules transformed.
+[32m✓ built in 32ms[39m
+[31m[vite:worker-import-meta-url] Could not resolve entry module "../../node_modules/.pnpm/@paysecure-design+tokens@1.0.2_react@18.3.1/node_modules/@paysecure-design/tokens/dist/worker/token.worker.ts".[39m
+file: [36m/Users/lovish/Desktop/workspace/design-library/node_modules/.pnpm/@paysecure-design+tokens@1.0.2_react@18.3.1/node_modules/@paysecure-design/tokens/dist/index.mjs[39m
+[31merror during build:
+RollupError: Could not resolve entry module "../../node_modules/.pnpm/@paysecure-design+tokens@1.0.2_react@18.3.1/node_modules/@paysecure-design/tokens/dist/worker/token.worker.ts".
+    at error (file:///Users/lovish/Desktop/workspace/design-library/node_modules/.pnpm/rollup@3.29.5/node_modules/rollup/dist/es/shared/node-entry.js:2287:30)
+    at ModuleLoader.loadEntryModule (file:///Users/lovish/Desktop/workspace/design-library/node_modules/.pnpm/rollup@3.29.5/node_modules/rollup/dist/es/shared/node-entry.js:24881:20)
+    at async Promise.all (index 0)[39m
+[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 1.[39m
