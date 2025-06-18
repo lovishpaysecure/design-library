@@ -1,6 +1,8 @@
 // Components
 export * from './components/Button';
 export * from './components/Typography';
+export * from './components/Sidebar';
+export * from './components/Header';
 
 // Hooks
 export * from './hooks/useTokens';
