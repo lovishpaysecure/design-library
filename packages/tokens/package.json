@@ -1,5 +1,5 @@
 {
-  "name": "@design-system/tokens",
+  "name": "@paysecure-design/tokens",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
