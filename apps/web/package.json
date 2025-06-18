@@ -10,8 +10,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@pay-design/design-system": "workspace:*",
-    "@design-system/tokens": "workspace:*",
+    "@paysecure-design/design-system": "workspace:*",
+    "@paysecure-design/tokens": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^6.0.0-rc.1"

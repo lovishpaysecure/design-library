@@ -13,7 +13,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['@design-system/tokens/worker/token.worker'],
+      external: ['@pay-design/design-system/worker/token.worker'],
     },
   }
 }); 

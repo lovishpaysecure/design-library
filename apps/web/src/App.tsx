@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from '@pay-design/design-system/Button';
-import { Typography } from '@pay-design/design-system/Typography';
+import { Button } from '@paysecure-design/design-system/Button';
+import { Typography } from '@paysecure-design/design-system/Typography';
 
 const Container = styled.div`
   padding: 2rem;

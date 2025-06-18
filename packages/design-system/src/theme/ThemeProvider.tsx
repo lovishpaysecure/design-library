@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ReactNode } from 'react';
-import { TokenManager } from '@design-system/tokens';
+import { TokenManager } from '@paysecure-design/tokens';
 
 interface ThemeProviderProps {
   tokenUrl: string;

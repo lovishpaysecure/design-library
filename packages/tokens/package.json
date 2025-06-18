@@ -10,10 +10,11 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --external react",
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react && pnpm copy-worker",
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
     "lint": "eslint src/**/*.ts*",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "copy-worker": "mkdir -p dist/worker && cp src/worker/token.worker.ts dist/worker/token.worker.ts"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

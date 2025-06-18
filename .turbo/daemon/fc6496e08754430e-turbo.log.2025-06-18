@@ -1,0 +1,158 @@
+2025-06-18T08:58:26.783299Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/1.cookie"), AnchoredSystemPathBuf(".turbo/cookies/.turbo-cookie")}
+2025-06-18T08:58:26.783308Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T08:58:27.782451Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_oyxflnwk3d9.mjs"), AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_j3v99utc8m.mjs")}
+2025-06-18T08:58:27.782461Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T08:59:34.682183Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("_tmp_59677_1b02534e2525c0e3a711986802404e84"), AnchoredSystemPathBuf("")}
+2025-06-18T08:59:34.682191Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T08:59:35.583304Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("pnpm-lock.yaml"), AnchoredSystemPathBuf("pnpm-lock.yaml.1280039661")}
+2025-06-18T08:59:35.583316Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T08:59:40.183512Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/2.cookie")}
+2025-06-18T08:59:40.183521Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T08:59:40.682308Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_s7zy3ivm9bk.mjs")}
+2025-06-18T08:59:40.682319Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T08:59:40.691852Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T08:59:40.782144Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_j79sq9epx8.mjs")}
+2025-06-18T08:59:40.782155Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:01:41.782901Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/vite.config.ts")}
+2025-06-18T09:01:41.782930Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:02:05.483190Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:02:05.483198Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:02:35.883026Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:02:35.883039Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:02:54.783826Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/3.cookie")}
+2025-06-18T09:02:54.783835Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:02:55.285084Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_poga59doiwj.mjs"), AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_3vvri6wo6dv.mjs")}
+2025-06-18T09:02:55.285098Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }, WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:02:55.324256Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:13:59.146808Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/4.cookie"), AnchoredSystemPathBuf(".turbo/cookies/5.cookie"), AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log")}
+2025-06-18T09:13:59.146824Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:13:59.446210Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_0kx7nakkzhb.mjs")}
+2025-06-18T09:13:59.446217Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:13:59.471513Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:14:00.147325Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/7.cookie"), AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/6.cookie"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log")}
+2025-06-18T09:14:00.147333Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:14:00.347120Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_cva1z8ybjos.mjs")}
+2025-06-18T09:14:00.347128Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:14:01.546955Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/8.cookie"), AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/9.cookie"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log")}
+2025-06-18T09:14:01.546963Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:14:02.346662Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log")}
+2025-06-18T09:14:02.346671Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:14:23.347576Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:14:23.347584Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:14:23.356953Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:14:29.746636Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:14:29.746652Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:14:29.746686Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:14:35.549323Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:14:35.549337Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:14:39.346829Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:14:39.346843Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:15:03.847517Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:15:03.847535Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:15:08.446934Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/src/theme/ThemeProvider.tsx")}
+2025-06-18T09:15:08.446944Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:16:37.748395Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsconfig.json")}
+2025-06-18T09:16:37.748405Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:16:46.947776Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsconfig.json")}
+2025-06-18T09:16:46.947786Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:16:58.948944Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/src/main.tsx")}
+2025-06-18T09:16:58.948954Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:16:59.947798Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/src/main.tsx")}
+2025-06-18T09:16:59.947806Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:16:59.966614Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:03.648735Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/src/App.tsx")}
+2025-06-18T09:17:03.648745Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:04.848670Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2025-06-18T09:17:04.848678Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:06.549426Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/src/App.tsx")}
+2025-06-18T09:17:06.549436Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:06.549455Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:07.749272Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2025-06-18T09:17:07.749284Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:08.848747Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2025-06-18T09:17:08.848755Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:08.850430Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:13.949368Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/src/App.tsx")}
+2025-06-18T09:17:13.949377Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:15.649127Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/src/App.tsx")}
+2025-06-18T09:17:15.649138Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:15.672016Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:21.449746Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2025-06-18T09:17:21.449753Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:22.949650Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/tsconfig.json")}
+2025-06-18T09:17:22.949657Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:22.949741Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:27.449142Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/10.cookie")}
+2025-06-18T09:17:27.449151Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:17:27.549579Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/11.cookie")}
+2025-06-18T09:17:27.549586Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:17:27.849715Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_ezdxx83soug.mjs")}
+2025-06-18T09:17:27.849723Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:17:27.849734Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:28.448670Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/12.cookie"), AnchoredSystemPathBuf(".turbo/cookies/13.cookie")}
+2025-06-18T09:17:28.448679Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:17:28.549273Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log")}
+2025-06-18T09:17:28.549281Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:17:28.749186Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_p5o0p2mpn1p.mjs")}
+2025-06-18T09:17:28.749195Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:17:30.049207Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/14.cookie"), AnchoredSystemPathBuf(".turbo/cookies/15.cookie"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log"), AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log")}
+2025-06-18T09:17:30.049223Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }, WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:30.749172Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/dist")}
+2025-06-18T09:17:30.749179Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:17:30.749189Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:17:31.148943Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log")}
+2025-06-18T09:17:31.148953Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:18:28.149568Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsconfig.json")}
+2025-06-18T09:18:28.149576Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:18:28.187484Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:18:40.250780Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsconfig.json")}
+2025-06-18T09:18:40.250789Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:18:40.250811Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:18:46.750704Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsconfig.json")}
+2025-06-18T09:18:46.750713Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:18:46.750732Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:19:09.951051Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/17.cookie"), AnchoredSystemPathBuf(".turbo/cookies/16.cookie")}
+2025-06-18T09:19:09.951058Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:19:10.051077Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log")}
+2025-06-18T09:19:10.051084Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:10.350598Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_um099tdd3k.mjs")}
+2025-06-18T09:19:10.350609Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:10.350628Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:19:10.950653Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/18.cookie"), AnchoredSystemPathBuf(".turbo/cookies/19.cookie"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log")}
+2025-06-18T09:19:10.950661Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:19:11.250359Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_uap1rp0umne.mjs")}
+2025-06-18T09:19:11.250368Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:19:11.253078Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:19:12.450280Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/20.cookie"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log"), AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/21.cookie")}
+2025-06-18T09:19:12.450288Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:19:13.450436Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log")}
+2025-06-18T09:19:13.450445Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }}))
+2025-06-18T09:19:46.450934Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/package.json")}
+2025-06-18T09:19:46.450944Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:47.251793Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/package.json")}
+2025-06-18T09:19:47.251802Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:47.281630Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:19:47.351448Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/package.json")}
+2025-06-18T09:19:47.351458Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:47.351474Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:19:58.149950Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/23.cookie"), AnchoredSystemPathBuf(".turbo/cookies/22.cookie"), AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log")}
+2025-06-18T09:19:58.149957Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:19:58.451487Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_6fky8f7tjdu.mjs")}
+2025-06-18T09:19:58.451494Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:58.451506Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:19:59.250069Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/24.cookie"), AnchoredSystemPathBuf("packages/tokens/.turbo/turbo-build.log"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/25.cookie")}
+2025-06-18T09:19:59.250076Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }}))
+2025-06-18T09:19:59.551319Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_7abb6o5l02u.mjs")}
+2025-06-18T09:19:59.551328Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:19:59.564503Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:20:00.751653Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/26.cookie"), AnchoredSystemPathBuf(".turbo/cookies/27.cookie"), AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log"), AnchoredSystemPathBuf("packages/design-system/.turbo/turbo-build.log")}
+2025-06-18T09:20:00.751662Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:20:02.051906Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/web/.turbo/turbo-build.log"), AnchoredSystemPathBuf(".turbo/cookies/28.cookie")}
+2025-06-18T09:20:02.051918Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("web"), path: AnchoredSystemPathBuf("apps/web") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:20:06.851701Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".turbo/cookies/29.cookie")}
+2025-06-18T09:20:06.851709Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-18T09:20:07.251038Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/tsup.config.bundled_owrfw74l15j.mjs"), AnchoredSystemPathBuf("packages/tokens/tsup.config.bundled_yd5j8stqf3f.mjs")}
+2025-06-18T09:20:07.251051Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/tokens"), path: AnchoredSystemPathBuf("packages/tokens") }, WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T09:20:07.276085Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-18T09:20:27.651878Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/vite.config.ts.timestamp-1750238427540-473025706d1548.mjs")}
+2025-06-18T09:20:27.651892Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))

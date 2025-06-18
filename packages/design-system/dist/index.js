@@ -1,7 +1,7 @@
 export { Button, useTokens } from './chunk-CM26Q5CI.js';
 export { Typography } from './chunk-7G77ZRSR.js';
 import React, { useState, useEffect } from 'react';
-import { TokenManager } from '@design-system/tokens';
+import { TokenManager } from '@paysecure-design/tokens';
 
 var ThemeProvider = ({ tokenUrl, children }) => {
   const [loading, setLoading] = useState(true);

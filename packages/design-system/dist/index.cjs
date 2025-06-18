@@ -3,7 +3,7 @@
 var chunk3BMWW4FX_cjs = require('./chunk-3BMWW4FX.cjs');
 var chunk3Z33FTZD_cjs = require('./chunk-3Z33FTZD.cjs');
 var React = require('react');
-var tokens = require('@design-system/tokens');
+var tokens = require('@paysecure-design/tokens');
 
 function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
