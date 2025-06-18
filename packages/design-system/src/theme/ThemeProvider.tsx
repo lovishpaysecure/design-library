@@ -26,7 +26,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ tokenUrl, children
     fetchTokens();
   }, [tokenUrl]);
 
-  if (loading) return null; // or a spinner
+  if (loading) return null;
 
   return <>{children}</>;
 }; 
