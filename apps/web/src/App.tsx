@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from '@paysecure-design/design-system/Button';
 import { Typography } from '@paysecure-design/design-system/Typography';
+import { DatePicker, DateRange } from '@paysecure-design/design-system';
 
 const Container = styled.div`
   padding: 2rem;
@@ -27,6 +28,10 @@ const ButtonRow = styled.div`
 `;
 
 export default function App() {
+  const handleDateChange = (range: DateRange) => {
+    console.log('Selected date range:', range);
+  };
+
   return (
     <Container>
       <Typography variant="h1">Design System Demo</Typography>
@@ -87,6 +92,17 @@ export default function App() {
             <span>Sync Tokens</span>
           </Button>
         </ButtonGrid>
+      </Section>
+
+      <Section>
+        <Typography variant="h2">Date Picker</Typography>
+        <ButtonRow>
+          <DatePicker
+            onChange={handleDateChange}
+            minDate={new Date(2024, 0, 1)}
+            maxDate={new Date(2024, 11, 31)}
+          />
+        </ButtonRow>
       </Section>
     </Container>
   );

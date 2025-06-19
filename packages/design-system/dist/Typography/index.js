@@ -1,4 +1,3 @@
-export { Typography } from '../chunk-FUZMWTGI.js';
-import '../chunk-LRXJK6ZR.js';
+export { Typography } from '../chunk-L67Q7BPV.js';
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.js.map

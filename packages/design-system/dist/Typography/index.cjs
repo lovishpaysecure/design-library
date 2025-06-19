@@ -1,13 +1,12 @@
 'use strict';
 
-var chunk6SG7KMQ6_cjs = require('../chunk-6SG7KMQ6.cjs');
-require('../chunk-7K4GYSXH.cjs');
+var chunkQCVPZXSW_cjs = require('../chunk-QCVPZXSW.cjs');
 
 
 
 Object.defineProperty(exports, 'Typography', {
   enumerable: true,
-  get: function () { return chunk6SG7KMQ6_cjs.Typography; }
+  get: function () { return chunkQCVPZXSW_cjs.Typography; }
 });
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.cjs.map
