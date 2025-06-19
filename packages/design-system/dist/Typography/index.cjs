@@ -1,13 +1,13 @@
 'use strict';
 
-var chunkPHTFZQKT_cjs = require('../chunk-PHTFZQKT.cjs');
-require('../chunk-7UZHC74I.cjs');
+var chunkSLF6HWDX_cjs = require('../chunk-SLF6HWDX.cjs');
+require('../chunk-7K4GYSXH.cjs');
 
 
 
 Object.defineProperty(exports, 'Typography', {
   enumerable: true,
-  get: function () { return chunkPHTFZQKT_cjs.Typography; }
+  get: function () { return chunkSLF6HWDX_cjs.Typography; }
 });
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.cjs.map

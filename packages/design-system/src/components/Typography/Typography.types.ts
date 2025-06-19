@@ -9,15 +9,32 @@ export type TypographyVariant =
 export type TypographyWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 export type TypographyAlign = 'left' | 'center' | 'right' | 'justify';
 
+export interface TypographyProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
+  variant?: TypographyVariant;
+  weight?: TypographyWeight;
+  align?: TypographyAlign;
+  component?: keyof JSX.IntrinsicElements;
+  children: React.ReactNode;
+}
+
 export interface StyledTypographyProps {
   $variant: TypographyVariant;
   $weight: TypographyWeight;
   $align: TypographyAlign;
 }
 
-export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: TypographyVariant;
-  weight?: TypographyWeight;
-  align?: TypographyAlign;
-  component?: keyof JSX.IntrinsicElements;
+export interface TypographyTokens {
+  variants: {
+    [key in TypographyVariant]: {
+      fontSize: string;
+      lineHeight: string;
+      letterSpacing: string;
+      marginBottom?: string;
+      textTransform?: string;
+    };
+  };
+  weights: {
+    [key in TypographyWeight]: string;
+  };
+  fontFamily: string;
 } 

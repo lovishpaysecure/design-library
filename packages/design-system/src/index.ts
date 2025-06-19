@@ -8,6 +8,7 @@ export * from './components/Typography';
 export * from './components/Sidebar';
 export * from './components/Header';
 export * from './components/Tooltip';
+export * from './components/Card';
 
 // Hooks
 export * from './hooks/useTokens';

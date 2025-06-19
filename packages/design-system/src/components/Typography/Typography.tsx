@@ -1,6 +1,8 @@
 import React from 'react';
-import { TypographyProps, TypographyVariant, TypographyWeight, TypographyAlign } from './Typography.types';
+import { useTokens } from '../../hooks/useTokens';
+import { TypographyProps, TypographyVariant, TypographyWeight, TypographyAlign, TypographyTokens } from './Typography.types';
 import { StyledTypography } from '../../styles/Typography.styles';
+import { typographyTokens } from './Typography.tokens';
 
 export const Typography = React.forwardRef<HTMLDivElement, TypographyProps>(
   ({ 
@@ -11,6 +13,7 @@ export const Typography = React.forwardRef<HTMLDivElement, TypographyProps>(
     children,
     ...props
   }, ref) => {
+    const tokens = useTokens<TypographyTokens>('typography', typographyTokens);
     const Component = component || getDefaultComponent(variant);
 
     return (
@@ -20,6 +23,7 @@ export const Typography = React.forwardRef<HTMLDivElement, TypographyProps>(
         $variant={variant}
         $weight={weight}
         $align={align}
+        tokens={tokens}
         {...props}
       >
         {children}

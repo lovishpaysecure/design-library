@@ -1,30 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { SidebarProps, MenuItemConfig, SidebarTokens } from './types';
+import { SidebarProps, MenuItemConfig, SidebarTokens } from './Sidebar.types';
 import { SidebarContainer, SidebarHeader, LogoContainer, ToggleSidebarButton, SidebarContent } from '../../styles/Sidebar.styles';
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography/Typography';
-
-const defaultTokens: SidebarTokens = {
-  sidebar: {
-    width: '250px',
-    collapsedWidth: '80px',
-    background: '#fff',
-    borderColor: '#eee',
-    boxShadow: '2px 0 4px rgba(0,0,0,0.05)',
-    headerHeight: '64px',
-    headerBg: '#fff',
-    logoPadding: '0 20px',
-    logoPaddingCollapsed: '0 10px',
-    logoJustify: 'flex-start',
-    logoJustifyCollapsed: 'center',
-    toggleBg: '#fff',
-    toggleBorder: '#eee',
-    toggleColor: '#666',
-    toggleBoxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-  },
-};
+import { sidebarTokens } from './Sidebar.tokens';
 
 const SearchBar: React.FC<{
   isCollapsed: boolean;
@@ -139,7 +120,7 @@ const NavigationItem: React.FC<{
 export const Sidebar: React.FC<SidebarProps & { tokens?: SidebarTokens }> = ({ menuItems, logo, collapsed, onToggleCollapse, onMenuClick, tokens: tokensProp }) => {
   const [searchValue, setSearchValue] = useState('');
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
-  const tokens = useTokens<SidebarTokens>('sidebar', defaultTokens);
+  const tokens = useTokens<SidebarTokens>('sidebar', sidebarTokens);
   const mergedTokens = tokensProp || tokens;
 
   const handleSearchFocus = () => {

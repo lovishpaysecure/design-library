@@ -1,8 +1,9 @@
 'use strict';
 
-var chunkEGXKMLWE_cjs = require('./chunk-EGXKMLWE.cjs');
-var chunkPHTFZQKT_cjs = require('./chunk-PHTFZQKT.cjs');
-var chunk7UZHC74I_cjs = require('./chunk-7UZHC74I.cjs');
+var chunkCTDONTSX_cjs = require('./chunk-CTDONTSX.cjs');
+var chunkSLF6HWDX_cjs = require('./chunk-SLF6HWDX.cjs');
+var chunkBK2AYVDS_cjs = require('./chunk-BK2AYVDS.cjs');
+var chunk7K4GYSXH_cjs = require('./chunk-7K4GYSXH.cjs');
 var React = require('react');
 var reactFontawesome = require('@fortawesome/react-fontawesome');
 var freeSolidSvgIcons = require('@fortawesome/free-solid-svg-icons');
@@ -76,57 +77,8 @@ var SidebarContent = styled2__default.default.div`
   scrollbar-color: #ddd transparent;
 `;
 
-// src/utils/mockTokenManager.ts
-var TokenManager = class {
-  constructor() {
-    this.subscribers = /* @__PURE__ */ new Map();
-    this.state = {
-      components: {}
-    };
-  }
-  static getInstance() {
-    if (!TokenManager.instance) {
-      TokenManager.instance = new TokenManager();
-    }
-    return TokenManager.instance;
-  }
-  subscribe(componentType, callback) {
-    if (!this.subscribers.has(componentType)) {
-      this.subscribers.set(componentType, []);
-    }
-    this.subscribers.get(componentType)?.push(callback);
-    return () => {
-      const callbacks = this.subscribers.get(componentType);
-      if (callbacks) {
-        const index = callbacks.indexOf(callback);
-        if (index > -1) {
-          callbacks.splice(index, 1);
-        }
-      }
-    };
-  }
-  preloadTokens(componentTypes) {
-  }
-};
-
-// src/hooks/useTokens.ts
-function useTokens(componentType, defaultTokens3) {
-  const [tokens, setTokens] = React.useState(defaultTokens3);
-  React.useEffect(() => {
-    const manager = TokenManager.getInstance();
-    const unsubscribe = manager.subscribe(componentType, (state) => {
-      if (state.components[componentType]) {
-        setTokens(state.components[componentType].value);
-      }
-    });
-    manager.preloadTokens([componentType]);
-    return unsubscribe;
-  }, [componentType]);
-  return tokens;
-}
-
-// src/components/Sidebar/Sidebar.tsx
-var defaultTokens = {
+// src/components/Sidebar/Sidebar.tokens.ts
+var sidebarTokens = {
   sidebar: {
     width: "250px",
     collapsedWidth: "80px",
@@ -145,6 +97,8 @@ var defaultTokens = {
     toggleBoxShadow: "0 2px 4px rgba(0,0,0,0.1)"
   }
 };
+
+// src/components/Sidebar/Sidebar.tsx
 var SearchBar = ({ isCollapsed, value, onChange, onFocus, onExpandClick }) => /* @__PURE__ */ React__default.default.createElement("div", { style: {
   padding: "20px 20px",
   background: "#fff",
@@ -177,7 +131,7 @@ var SearchBar = ({ isCollapsed, value, onChange, onFocus, onExpandClick }) => /*
 var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
   const isSubmenuOpen = activeSubmenu === item.label;
   if (item.header) {
-    return !isCollapsed ? /* @__PURE__ */ React__default.default.createElement("div", { style: { padding: "12px 20px", marginTop: "10px" } }, /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "caption", weight: "semibold", style: { color: "#666", textTransform: "uppercase" } }, item.label)) : null;
+    return !isCollapsed ? /* @__PURE__ */ React__default.default.createElement("div", { style: { padding: "12px 20px", marginTop: "10px" } }, /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "caption", weight: "semibold", style: { color: "#666", textTransform: "uppercase" } }, item.label)) : null;
   }
   return /* @__PURE__ */ React__default.default.createElement("div", { style: { position: "relative" } }, /* @__PURE__ */ React__default.default.createElement(
     "div",
@@ -199,7 +153,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
       onClick: () => item.submenu && onSubmenuClick(item.label)
     },
     item.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: isCollapsed ? 0 : 8 } }, item.icon),
-    !isCollapsed && /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", weight: "semibold", style: { flex: 1, marginRight: 10, color: "inherit" } }, item.label),
+    !isCollapsed && /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", weight: "semibold", style: { flex: 1, marginRight: 10, color: "inherit" } }, item.label),
     !isCollapsed && item.submenu && /* @__PURE__ */ React__default.default.createElement(
       reactFontawesome.FontAwesomeIcon,
       {
@@ -207,12 +161,12 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
         style: { marginLeft: "auto", fontSize: 12, transition: "transform 0.3s ease", transform: isSubmenuOpen ? "rotate(180deg)" : void 0 }
       }
     )
-  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React__default.default.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React__default.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease" } }, subItem.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, subItem.label)))));
+  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React__default.default.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React__default.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease" } }, subItem.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, subItem.label)))));
 };
 var Sidebar = ({ menuItems, logo, collapsed, onToggleCollapse, onMenuClick, tokens: tokensProp }) => {
   const [searchValue, setSearchValue] = React.useState("");
   const [activeSubmenu, setActiveSubmenu] = React.useState(null);
-  const tokens = useTokens("sidebar", defaultTokens);
+  const tokens = chunk7K4GYSXH_cjs.useTokens("sidebar", sidebarTokens);
   const mergedTokens = tokensProp || tokens;
   const handleSearchFocus = () => {
     if (collapsed) {
@@ -379,11 +333,11 @@ var TooltipWrapper = styled2__default.default.div`
 var TooltipBubble = styled2__default.default.div`
   position: absolute;
   z-index: 1000;
-  background: #fff;
-  color: #5022bd;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  padding: 8px 14px;
+  background: ${(props) => props.tokens.bubble.background};
+  color: ${(props) => props.tokens.bubble.color};
+  border-radius: ${(props) => props.tokens.bubble.borderRadius};
+  box-shadow: ${(props) => props.tokens.bubble.boxShadow};
+  padding: ${(props) => props.tokens.bubble.padding};
   ${({ linebreak, maxWidth }) => linebreak && maxWidth ? `max-width: ${maxWidth};` : ""}
   white-space: ${({ linebreak }) => linebreak ? "normal" : "nowrap"};
   overflow-wrap: break-word;
@@ -391,10 +345,10 @@ var TooltipBubble = styled2__default.default.div`
   width: max-content;
   min-width: 40px;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s;
-  font-size: 14px;
-  line-height: 1.4;
+  opacity: ${(props) => props.tokens.bubble.opacity};
+  transition: ${(props) => props.tokens.bubble.transition};
+  font-size: ${(props) => props.tokens.bubble.fontSize};
+  line-height: ${(props) => props.tokens.bubble.lineHeight};
   left: 50%;
   transform: translateX(-50%);
   ${({ placement }) => placement === "top" && "bottom: 120%;"}
@@ -407,51 +361,72 @@ var TooltipBubble = styled2__default.default.div`
     margin-left: 0;
   `}
   ${({ placement }) => placement === "right" && "left: 120%; top: 50%; transform: translateY(-50%);"}
+  
   &.visible {
     opacity: 1;
     pointer-events: auto;
   }
+  
   &::after {
     content: '';
     position: absolute;
     width: 0;
     height: 0;
     border-style: solid;
-    ${({ placement }) => placement === "top" && `
+    ${({ placement, tokens }) => placement === "top" && `
       top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 8px 8px 0 8px;
-      border-color: #fff transparent transparent transparent;
+      border-width: ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} 0 ${tokens.bubble.arrowSize};
+      border-color: ${tokens.bubble.background} transparent transparent transparent;
     `}
-    ${({ placement }) => placement === "bottom" && `
+    ${({ placement, tokens }) => placement === "bottom" && `
       bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 0 8px 8px 8px;
-      border-color: transparent transparent #fff transparent;
+      border-width: 0 ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize};
+      border-color: transparent transparent ${tokens.bubble.background} transparent;
     `}
-    ${({ placement }) => placement === "left" && `
+    ${({ placement, tokens }) => placement === "left" && `
       left: 100%;
       top: 50%;
       transform: translateY(-50%);
-      border-width: 8px 0 8px 8px;
-      border-color: transparent transparent transparent #fff;
+      border-width: ${tokens.bubble.arrowSize} 0 ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize};
+      border-color: transparent transparent transparent ${tokens.bubble.background};
     `}
-    ${({ placement }) => placement === "right" && `
+    ${({ placement, tokens }) => placement === "right" && `
       right: 100%;
       top: 50%;
       transform: translateY(-50%);
-      border-width: 8px 8px 8px 0;
-      border-color: transparent #fff transparent transparent;
+      border-width: ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} 0;
+      border-color: transparent ${tokens.bubble.background} transparent transparent;
     `}
   }
+  
   @media (max-width: 600px) {
     ${({ linebreak }) => linebreak ? "max-width: 95vw;" : ""}
     left: 50%;
     transform: translateX(-50%);
   }
 `;
+
+// src/components/Tooltip/Tooltip.tokens.ts
+var tooltipTokens = {
+  bubble: {
+    background: "#fff",
+    color: "#5022bd",
+    borderRadius: "8px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+    padding: "8px 14px",
+    fontSize: "14px",
+    lineHeight: "1.4",
+    opacity: "0",
+    transition: "opacity 0.2s",
+    arrowSize: "8px"
+  }
+};
+
+// src/components/Tooltip/Tooltip.tsx
 var Tooltip = ({
   content,
   children,
@@ -462,6 +437,7 @@ var Tooltip = ({
 }) => {
   const [visible, setVisible] = React.useState(false);
   const timeout = React.useRef(null);
+  const tokens = chunk7K4GYSXH_cjs.useTokens("tooltip", tooltipTokens);
   const show = () => {
     timeout.current = setTimeout(() => setVisible(true), delay);
   };
@@ -477,14 +453,15 @@ var Tooltip = ({
       placement,
       maxWidth: linebreak ? maxWidth : void 0,
       linebreak,
+      tokens,
       role: "tooltip"
     },
-    /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "#5022bd" } }, content)
+    /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: tokens.bubble.color } }, content)
   ));
 };
 
-// src/components/Header/Header.tsx
-var defaultTokens2 = {
+// src/components/Header/Header.tokens.ts
+var headerTokens = {
   header: {
     height: "64px",
     background: "#fff",
@@ -501,6 +478,8 @@ var defaultTokens2 = {
     userMenuItemHoverColor: "#333"
   }
 };
+
+// src/components/Header/Header.tsx
 var defaultMenuOptions = (onLogout) => [
   { label: "Profile", icon: /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faUser }), onClick: () => {
   }, disabled: true },
@@ -513,7 +492,7 @@ var defaultMenuOptions = (onLogout) => [
 var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions, tooltipIcon, tooltipContent, tooltipPlacement }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const userRef = React.useRef(null);
-  const tokens = useTokens("header", defaultTokens2);
+  const tokens = chunk7K4GYSXH_cjs.useTokens("header", headerTokens);
   const mergedTokens = tokensProp || tokens;
   const menuOptions = userMenuOptions || defaultMenuOptions(onLogout);
   React.useEffect(() => {
@@ -560,12 +539,12 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
           }
         },
         action.icon,
-        /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2" }, action.label)
+        /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2" }, action.label)
       ));
     }
     return actions;
   };
-  return /* @__PURE__ */ React__default.default.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React__default.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, tooltipIcon && tooltipContent && /* @__PURE__ */ React__default.default.createElement(Tooltip, { content: tooltipContent, placement: tooltipPlacement }, tooltipIcon), title && (typeof title === "string" ? /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "h5", weight: "semibold", style: { color: mergedTokens.header.titleColor } }, title) : title)), /* @__PURE__ */ React__default.default.createElement(Actions, null, renderActions && renderActions(), user && /* @__PURE__ */ React__default.default.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React__default.default.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React__default.default.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React__default.default.createElement(UserDetails, null, /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body1", weight: "medium" }, user.name), user.role && /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "caption", style: { color: mergedTokens.header.userRoleColor } }, user.role)), /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React__default.default.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React__default.default.createElement(
+  return /* @__PURE__ */ React__default.default.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React__default.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, tooltipIcon && tooltipContent && /* @__PURE__ */ React__default.default.createElement(Tooltip, { content: tooltipContent, placement: tooltipPlacement }, tooltipIcon), title && (typeof title === "string" ? /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "h5", weight: "semibold", style: { color: mergedTokens.header.titleColor } }, title) : title)), /* @__PURE__ */ React__default.default.createElement(Actions, null, renderActions && renderActions(), user && /* @__PURE__ */ React__default.default.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React__default.default.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React__default.default.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React__default.default.createElement(UserDetails, null, /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body1", weight: "medium" }, user.name), user.role && /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "caption", style: { color: mergedTokens.header.userRoleColor } }, user.role)), /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React__default.default.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React__default.default.createElement(
     UserMenuItem,
     {
       key: option.label,
@@ -579,7 +558,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: option.label === "Logout"
     },
     option.icon,
-    /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, option.label)
+    /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, option.label)
   )), /* @__PURE__ */ React__default.default.createElement(Divider, null), /* @__PURE__ */ React__default.default.createElement(
     UserMenuItem,
     {
@@ -594,7 +573,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: true
     },
     menuOptions[menuOptions.length - 1].icon,
-    /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, menuOptions[menuOptions.length - 1].label)
+    /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, menuOptions[menuOptions.length - 1].label)
   )))));
 };
 var Header_default = Header;
@@ -1130,7 +1109,7 @@ replaceTraps((oldTraps) => ({
 
 // ../../node_modules/.pnpm/zod@3.25.67/node_modules/zod/dist/esm/v3/external.js
 var external_exports = {};
-chunk7UZHC74I_cjs.__export(external_exports, {
+chunk7K4GYSXH_cjs.__export(external_exports, {
   BRAND: () => BRAND,
   DIRTY: () => DIRTY,
   EMPTY_PATH: () => EMPTY_PATH,
@@ -5213,7 +5192,7 @@ var IndexedDBStorage = class {
 };
 var CHUNK_SIZE = 1e3;
 var SHARED_BUFFER_SIZE = 16384;
-var TokenManager2 = class {
+var TokenManager = class {
   constructor() {
     this.subscribers = /* @__PURE__ */ new Map();
     this.virtualState = { pending: /* @__PURE__ */ new Set(), processed: /* @__PURE__ */ new Map() };
@@ -5232,10 +5211,10 @@ var TokenManager2 = class {
     this.setupUpdateChannel();
   }
   static getInstance() {
-    if (!TokenManager2.instance) {
-      TokenManager2.instance = new TokenManager2();
+    if (!TokenManager.instance) {
+      TokenManager.instance = new TokenManager();
     }
-    return TokenManager2.instance;
+    return TokenManager.instance;
   }
   setupUpdateChannel() {
     this.updateChannel.port1.onmessage = (event) => {
@@ -5341,7 +5320,7 @@ var ThemeProvider = ({ tokenUrl, children }) => {
         if (!response.ok)
           throw new Error("Failed to fetch tokens");
         const tokens = await response.json();
-        await TokenManager2.getInstance().processTokens(tokens);
+        await TokenManager.getInstance().processTokens(tokens);
       } catch (e) {
         console.warn("Token fetch failed, using defaults.", e);
       } finally {
@@ -5366,16 +5345,23 @@ comlink/dist/esm/comlink.mjs:
 
 Object.defineProperty(exports, 'Button', {
   enumerable: true,
-  get: function () { return chunkEGXKMLWE_cjs.Button; }
+  get: function () { return chunkCTDONTSX_cjs.Button; }
 });
 Object.defineProperty(exports, 'Typography', {
   enumerable: true,
-  get: function () { return chunkPHTFZQKT_cjs.Typography; }
+  get: function () { return chunkSLF6HWDX_cjs.Typography; }
+});
+Object.defineProperty(exports, 'Card', {
+  enumerable: true,
+  get: function () { return chunkBK2AYVDS_cjs.Card; }
+});
+Object.defineProperty(exports, 'useTokens', {
+  enumerable: true,
+  get: function () { return chunk7K4GYSXH_cjs.useTokens; }
 });
 exports.Header = Header_default;
 exports.Sidebar = Sidebar;
 exports.ThemeProvider = ThemeProvider;
 exports.Tooltip = Tooltip;
-exports.useTokens = useTokens;
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.cjs.map

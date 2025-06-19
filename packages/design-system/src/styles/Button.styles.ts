@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { StyledButtonProps } from '../components/Button/Button.types';
-import { buttonTokens } from '../components/Button/Button.tokens';
+import { StyledButtonProps, ButtonTokens } from '../components/Button/Button.types';
 
-export const StyledButton = styled.button<StyledButtonProps>`
+export const StyledButton = styled.button<StyledButtonProps & { tokens: ButtonTokens }>`
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -15,11 +14,11 @@ export const StyledButton = styled.button<StyledButtonProps>`
   font-weight: 600;
   transition: all 0.2s ease;
   width: ${props => props.$fullWidth ? '100%' : 'auto'};
-  padding: ${props => buttonTokens.sizes[props.$size].padding};
-  font-size: ${props => buttonTokens.sizes[props.$size].fontSize};
+  padding: ${props => props.tokens.sizes[props.$size].padding};
+  font-size: ${props => props.tokens.sizes[props.$size].fontSize};
 
   ${props => {
-    const variant = buttonTokens.variants[props.$variant];
+    const variant = props.tokens.variants[props.$variant];
     return `
       background: ${variant.background};
       color: ${variant.color};

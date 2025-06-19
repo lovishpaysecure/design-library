@@ -17,6 +17,11 @@
       "import": "./dist/Typography/index.js",
       "require": "./dist/Typography/index.cjs",
       "types": "./dist/Typography/index.d.ts"
+    },
+    "./Card": {
+      "import": "./dist/Card/index.js",
+      "require": "./dist/Card/index.cjs",
+      "types": "./dist/Card/index.d.ts"
     }
   },
   "main": "./dist/index.cjs",

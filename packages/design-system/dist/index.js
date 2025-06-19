@@ -1,8 +1,10 @@
-export { Button } from './chunk-234C26UT.js';
-import { Typography } from './chunk-XRT27FHT.js';
-export { Typography } from './chunk-XRT27FHT.js';
-import { __export } from './chunk-JC4IRQUL.js';
-import React, { useState, useEffect, useRef } from 'react';
+export { Button } from './chunk-ESVE2HZE.js';
+import { Typography } from './chunk-FLUOFIYY.js';
+export { Typography } from './chunk-FLUOFIYY.js';
+export { Card } from './chunk-DQGT6YOO.js';
+import { __export, useTokens } from './chunk-LRXJK6ZR.js';
+export { useTokens } from './chunk-LRXJK6ZR.js';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faSearch, faChevronDown, faUser, faEnvelope, faKey, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import styled2 from 'styled-components';
@@ -69,57 +71,8 @@ var SidebarContent = styled2.div`
   scrollbar-color: #ddd transparent;
 `;
 
-// src/utils/mockTokenManager.ts
-var TokenManager = class {
-  constructor() {
-    this.subscribers = /* @__PURE__ */ new Map();
-    this.state = {
-      components: {}
-    };
-  }
-  static getInstance() {
-    if (!TokenManager.instance) {
-      TokenManager.instance = new TokenManager();
-    }
-    return TokenManager.instance;
-  }
-  subscribe(componentType, callback) {
-    if (!this.subscribers.has(componentType)) {
-      this.subscribers.set(componentType, []);
-    }
-    this.subscribers.get(componentType)?.push(callback);
-    return () => {
-      const callbacks = this.subscribers.get(componentType);
-      if (callbacks) {
-        const index = callbacks.indexOf(callback);
-        if (index > -1) {
-          callbacks.splice(index, 1);
-        }
-      }
-    };
-  }
-  preloadTokens(componentTypes) {
-  }
-};
-
-// src/hooks/useTokens.ts
-function useTokens(componentType, defaultTokens3) {
-  const [tokens, setTokens] = useState(defaultTokens3);
-  useEffect(() => {
-    const manager = TokenManager.getInstance();
-    const unsubscribe = manager.subscribe(componentType, (state) => {
-      if (state.components[componentType]) {
-        setTokens(state.components[componentType].value);
-      }
-    });
-    manager.preloadTokens([componentType]);
-    return unsubscribe;
-  }, [componentType]);
-  return tokens;
-}
-
-// src/components/Sidebar/Sidebar.tsx
-var defaultTokens = {
+// src/components/Sidebar/Sidebar.tokens.ts
+var sidebarTokens = {
   sidebar: {
     width: "250px",
     collapsedWidth: "80px",
@@ -138,6 +91,8 @@ var defaultTokens = {
     toggleBoxShadow: "0 2px 4px rgba(0,0,0,0.1)"
   }
 };
+
+// src/components/Sidebar/Sidebar.tsx
 var SearchBar = ({ isCollapsed, value, onChange, onFocus, onExpandClick }) => /* @__PURE__ */ React.createElement("div", { style: {
   padding: "20px 20px",
   background: "#fff",
@@ -205,7 +160,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
 var Sidebar = ({ menuItems, logo, collapsed, onToggleCollapse, onMenuClick, tokens: tokensProp }) => {
   const [searchValue, setSearchValue] = useState("");
   const [activeSubmenu, setActiveSubmenu] = useState(null);
-  const tokens = useTokens("sidebar", defaultTokens);
+  const tokens = useTokens("sidebar", sidebarTokens);
   const mergedTokens = tokensProp || tokens;
   const handleSearchFocus = () => {
     if (collapsed) {
@@ -372,11 +327,11 @@ var TooltipWrapper = styled2.div`
 var TooltipBubble = styled2.div`
   position: absolute;
   z-index: 1000;
-  background: #fff;
-  color: #5022bd;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  padding: 8px 14px;
+  background: ${(props) => props.tokens.bubble.background};
+  color: ${(props) => props.tokens.bubble.color};
+  border-radius: ${(props) => props.tokens.bubble.borderRadius};
+  box-shadow: ${(props) => props.tokens.bubble.boxShadow};
+  padding: ${(props) => props.tokens.bubble.padding};
   ${({ linebreak, maxWidth }) => linebreak && maxWidth ? `max-width: ${maxWidth};` : ""}
   white-space: ${({ linebreak }) => linebreak ? "normal" : "nowrap"};
   overflow-wrap: break-word;
@@ -384,10 +339,10 @@ var TooltipBubble = styled2.div`
   width: max-content;
   min-width: 40px;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s;
-  font-size: 14px;
-  line-height: 1.4;
+  opacity: ${(props) => props.tokens.bubble.opacity};
+  transition: ${(props) => props.tokens.bubble.transition};
+  font-size: ${(props) => props.tokens.bubble.fontSize};
+  line-height: ${(props) => props.tokens.bubble.lineHeight};
   left: 50%;
   transform: translateX(-50%);
   ${({ placement }) => placement === "top" && "bottom: 120%;"}
@@ -400,51 +355,72 @@ var TooltipBubble = styled2.div`
     margin-left: 0;
   `}
   ${({ placement }) => placement === "right" && "left: 120%; top: 50%; transform: translateY(-50%);"}
+  
   &.visible {
     opacity: 1;
     pointer-events: auto;
   }
+  
   &::after {
     content: '';
     position: absolute;
     width: 0;
     height: 0;
     border-style: solid;
-    ${({ placement }) => placement === "top" && `
+    ${({ placement, tokens }) => placement === "top" && `
       top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 8px 8px 0 8px;
-      border-color: #fff transparent transparent transparent;
+      border-width: ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} 0 ${tokens.bubble.arrowSize};
+      border-color: ${tokens.bubble.background} transparent transparent transparent;
     `}
-    ${({ placement }) => placement === "bottom" && `
+    ${({ placement, tokens }) => placement === "bottom" && `
       bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
-      border-width: 0 8px 8px 8px;
-      border-color: transparent transparent #fff transparent;
+      border-width: 0 ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize};
+      border-color: transparent transparent ${tokens.bubble.background} transparent;
     `}
-    ${({ placement }) => placement === "left" && `
+    ${({ placement, tokens }) => placement === "left" && `
       left: 100%;
       top: 50%;
       transform: translateY(-50%);
-      border-width: 8px 0 8px 8px;
-      border-color: transparent transparent transparent #fff;
+      border-width: ${tokens.bubble.arrowSize} 0 ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize};
+      border-color: transparent transparent transparent ${tokens.bubble.background};
     `}
-    ${({ placement }) => placement === "right" && `
+    ${({ placement, tokens }) => placement === "right" && `
       right: 100%;
       top: 50%;
       transform: translateY(-50%);
-      border-width: 8px 8px 8px 0;
-      border-color: transparent #fff transparent transparent;
+      border-width: ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} ${tokens.bubble.arrowSize} 0;
+      border-color: transparent ${tokens.bubble.background} transparent transparent;
     `}
   }
+  
   @media (max-width: 600px) {
     ${({ linebreak }) => linebreak ? "max-width: 95vw;" : ""}
     left: 50%;
     transform: translateX(-50%);
   }
 `;
+
+// src/components/Tooltip/Tooltip.tokens.ts
+var tooltipTokens = {
+  bubble: {
+    background: "#fff",
+    color: "#5022bd",
+    borderRadius: "8px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+    padding: "8px 14px",
+    fontSize: "14px",
+    lineHeight: "1.4",
+    opacity: "0",
+    transition: "opacity 0.2s",
+    arrowSize: "8px"
+  }
+};
+
+// src/components/Tooltip/Tooltip.tsx
 var Tooltip = ({
   content,
   children,
@@ -455,6 +431,7 @@ var Tooltip = ({
 }) => {
   const [visible, setVisible] = useState(false);
   const timeout = useRef(null);
+  const tokens = useTokens("tooltip", tooltipTokens);
   const show = () => {
     timeout.current = setTimeout(() => setVisible(true), delay);
   };
@@ -470,14 +447,15 @@ var Tooltip = ({
       placement,
       maxWidth: linebreak ? maxWidth : void 0,
       linebreak,
+      tokens,
       role: "tooltip"
     },
-    /* @__PURE__ */ React.createElement(Typography, { variant: "body2", style: { color: "#5022bd" } }, content)
+    /* @__PURE__ */ React.createElement(Typography, { variant: "body2", style: { color: tokens.bubble.color } }, content)
   ));
 };
 
-// src/components/Header/Header.tsx
-var defaultTokens2 = {
+// src/components/Header/Header.tokens.ts
+var headerTokens = {
   header: {
     height: "64px",
     background: "#fff",
@@ -494,6 +472,8 @@ var defaultTokens2 = {
     userMenuItemHoverColor: "#333"
   }
 };
+
+// src/components/Header/Header.tsx
 var defaultMenuOptions = (onLogout) => [
   { label: "Profile", icon: /* @__PURE__ */ React.createElement(FontAwesomeIcon, { icon: faUser }), onClick: () => {
   }, disabled: true },
@@ -506,7 +486,7 @@ var defaultMenuOptions = (onLogout) => [
 var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions, tooltipIcon, tooltipContent, tooltipPlacement }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const userRef = useRef(null);
-  const tokens = useTokens("header", defaultTokens2);
+  const tokens = useTokens("header", headerTokens);
   const mergedTokens = tokensProp || tokens;
   const menuOptions = userMenuOptions || defaultMenuOptions(onLogout);
   useEffect(() => {
@@ -5206,7 +5186,7 @@ var IndexedDBStorage = class {
 };
 var CHUNK_SIZE = 1e3;
 var SHARED_BUFFER_SIZE = 16384;
-var TokenManager2 = class {
+var TokenManager = class {
   constructor() {
     this.subscribers = /* @__PURE__ */ new Map();
     this.virtualState = { pending: /* @__PURE__ */ new Set(), processed: /* @__PURE__ */ new Map() };
@@ -5225,10 +5205,10 @@ var TokenManager2 = class {
     this.setupUpdateChannel();
   }
   static getInstance() {
-    if (!TokenManager2.instance) {
-      TokenManager2.instance = new TokenManager2();
+    if (!TokenManager.instance) {
+      TokenManager.instance = new TokenManager();
     }
-    return TokenManager2.instance;
+    return TokenManager.instance;
   }
   setupUpdateChannel() {
     this.updateChannel.port1.onmessage = (event) => {
@@ -5334,7 +5314,7 @@ var ThemeProvider = ({ tokenUrl, children }) => {
         if (!response.ok)
           throw new Error("Failed to fetch tokens");
         const tokens = await response.json();
-        await TokenManager2.getInstance().processTokens(tokens);
+        await TokenManager.getInstance().processTokens(tokens);
       } catch (e) {
         console.warn("Token fetch failed, using defaults.", e);
       } finally {
@@ -5357,6 +5337,6 @@ comlink/dist/esm/comlink.mjs:
    *)
 */
 
-export { Header_default as Header, Sidebar, ThemeProvider, Tooltip, useTokens };
+export { Header_default as Header, Sidebar, ThemeProvider, Tooltip };
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.js.map

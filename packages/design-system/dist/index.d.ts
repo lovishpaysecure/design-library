@@ -1,6 +1,7 @@
-export { Button } from './Button/index.js';
-export { Typography } from './Typography/index.js';
+export { Button, ButtonProps, ButtonTokens } from './Button/index.js';
+export { Typography, TypographyProps, TypographyTokens } from './Typography/index.js';
 import React$1, { ReactNode } from 'react';
+export { Card, CardPadding, CardProps, CardTokens, CardVariant } from './Card/index.js';
 
 interface SubMenuItemConfig {
     icon?: React.ReactNode;
@@ -96,13 +97,28 @@ interface HeaderProps {
 declare const Header: React$1.FC<HeaderProps>;
 
 interface TooltipProps {
-    content: ReactNode;
-    children: ReactNode;
+    content: React$1.ReactNode;
+    children: React$1.ReactNode;
     placement?: 'top' | 'bottom' | 'left' | 'right';
     delay?: number;
     maxWidth?: string;
     linebreak?: boolean;
 }
+interface TooltipTokens {
+    bubble: {
+        background: string;
+        color: string;
+        borderRadius: string;
+        boxShadow: string;
+        padding: string;
+        fontSize: string;
+        lineHeight: string;
+        opacity: string;
+        transition: string;
+        arrowSize: string;
+    };
+}
+
 declare const Tooltip: React$1.FC<TooltipProps>;
 
 interface TokenValue {
@@ -121,4 +137,4 @@ interface ThemeProviderProps {
 }
 declare const ThemeProvider: React$1.FC<ThemeProviderProps>;
 
-export { Header, HeaderProps, Sidebar, SidebarProps, ThemeProvider, TokenConfig, TokenValue, Tooltip, TooltipProps, useTokens };
+export { Header, HeaderProps, HeaderTokens, Sidebar, SidebarProps, SidebarTokens, ThemeProvider, TokenConfig, TokenValue, Tooltip, TooltipProps, TooltipTokens, useTokens };

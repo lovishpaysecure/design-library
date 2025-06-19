@@ -16,24 +16,7 @@ import {
 } from '../../styles/Header.styles';
 import { Typography } from '../Typography/Typography';
 import { Tooltip } from '../Tooltip';
-
-const defaultTokens: HeaderTokens = {
-  header: {
-    height: '64px',
-    background: '#fff',
-    titleFontSize: '20px',
-    titleFontWeight: 600,
-    titleColor: '#333',
-    userBg: '#f8f9fa',
-    userRoleFontSize: '12px',
-    userRoleColor: '#666',
-    userMenuBoxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-    userMenuBg: '#fff',
-    userMenuItemColor: '#5022bd',
-    userMenuItemHoverBg: '#f5f5f5',
-    userMenuItemHoverColor: '#333',
-  },
-};
+import { headerTokens } from './Header.tokens';
 
 const defaultMenuOptions = (onLogout?: () => void): UserMenuOption[] => [
   { label: 'Profile', icon: <FontAwesomeIcon icon={faUser} />, onClick: () => {}, disabled: true },
@@ -45,7 +28,7 @@ const defaultMenuOptions = (onLogout?: () => void): UserMenuOption[] => [
 const Header: React.FC<HeaderProps> = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions, tooltipIcon, tooltipContent, tooltipPlacement }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const userRef = useRef<HTMLDivElement>(null);
-  const tokens = useTokens<HeaderTokens>('header', defaultTokens);
+  const tokens = useTokens<HeaderTokens>('header', headerTokens);
   const mergedTokens = tokensProp || tokens;
   const menuOptions = userMenuOptions || defaultMenuOptions(onLogout);
 

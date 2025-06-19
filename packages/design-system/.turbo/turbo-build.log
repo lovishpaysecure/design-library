@@ -1,8 +1,8 @@
 
-> @paysecure-design/design-system@0.0.5 build /Users/lovish/Desktop/workspace/design-library/packages/design-system
+> @paysecure-design/design-system@0.0.6 build /Users/lovish/Desktop/workspace/design-library/packages/design-system
 > tsup
 
-[34mCLI[39m Building entry: {"index":"src/index.ts","Button/index":"src/components/Button/index.ts","Typography/index":"src/components/Typography/index.ts"}
+[34mCLI[39m Building entry: {"index":"src/index.ts","Button/index":"src/components/Button/index.ts","Typography/index":"src/components/Typography/index.ts","Card/index":"src/components/Card/index.ts"}
 [34mCLI[39m Using tsconfig: tsconfig.json
 [34mCLI[39m tsup v6.7.0
 [34mCLI[39m Using tsup config: /Users/lovish/Desktop/workspace/design-library/packages/design-system/tsup.config.ts
@@ -16,36 +16,40 @@
 [32mCJS[39m [1mdist/DMSans-VariableFont_opsz,wght-ZSOUECSW.ttf [22m[32m233.38 KB[39m
 [32mCJS[39m [1mdist/index.css.map                              [22m[32m1.47 KB[39m
 [32mCJS[39m [1mdist/Typography/index.cjs                       [22m[32m307.00 B[39m
-[32mCJS[39m [1mdist/chunk-KN76GHGI.cjs                         [22m[32m3.86 KB[39m
+[32mCJS[39m [1mdist/chunk-CTDONTSX.cjs                         [22m[32m4.56 KB[39m
+[32mCJS[39m [1mdist/chunk-SLF6HWDX.cjs                         [22m[32m3.60 KB[39m
+[32mCJS[39m [1mdist/Card/index.cjs                             [22m[32m295.00 B[39m
 [32mCJS[39m [1mdist/Button/index.cjs                           [22m[32m299.00 B[39m
-[32mCJS[39m [1mdist/chunk-7UZHC74I.cjs                         [22m[32m287.00 B[39m
-[32mCJS[39m [1mdist/index.cjs                                  [22m[32m158.53 KB[39m
-[32mCJS[39m [1mdist/chunk-4EF755V4.cjs                         [22m[32m6.57 KB[39m
+[32mCJS[39m [1mdist/chunk-7K4GYSXH.cjs                         [22m[32m1.64 KB[39m
+[32mCJS[39m [1mdist/chunk-BK2AYVDS.cjs                         [22m[32m3.17 KB[39m
+[32mCJS[39m [1mdist/index.cjs                                  [22m[32m164.70 KB[39m
+[32mCJS[39m [1mdist/chunk-CTDONTSX.cjs.map                     [22m[32m7.35 KB[39m
 [32mCJS[39m [1mdist/Typography/index.cjs.map                   [22m[32m51.00 B[39m
-[32mCJS[39m [1mdist/chunk-KN76GHGI.cjs.map                     [22m[32m5.66 KB[39m
+[32mCJS[39m [1mdist/chunk-SLF6HWDX.cjs.map                     [22m[32m6.11 KB[39m
 [32mCJS[39m [1mdist/Button/index.cjs.map                       [22m[32m51.00 B[39m
-[32mCJS[39m [1mdist/index.cjs.map                              [22m[32m295.97 KB[39m
-[32mCJS[39m [1mdist/chunk-7UZHC74I.cjs.map                     [22m[32m71.00 B[39m
-[32mCJS[39m [1mdist/chunk-4EF755V4.cjs.map                     [22m[32m11.55 KB[39m
-[32mCJS[39m ⚡️ Build success in 281ms
-[32mESM[39m [1mdist/DMSans-VariableFont_opsz,wght-ZSOUECSW.ttf [22m[32m233.38 KB[39m
+[32mCJS[39m [1mdist/chunk-7K4GYSXH.cjs.map                     [22m[32m3.19 KB[39m
+[32mCJS[39m [1mdist/chunk-BK2AYVDS.cjs.map                     [22m[32m5.27 KB[39m
+[32mCJS[39m [1mdist/Card/index.cjs.map                         [22m[32m51.00 B[39m
+[32mCJS[39m [1mdist/index.cjs.map                              [22m[32m306.13 KB[39m
+[32mCJS[39m ⚡️ Build success in 407ms
 [32mESM[39m [1mdist/index.css                                  [22m[32m1.02 KB[39m
 [32mESM[39m [1mdist/dm-sans-Q34TSVPN.woff2                     [22m[32m13.74 KB[39m
+[32mESM[39m [1mdist/DMSans-VariableFont_opsz,wght-ZSOUECSW.ttf [22m[32m233.38 KB[39m
 [32mESM[39m [1mdist/index.css.map                              [22m[32m1.47 KB[39m
-[32mESM[39m [1mdist/chunk-JC4IRQUL.js                          [22m[32m263.00 B[39m
+[32mESM[39m [1mdist/chunk-ESVE2HZE.js                          [22m[32m4.26 KB[39m
+[32mESM[39m [1mdist/Card/index.js                              [22m[32m141.00 B[39m
+[32mESM[39m [1mdist/chunk-FLUOFIYY.js                          [22m[32m3.30 KB[39m
 [32mESM[39m [1mdist/Button/index.js                            [22m[32m143.00 B[39m
-[32mESM[39m [1mdist/chunk-VOQ6ZGCL.js                          [22m[32m3.59 KB[39m
 [32mESM[39m [1mdist/Typography/index.js                        [22m[32m147.00 B[39m
-[32mESM[39m [1mdist/chunk-56SBE735.js                          [22m[32m6.28 KB[39m
-[32mESM[39m [1mdist/index.js                                   [22m[32m156.13 KB[39m
-[32mESM[39m [1mdist/chunk-JC4IRQUL.js.map                      [22m[32m71.00 B[39m
-[32mESM[39m [1mdist/chunk-VOQ6ZGCL.js.map                      [22m[32m5.66 KB[39m
-[32mESM[39m [1mdist/Typography/index.js.map                    [22m[32m51.00 B[39m
-[32mESM[39m [1mdist/chunk-56SBE735.js.map                      [22m[32m11.55 KB[39m
+[32mESM[39m [1mdist/chunk-DQGT6YOO.js                          [22m[32m2.88 KB[39m
+[32mESM[39m [1mdist/chunk-LRXJK6ZR.js                          [22m[32m1.60 KB[39m
+[32mESM[39m [1mdist/Card/index.js.map                          [22m[32m51.00 B[39m
+[32mESM[39m [1mdist/chunk-ESVE2HZE.js.map                      [22m[32m7.35 KB[39m
 [32mESM[39m [1mdist/Button/index.js.map                        [22m[32m51.00 B[39m
-[32mESM[39m [1mdist/index.js.map                               [22m[32m295.97 KB[39m
-[32mESM[39m ⚡️ Build success in 281ms
-[32mDTS[39m ⚡️ Build success in 1419ms
-[32mDTS[39m [1mdist/index.d.ts            [22m[32m2.65 KB[39m
-[32mDTS[39m [1mdist/Button/index.d.ts     [22m[32m432.00 B[39m
-[32mDTS[39m [1mdist/Typography/index.d.ts [22m[32m651.00 B[39m
+[32mESM[39m [1mdist/Typography/index.js.map                    [22m[32m51.00 B[39m
+[32mESM[39m [1mdist/chunk-DQGT6YOO.js.map                      [22m[32m5.27 KB[39m
+[32mESM[39m [1mdist/chunk-LRXJK6ZR.js.map                      [22m[32m3.19 KB[39m
+[32mESM[39m [1mdist/chunk-FLUOFIYY.js.map                      [22m[32m6.11 KB[39m
+[32mESM[39m [1mdist/index.js                                   [22m[32m161.96 KB[39m
+[32mESM[39m [1mdist/index.js.map                               [22m[32m306.13 KB[39m
+[32mESM[39m ⚡️ Build success in 409ms
