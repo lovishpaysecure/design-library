@@ -9,6 +9,7 @@ export * from './components/Sidebar';
 export * from './components/Header';
 export * from './components/Tooltip';
 export * from './components/Card';
+export * from './components/Modal';
 
 // Hooks
 export * from './hooks/useTokens';

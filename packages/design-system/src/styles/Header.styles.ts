@@ -34,8 +34,8 @@ export const UserButton = styled.div<{tokens: HeaderTokens['header']}>`
 `;
 
 export const UserAvatar = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   background: #eee;
   overflow: hidden;
