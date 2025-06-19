@@ -37,13 +37,11 @@ export const typographyTokens: TypographyTokens = {
       fontSize: '1.125rem',
       lineHeight: '1.5',
       letterSpacing: '0',
-      marginBottom: '0.35em',
     },
     subtitle2: {
       fontSize: '0.875rem',
       lineHeight: '1.5',
       letterSpacing: '0.01em',
-      marginBottom: '0.35em',
     },
     body1: {
       fontSize: '1rem',
