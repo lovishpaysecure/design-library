@@ -8,14 +8,6 @@ export const HeaderBar = styled.div<{tokens: HeaderTokens['header']}>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: ${({tokens}) => tokens.background};
-`;
-
-export const Title = styled.h1<{tokens: HeaderTokens['header']}>`
-  font-size: ${({tokens}) => tokens.titleFontSize};
-  font-weight: ${({tokens}) => tokens.titleFontWeight};
-  color: ${({tokens}) => tokens.titleColor};
-  margin: 0;
 `;
 
 export const Actions = styled.div`
@@ -53,13 +45,8 @@ export const UserAvatar = styled.div`
 export const UserDetails = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-`;
-
-export const UserRole = styled.span<{tokens: HeaderTokens['header']}>`
-  font-size: ${({tokens}) => tokens.userRoleFontSize};
-  color: ${({tokens}) => tokens.userRoleColor};
-  margin-left: 4px;
+  align-items: flex-start;
+  gap: 2px;
 `;
 
 export const UserMenu = styled.div<{tokens: HeaderTokens['header']}>`

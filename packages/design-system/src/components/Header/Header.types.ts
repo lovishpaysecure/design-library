@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 export interface HeaderTokens {
   header: {
@@ -19,25 +19,35 @@ export interface HeaderTokens {
 }
 
 export interface UserConfig {
-  avatar?: React.ReactNode;
+  avatar?: ReactNode;
   name: string;
   role?: string;
 }
 
 export interface UserMenuOption {
   label: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   onClick?: () => void;
   disabled?: boolean;
   bold?: boolean;
   gray?: boolean;
 }
 
+export interface ActionItem {
+  icon: ReactNode;
+  label: string;
+  onClick?: () => void;
+  disabled?: boolean;
+}
+
 export interface HeaderProps {
-  title?: React.ReactNode;
-  actions?: { icon: React.ReactNode; label: string; onClick?: () => void }[];
+  title?: ReactNode;
+  actions?: ActionItem[] | ReactNode;
   user?: UserConfig;
   tokens?: HeaderTokens;
   onLogout?: () => void;
   userMenuOptions?: UserMenuOption[];
+  tooltipIcon?: ReactNode;
+  tooltipContent?: ReactNode;
+  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right';
 } 

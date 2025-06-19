@@ -1,7 +1,5 @@
-import { wrap, Remote } from 'comlink';
 import { TokenComponent, TokenState, TokenSubscriber, TokenUpdateMessage, VirtualTokenState } from './types';
 import { IndexedDBStorage } from './storage/indexeddb';
-import { TokenWorkerAPI } from './worker/token.worker';
 
 const CHUNK_SIZE = 1000; // Process tokens in chunks of 1000
 const SHARED_BUFFER_SIZE = 16384; // 16KB buffer for cross-thread communication
@@ -10,7 +8,6 @@ export class TokenManager {
   private static instance: TokenManager;
   private storage: IndexedDBStorage;
   private subscribers = new Map<string, Set<TokenSubscriber>>();
-  private worker: Remote<TokenWorkerAPI>;
   private updateChannel: MessageChannel;
   private sharedBuffer?: SharedArrayBuffer;
   private virtualState: VirtualTokenState = { pending: new Set(), processed: new Map() };
@@ -19,7 +16,6 @@ export class TokenManager {
 
   private constructor() {
     this.storage = new IndexedDBStorage();
-    this.worker = wrap<TokenWorkerAPI>(new Worker(new URL('./worker/token.worker.ts', import.meta.url).href));
     this.updateChannel = new MessageChannel();
     
     // Try to create SharedArrayBuffer if available
@@ -82,29 +78,24 @@ export class TokenManager {
   }
 
   async processTokens(tokens: Record<string, TokenComponent>) {
-    const entries = Object.entries(tokens);
-    const chunks = [];
-    
-    // Split tokens into chunks
-    for (let i = 0; i < entries.length; i += CHUNK_SIZE) {
-      chunks.push(Object.fromEntries(entries.slice(i, i + CHUNK_SIZE)));
+    // Process tokens synchronously without worker
+    const processedTokens: Record<string, TokenComponent> = {};
+    for (const [key, value] of Object.entries(tokens)) {
+      processedTokens[key] = {
+        ...value,
+        processed: true,
+        timestamp: Date.now()
+      };
     }
 
-    // Process chunks in parallel
-    const promises = chunks.map(chunk => this.worker.processTokens(chunk));
-    const results = await Promise.all(promises);
-
-    // Merge results
-    const mergedState: TokenState = {
-      components: {},
+    const state: TokenState = {
+      components: processedTokens,
       timestamp: Date.now()
     };
 
-    results.forEach(result => {
-      Object.assign(mergedState.components, result.components);
-    });
-
-    return mergedState;
+    // Handle the update
+    await this.handleTokenUpdate(state);
+    return state;
   }
 
   async getTokens(componentTypes: string[]): Promise<TokenState> {

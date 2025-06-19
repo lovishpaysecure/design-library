@@ -12,7 +12,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'ghost'],
+      options: ['primary', 'tertiary', 'warning', 'danger', 'success', 'link'],
     },
     size: {
       control: 'select',
@@ -37,13 +37,6 @@ export const Primary: Story = {
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-    children: 'Secondary Button',
-  },
-};
-
 export const Tertiary: Story = {
   args: {
     variant: 'tertiary',
@@ -51,10 +44,31 @@ export const Tertiary: Story = {
   },
 };
 
-export const Ghost: Story = {
+export const Warning: Story = {
   args: {
-    variant: 'ghost',
-    children: 'Ghost Button',
+    variant: 'warning',
+    children: 'Warning Button',
+  },
+};
+
+export const Danger: Story = {
+  args: {
+    variant: 'danger',
+    children: 'Danger Button',
+  },
+};
+
+export const Success: Story = {
+  args: {
+    variant: 'success',
+    children: 'Success Button',
+  },
+};
+
+export const Link: Story = {
+  args: {
+    variant: 'link',
+    children: 'Link Button',
   },
 };
 
@@ -62,6 +76,13 @@ export const Small: Story = {
   args: {
     size: 'small',
     children: 'Small Button',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'medium',
+    children: 'Medium Button',
   },
 };
 

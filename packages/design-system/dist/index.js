@@ -1,6 +1,6 @@
-import { useTokens } from './chunk-CM26Q5CI.js';
-export { Button, useTokens } from './chunk-CM26Q5CI.js';
-export { Typography } from './chunk-7G77ZRSR.js';
+export { Button } from './chunk-234C26UT.js';
+import { Typography } from './chunk-XRT27FHT.js';
+export { Typography } from './chunk-XRT27FHT.js';
 import { __export } from './chunk-JC4IRQUL.js';
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -69,6 +69,55 @@ var SidebarContent = styled2.div`
   scrollbar-color: #ddd transparent;
 `;
 
+// src/utils/mockTokenManager.ts
+var TokenManager = class {
+  constructor() {
+    this.subscribers = /* @__PURE__ */ new Map();
+    this.state = {
+      components: {}
+    };
+  }
+  static getInstance() {
+    if (!TokenManager.instance) {
+      TokenManager.instance = new TokenManager();
+    }
+    return TokenManager.instance;
+  }
+  subscribe(componentType, callback) {
+    if (!this.subscribers.has(componentType)) {
+      this.subscribers.set(componentType, []);
+    }
+    this.subscribers.get(componentType)?.push(callback);
+    return () => {
+      const callbacks = this.subscribers.get(componentType);
+      if (callbacks) {
+        const index = callbacks.indexOf(callback);
+        if (index > -1) {
+          callbacks.splice(index, 1);
+        }
+      }
+    };
+  }
+  preloadTokens(componentTypes) {
+  }
+};
+
+// src/hooks/useTokens.ts
+function useTokens(componentType, defaultTokens3) {
+  const [tokens, setTokens] = useState(defaultTokens3);
+  useEffect(() => {
+    const manager = TokenManager.getInstance();
+    const unsubscribe = manager.subscribe(componentType, (state) => {
+      if (state.components[componentType]) {
+        setTokens(state.components[componentType].value);
+      }
+    });
+    manager.preloadTokens([componentType]);
+    return unsubscribe;
+  }, [componentType]);
+  return tokens;
+}
+
 // src/components/Sidebar/Sidebar.tsx
 var defaultTokens = {
   sidebar: {
@@ -121,7 +170,7 @@ var SearchBar = ({ isCollapsed, value, onChange, onFocus, onExpandClick }) => /*
 var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
   const isSubmenuOpen = activeSubmenu === item.label;
   if (item.header) {
-    return !isCollapsed ? /* @__PURE__ */ React.createElement("div", { style: { padding: "12px 20px", fontSize: "12px", fontWeight: 600, color: "#666", textTransform: "uppercase", marginTop: "10px" } }, item.label) : null;
+    return !isCollapsed ? /* @__PURE__ */ React.createElement("div", { style: { padding: "12px 20px", marginTop: "10px" } }, /* @__PURE__ */ React.createElement(Typography, { variant: "caption", weight: "semibold", style: { color: "#666", textTransform: "uppercase" } }, item.label)) : null;
   }
   return /* @__PURE__ */ React.createElement("div", { style: { position: "relative" } }, /* @__PURE__ */ React.createElement(
     "div",
@@ -136,8 +185,6 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
         position: "relative",
         whiteSpace: "nowrap",
         marginBottom: 4,
-        fontSize: 14,
-        fontWeight: 600,
         background: isSubmenuOpen || item.active ? "#efefef" : void 0,
         borderRadius: isSubmenuOpen || item.active ? 10 : void 0,
         justifyContent: isCollapsed ? "center" : void 0
@@ -145,7 +192,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
       onClick: () => item.submenu && onSubmenuClick(item.label)
     },
     item.icon && /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: isCollapsed ? 0 : 8 } }, item.icon),
-    !isCollapsed && /* @__PURE__ */ React.createElement("span", { style: { flex: 1, marginRight: 10 } }, item.label),
+    !isCollapsed && /* @__PURE__ */ React.createElement(Typography, { variant: "body2", weight: "semibold", style: { flex: 1, marginRight: 10, color: "inherit" } }, item.label),
     !isCollapsed && item.submenu && /* @__PURE__ */ React.createElement(
       FontAwesomeIcon,
       {
@@ -153,7 +200,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
         style: { marginLeft: "auto", fontSize: 12, transition: "transform 0.3s ease", transform: isSubmenuOpen ? "rotate(180deg)" : void 0 }
       }
     )
-  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease", fontSize: 14 } }, subItem.icon && /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React.createElement("span", null, subItem.label)))));
+  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease" } }, subItem.icon && /* @__PURE__ */ React.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React.createElement(Typography, { variant: "body2", style: { color: "inherit" } }, subItem.label)))));
 };
 var Sidebar = ({ menuItems, logo, collapsed, onToggleCollapse, onMenuClick, tokens: tokensProp }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -238,13 +285,6 @@ var HeaderBar = styled2.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: ${({ tokens }) => tokens.background};
-`;
-var Title = styled2.h1`
-  font-size: ${({ tokens }) => tokens.titleFontSize};
-  font-weight: ${({ tokens }) => tokens.titleFontWeight};
-  color: ${({ tokens }) => tokens.titleColor};
-  margin: 0;
 `;
 var Actions = styled2.div`
   display: flex;
@@ -277,12 +317,8 @@ var UserAvatar = styled2.div`
 var UserDetails = styled2.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-`;
-var UserRole = styled2.span`
-  font-size: ${({ tokens }) => tokens.userRoleFontSize};
-  color: ${({ tokens }) => tokens.userRoleColor};
-  margin-left: 4px;
+  align-items: flex-start;
+  gap: 2px;
 `;
 var UserMenu = styled2.div`
   position: absolute;
@@ -329,6 +365,116 @@ var Divider = styled2.div`
   margin: 4px 0 4px 0;
   width: 100%;
 `;
+var TooltipWrapper = styled2.div`
+  position: relative;
+  display: inline-block;
+`;
+var TooltipBubble = styled2.div`
+  position: absolute;
+  z-index: 1000;
+  background: #fff;
+  color: #5022bd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 8px 14px;
+  ${({ linebreak, maxWidth }) => linebreak && maxWidth ? `max-width: ${maxWidth};` : ""}
+  white-space: ${({ linebreak }) => linebreak ? "normal" : "nowrap"};
+  overflow-wrap: break-word;
+  display: inline-block;
+  width: max-content;
+  min-width: 40px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 14px;
+  line-height: 1.4;
+  left: 50%;
+  transform: translateX(-50%);
+  ${({ placement }) => placement === "top" && "bottom: 120%;"}
+  ${({ placement }) => placement === "bottom" && `top: 120%; left: 0; right: 0; margin: auto; width: fit-content; transform: none;`}
+  ${({ placement }) => placement === "left" && `
+    right: 120%;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0;
+  `}
+  ${({ placement }) => placement === "right" && "left: 120%; top: 50%; transform: translateY(-50%);"}
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    ${({ placement }) => placement === "top" && `
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px 8px 0 8px;
+      border-color: #fff transparent transparent transparent;
+    `}
+    ${({ placement }) => placement === "bottom" && `
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 8px 8px 8px;
+      border-color: transparent transparent #fff transparent;
+    `}
+    ${({ placement }) => placement === "left" && `
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 8px 0 8px 8px;
+      border-color: transparent transparent transparent #fff;
+    `}
+    ${({ placement }) => placement === "right" && `
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 8px 8px 8px 0;
+      border-color: transparent #fff transparent transparent;
+    `}
+  }
+  @media (max-width: 600px) {
+    ${({ linebreak }) => linebreak ? "max-width: 95vw;" : ""}
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+var Tooltip = ({
+  content,
+  children,
+  placement = "top",
+  delay = 100,
+  maxWidth = "450px",
+  linebreak = false
+}) => {
+  const [visible, setVisible] = useState(false);
+  const timeout = useRef(null);
+  const show = () => {
+    timeout.current = setTimeout(() => setVisible(true), delay);
+  };
+  const hide = () => {
+    if (timeout.current)
+      clearTimeout(timeout.current);
+    setVisible(false);
+  };
+  return /* @__PURE__ */ React.createElement(TooltipWrapper, { onMouseEnter: show, onMouseLeave: hide }, children, /* @__PURE__ */ React.createElement(
+    TooltipBubble,
+    {
+      className: visible ? "visible" : "",
+      placement,
+      maxWidth: linebreak ? maxWidth : void 0,
+      linebreak,
+      role: "tooltip"
+    },
+    /* @__PURE__ */ React.createElement(Typography, { variant: "body2", style: { color: "#5022bd" } }, content)
+  ));
+};
 
 // src/components/Header/Header.tsx
 var defaultTokens2 = {
@@ -357,7 +503,7 @@ var defaultMenuOptions = (onLogout) => [
   }, disabled: true },
   { label: "Logout", icon: /* @__PURE__ */ React.createElement(FontAwesomeIcon, { icon: faSignOutAlt }), onClick: onLogout }
 ];
-var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions }) => {
+var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions, tooltipIcon, tooltipContent, tooltipPlacement }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const userRef = useRef(null);
   const tokens = useTokens("header", defaultTokens2);
@@ -374,7 +520,45 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
-  return /* @__PURE__ */ React.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, title && (typeof title === "string" ? /* @__PURE__ */ React.createElement(Title, { tokens: mergedTokens.header }, title) : title)), /* @__PURE__ */ React.createElement(Actions, null, user && /* @__PURE__ */ React.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React.createElement(UserDetails, null, /* @__PURE__ */ React.createElement("span", null, user.name), user.role && /* @__PURE__ */ React.createElement(UserRole, { tokens: mergedTokens.header }, user.role)), /* @__PURE__ */ React.createElement(FontAwesomeIcon, { icon: faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React.createElement(
+  const renderActions = () => {
+    if (!actions)
+      return null;
+    if (Array.isArray(actions)) {
+      return actions.map((action, index) => /* @__PURE__ */ React.createElement(
+        "button",
+        {
+          key: index,
+          onClick: action.onClick,
+          disabled: action.disabled,
+          style: {
+            background: "none",
+            border: "none",
+            cursor: action.disabled ? "not-allowed" : "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "8px 12px",
+            borderRadius: "4px",
+            color: mergedTokens.header.titleColor,
+            opacity: action.disabled ? 0.6 : 1,
+            transition: "background-color 0.2s"
+          },
+          onMouseEnter: (e) => {
+            if (!action.disabled) {
+              e.currentTarget.style.backgroundColor = "#f5f5f5";
+            }
+          },
+          onMouseLeave: (e) => {
+            e.currentTarget.style.backgroundColor = "transparent";
+          }
+        },
+        action.icon,
+        /* @__PURE__ */ React.createElement(Typography, { variant: "body2" }, action.label)
+      ));
+    }
+    return actions;
+  };
+  return /* @__PURE__ */ React.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, tooltipIcon && tooltipContent && /* @__PURE__ */ React.createElement(Tooltip, { content: tooltipContent, placement: tooltipPlacement }, tooltipIcon), title && (typeof title === "string" ? /* @__PURE__ */ React.createElement(Typography, { variant: "h5", weight: "semibold", style: { color: mergedTokens.header.titleColor } }, title) : title)), /* @__PURE__ */ React.createElement(Actions, null, renderActions && renderActions(), user && /* @__PURE__ */ React.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React.createElement(UserDetails, null, /* @__PURE__ */ React.createElement(Typography, { variant: "body1", weight: "medium" }, user.name), user.role && /* @__PURE__ */ React.createElement(Typography, { variant: "caption", style: { color: mergedTokens.header.userRoleColor } }, user.role)), /* @__PURE__ */ React.createElement(FontAwesomeIcon, { icon: faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React.createElement(
     UserMenuItem,
     {
       key: option.label,
@@ -388,8 +572,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: option.label === "Logout"
     },
     option.icon,
-    " ",
-    option.label
+    /* @__PURE__ */ React.createElement(Typography, { variant: "body2", style: { color: "inherit" } }, option.label)
   )), /* @__PURE__ */ React.createElement(Divider, null), /* @__PURE__ */ React.createElement(
     UserMenuItem,
     {
@@ -404,8 +587,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: true
     },
     menuOptions[menuOptions.length - 1].icon,
-    " ",
-    menuOptions[menuOptions.length - 1].label
+    /* @__PURE__ */ React.createElement(Typography, { variant: "body2", style: { color: "inherit" } }, menuOptions[menuOptions.length - 1].label)
   )))));
 };
 var Header_default = Header;
@@ -5024,7 +5206,7 @@ var IndexedDBStorage = class {
 };
 var CHUNK_SIZE = 1e3;
 var SHARED_BUFFER_SIZE = 16384;
-var TokenManager = class {
+var TokenManager2 = class {
   constructor() {
     this.subscribers = /* @__PURE__ */ new Map();
     this.virtualState = { pending: /* @__PURE__ */ new Set(), processed: /* @__PURE__ */ new Map() };
@@ -5043,10 +5225,10 @@ var TokenManager = class {
     this.setupUpdateChannel();
   }
   static getInstance() {
-    if (!TokenManager.instance) {
-      TokenManager.instance = new TokenManager();
+    if (!TokenManager2.instance) {
+      TokenManager2.instance = new TokenManager2();
     }
-    return TokenManager.instance;
+    return TokenManager2.instance;
   }
   setupUpdateChannel() {
     this.updateChannel.port1.onmessage = (event) => {
@@ -5152,7 +5334,7 @@ var ThemeProvider = ({ tokenUrl, children }) => {
         if (!response.ok)
           throw new Error("Failed to fetch tokens");
         const tokens = await response.json();
-        await TokenManager.getInstance().processTokens(tokens);
+        await TokenManager2.getInstance().processTokens(tokens);
       } catch (e) {
         console.warn("Token fetch failed, using defaults.", e);
       } finally {
@@ -5175,6 +5357,6 @@ comlink/dist/esm/comlink.mjs:
    *)
 */
 
-export { Header_default as Header, Sidebar, ThemeProvider };
+export { Header_default as Header, Sidebar, ThemeProvider, Tooltip, useTokens };
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.js.map

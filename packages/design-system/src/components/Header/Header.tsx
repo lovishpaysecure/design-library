@@ -2,20 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faSignOutAlt, faUser, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
-import { HeaderTokens, UserConfig, UserMenuOption, HeaderProps } from './Header.types';
+import { HeaderTokens, UserConfig, UserMenuOption, HeaderProps, ActionItem } from './Header.types';
 import {
   HeaderBar,
-  Title,
   Actions,
   UserMenuContainer,
   UserButton,
   UserAvatar,
   UserDetails,
-  UserRole,
   UserMenu,
   UserMenuItem,
   Divider
 } from '../../styles/Header.styles';
+import { Typography } from '../Typography/Typography';
+import { Tooltip } from '../Tooltip';
 
 const defaultTokens: HeaderTokens = {
   header: {
@@ -42,7 +42,7 @@ const defaultMenuOptions = (onLogout?: () => void): UserMenuOption[] => [
   { label: 'Logout', icon: <FontAwesomeIcon icon={faSignOutAlt} />, onClick: onLogout },
 ];
 
-const Header: React.FC<HeaderProps> = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions }) => {
+const Header: React.FC<HeaderProps> = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions, tooltipIcon, tooltipContent, tooltipPlacement }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const userRef = useRef<HTMLDivElement>(null);
   const tokens = useTokens<HeaderTokens>('header', defaultTokens);
@@ -60,19 +60,77 @@ const Header: React.FC<HeaderProps> = ({ title, actions, user, tokens: tokensPro
     return () => document.removeEventListener('mousedown', handleClick);
   }, [menuOpen]);
 
+  const renderActions = () => {
+    if (!actions) return null;
+    
+    // If actions is an array of ActionItem objects
+    if (Array.isArray(actions)) {
+      return actions.map((action: ActionItem, index) => (
+        <button
+          key={index}
+          onClick={action.onClick}
+          disabled={action.disabled}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: action.disabled ? 'not-allowed' : 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            color: mergedTokens.header.titleColor,
+            opacity: action.disabled ? 0.6 : 1,
+            transition: 'background-color 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            if (!action.disabled) {
+              e.currentTarget.style.backgroundColor = '#f5f5f5';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent';
+          }}
+        >
+          {action.icon}
+          <Typography variant="body2">{action.label}</Typography>
+        </button>
+      ));
+    }
+    
+    // If actions is a ReactNode, render it directly
+    return actions;
+  };
+
   return (
     <HeaderBar tokens={mergedTokens.header}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        {title && (typeof title === 'string' ? <Title tokens={mergedTokens.header}>{title}</Title> : title)}
+        {tooltipIcon && tooltipContent && (
+          <Tooltip content={tooltipContent} placement={tooltipPlacement}>
+            {tooltipIcon}
+          </Tooltip>
+        )}
+        {title && (typeof title === 'string' ? (
+          <Typography variant="h5" weight="semibold" style={{ color: mergedTokens.header.titleColor }}>
+            {title}
+          </Typography>
+        ) : title)}
       </div>
       <Actions>
+        {renderActions && renderActions()}
         {user && (
           <UserMenuContainer ref={userRef}>
             <UserButton tokens={mergedTokens.header} onClick={() => setMenuOpen((open) => !open)}>
               <UserAvatar>{user.avatar}</UserAvatar>
               <UserDetails>
-                <span>{user.name}</span>
-                {user.role && <UserRole tokens={mergedTokens.header}>{user.role}</UserRole>}
+                <Typography variant="body1" weight="medium">
+                  {user.name}
+                </Typography>
+                {user.role && (
+                  <Typography variant="caption" style={{ color: mergedTokens.header.userRoleColor }}>
+                    {user.role}
+                  </Typography>
+                )}
               </UserDetails>
               <FontAwesomeIcon icon={faChevronDown} style={{ marginLeft: 8, fontSize: 16 }} />
             </UserButton>
@@ -89,7 +147,10 @@ const Header: React.FC<HeaderProps> = ({ title, actions, user, tokens: tokensPro
                     disabled={option.disabled}
                     gray={option.label === 'Logout'}
                   >
-                    {option.icon} {option.label}
+                    {option.icon} 
+                    <Typography variant="body2" style={{ color: 'inherit' }}>
+                      {option.label}
+                    </Typography>
                   </UserMenuItem>
                 ))}
                 <Divider />
@@ -103,7 +164,10 @@ const Header: React.FC<HeaderProps> = ({ title, actions, user, tokens: tokensPro
                   disabled={menuOptions[menuOptions.length-1].disabled}
                   gray
                 >
-                  {menuOptions[menuOptions.length-1].icon} {menuOptions[menuOptions.length-1].label}
+                  {menuOptions[menuOptions.length-1].icon} 
+                  <Typography variant="body2" style={{ color: 'inherit' }}>
+                    {menuOptions[menuOptions.length-1].label}
+                  </Typography>
                 </UserMenuItem>
               </UserMenu>
             )}

@@ -94,7 +94,6 @@ declare class TokenManager {
     private static instance;
     private storage;
     private subscribers;
-    private worker;
     private updateChannel;
     private sharedBuffer?;
     private virtualState;

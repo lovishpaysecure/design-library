@@ -33,7 +33,7 @@ import favicon from '../../assests/icon/favicon.ico';
 const config = {
   logo: (collapsed: boolean) => collapsed
     ? <img src={favicon} alt="Favicon" style={{ width: 32, height: 32, borderRadius: 8 }} />
-    : <img src={Logo} alt="Logo" style={{ width: 120, height: 32, objectFit: 'contain' }} />,
+    : <img src={Logo} alt="Logo" style={{ width: 175, height: 32, objectFit: 'contain' }} />,
   menuItems: [
     { icon: <FontAwesomeIcon icon={faHome} />, label: 'Dashboard', active: true },
     { 
@@ -133,17 +133,6 @@ const config = {
         { icon: <FontAwesomeIcon icon={faChartLine} />, label: 'Custom Reports' }
       ]
     },
-  ],
-};
-
-// Custom config for demonstration
-const customConfig = {
-  logo: <div style={{width: 32, height: 32, background: '#4caf50', borderRadius: 8}} />,
-  menuItems: [
-    { icon: <FontAwesomeIcon icon={faHome} />, label: 'Home', active: true },
-    { icon: <FontAwesomeIcon icon={faTools} />, label: 'Tools' },
-    { label: 'CUSTOM SECTION', header: true },
-    { icon: <FontAwesomeIcon icon={faUserCog} />, label: 'Settings' },
   ],
 };
 

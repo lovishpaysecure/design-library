@@ -63,32 +63,47 @@ interface HeaderTokens {
     };
 }
 interface UserConfig {
-    avatar?: React$1.ReactNode;
+    avatar?: ReactNode;
     name: string;
     role?: string;
 }
 interface UserMenuOption {
     label: string;
-    icon?: React$1.ReactNode;
+    icon?: ReactNode;
     onClick?: () => void;
     disabled?: boolean;
     bold?: boolean;
     gray?: boolean;
 }
+interface ActionItem {
+    icon: ReactNode;
+    label: string;
+    onClick?: () => void;
+    disabled?: boolean;
+}
 interface HeaderProps {
-    title?: React$1.ReactNode;
-    actions?: {
-        icon: React$1.ReactNode;
-        label: string;
-        onClick?: () => void;
-    }[];
+    title?: ReactNode;
+    actions?: ActionItem[] | ReactNode;
     user?: UserConfig;
     tokens?: HeaderTokens;
     onLogout?: () => void;
     userMenuOptions?: UserMenuOption[];
+    tooltipIcon?: ReactNode;
+    tooltipContent?: ReactNode;
+    tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right';
 }
 
 declare const Header: React$1.FC<HeaderProps>;
+
+interface TooltipProps {
+    content: ReactNode;
+    children: ReactNode;
+    placement?: 'top' | 'bottom' | 'left' | 'right';
+    delay?: number;
+    maxWidth?: string;
+    linebreak?: boolean;
+}
+declare const Tooltip: React$1.FC<TooltipProps>;
 
 interface TokenValue {
     [key: string]: string | TokenValue;
@@ -106,4 +121,4 @@ interface ThemeProviderProps {
 }
 declare const ThemeProvider: React$1.FC<ThemeProviderProps>;
 
-export { Header, HeaderProps, Sidebar, SidebarProps, ThemeProvider, TokenConfig, TokenValue, useTokens };
+export { Header, HeaderProps, Sidebar, SidebarProps, ThemeProvider, TokenConfig, TokenValue, Tooltip, TooltipProps, useTokens };

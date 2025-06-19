@@ -1,6 +1,6 @@
 {
   "name": "@paysecure-design/tokens",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -10,11 +10,10 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --external react && pnpm copy-worker",
+    "build": "tsup src/index.ts --format esm,cjs --dts --external react",
     "dev": "tsup src/index.ts --format esm,cjs --watch --dts --external react",
     "lint": "eslint src/**/*.ts*",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "copy-worker": "mkdir -p dist/worker && cp src/worker/token.worker.ts dist/worker/token.worker.ts"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

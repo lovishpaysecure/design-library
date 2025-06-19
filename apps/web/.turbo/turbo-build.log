@@ -3,8 +3,8 @@
 > tsc && vite build
 
 [36mvite v4.5.14 [32mbuilding for production...[36m[39m
-[2K[1Gtransforming (1) [2mindex.html[22m[2K[1G[32m✓[39m 5 modules transformed.
-[32m✓ built in 32ms[39m
+[2K[1Gtransforming (1) [2mindex.html[22m[2K[1G[32m✓[39m 7 modules transformed.
+[32m✓ built in 48ms[39m
 [31m[vite:worker-import-meta-url] Could not resolve entry module "../../node_modules/.pnpm/@paysecure-design+tokens@1.0.2_react@18.3.1/node_modules/@paysecure-design/tokens/dist/worker/token.worker.ts".[39m
 file: [36m/Users/lovish/Desktop/workspace/design-library/node_modules/.pnpm/@paysecure-design+tokens@1.0.2_react@18.3.1/node_modules/@paysecure-design/tokens/dist/index.mjs[39m
 [31merror during build:

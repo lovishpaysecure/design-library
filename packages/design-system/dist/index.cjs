@@ -1,7 +1,7 @@
 'use strict';
 
-var chunk3BMWW4FX_cjs = require('./chunk-3BMWW4FX.cjs');
-var chunk3Z33FTZD_cjs = require('./chunk-3Z33FTZD.cjs');
+var chunkEGXKMLWE_cjs = require('./chunk-EGXKMLWE.cjs');
+var chunkPHTFZQKT_cjs = require('./chunk-PHTFZQKT.cjs');
 var chunk7UZHC74I_cjs = require('./chunk-7UZHC74I.cjs');
 var React = require('react');
 var reactFontawesome = require('@fortawesome/react-fontawesome');
@@ -76,6 +76,55 @@ var SidebarContent = styled2__default.default.div`
   scrollbar-color: #ddd transparent;
 `;
 
+// src/utils/mockTokenManager.ts
+var TokenManager = class {
+  constructor() {
+    this.subscribers = /* @__PURE__ */ new Map();
+    this.state = {
+      components: {}
+    };
+  }
+  static getInstance() {
+    if (!TokenManager.instance) {
+      TokenManager.instance = new TokenManager();
+    }
+    return TokenManager.instance;
+  }
+  subscribe(componentType, callback) {
+    if (!this.subscribers.has(componentType)) {
+      this.subscribers.set(componentType, []);
+    }
+    this.subscribers.get(componentType)?.push(callback);
+    return () => {
+      const callbacks = this.subscribers.get(componentType);
+      if (callbacks) {
+        const index = callbacks.indexOf(callback);
+        if (index > -1) {
+          callbacks.splice(index, 1);
+        }
+      }
+    };
+  }
+  preloadTokens(componentTypes) {
+  }
+};
+
+// src/hooks/useTokens.ts
+function useTokens(componentType, defaultTokens3) {
+  const [tokens, setTokens] = React.useState(defaultTokens3);
+  React.useEffect(() => {
+    const manager = TokenManager.getInstance();
+    const unsubscribe = manager.subscribe(componentType, (state) => {
+      if (state.components[componentType]) {
+        setTokens(state.components[componentType].value);
+      }
+    });
+    manager.preloadTokens([componentType]);
+    return unsubscribe;
+  }, [componentType]);
+  return tokens;
+}
+
 // src/components/Sidebar/Sidebar.tsx
 var defaultTokens = {
   sidebar: {
@@ -128,7 +177,7 @@ var SearchBar = ({ isCollapsed, value, onChange, onFocus, onExpandClick }) => /*
 var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
   const isSubmenuOpen = activeSubmenu === item.label;
   if (item.header) {
-    return !isCollapsed ? /* @__PURE__ */ React__default.default.createElement("div", { style: { padding: "12px 20px", fontSize: "12px", fontWeight: 600, color: "#666", textTransform: "uppercase", marginTop: "10px" } }, item.label) : null;
+    return !isCollapsed ? /* @__PURE__ */ React__default.default.createElement("div", { style: { padding: "12px 20px", marginTop: "10px" } }, /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "caption", weight: "semibold", style: { color: "#666", textTransform: "uppercase" } }, item.label)) : null;
   }
   return /* @__PURE__ */ React__default.default.createElement("div", { style: { position: "relative" } }, /* @__PURE__ */ React__default.default.createElement(
     "div",
@@ -143,8 +192,6 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
         position: "relative",
         whiteSpace: "nowrap",
         marginBottom: 4,
-        fontSize: 14,
-        fontWeight: 600,
         background: isSubmenuOpen || item.active ? "#efefef" : void 0,
         borderRadius: isSubmenuOpen || item.active ? 10 : void 0,
         justifyContent: isCollapsed ? "center" : void 0
@@ -152,7 +199,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
       onClick: () => item.submenu && onSubmenuClick(item.label)
     },
     item.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: isCollapsed ? 0 : 8 } }, item.icon),
-    !isCollapsed && /* @__PURE__ */ React__default.default.createElement("span", { style: { flex: 1, marginRight: 10 } }, item.label),
+    !isCollapsed && /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", weight: "semibold", style: { flex: 1, marginRight: 10, color: "inherit" } }, item.label),
     !isCollapsed && item.submenu && /* @__PURE__ */ React__default.default.createElement(
       reactFontawesome.FontAwesomeIcon,
       {
@@ -160,12 +207,12 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
         style: { marginLeft: "auto", fontSize: 12, transition: "transform 0.3s ease", transform: isSubmenuOpen ? "rotate(180deg)" : void 0 }
       }
     )
-  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React__default.default.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React__default.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease", fontSize: 14 } }, subItem.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React__default.default.createElement("span", null, subItem.label)))));
+  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React__default.default.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React__default.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease" } }, subItem.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, subItem.label)))));
 };
 var Sidebar = ({ menuItems, logo, collapsed, onToggleCollapse, onMenuClick, tokens: tokensProp }) => {
   const [searchValue, setSearchValue] = React.useState("");
   const [activeSubmenu, setActiveSubmenu] = React.useState(null);
-  const tokens = chunk3BMWW4FX_cjs.useTokens("sidebar", defaultTokens);
+  const tokens = useTokens("sidebar", defaultTokens);
   const mergedTokens = tokensProp || tokens;
   const handleSearchFocus = () => {
     if (collapsed) {
@@ -245,13 +292,6 @@ var HeaderBar = styled2__default.default.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: ${({ tokens }) => tokens.background};
-`;
-var Title = styled2__default.default.h1`
-  font-size: ${({ tokens }) => tokens.titleFontSize};
-  font-weight: ${({ tokens }) => tokens.titleFontWeight};
-  color: ${({ tokens }) => tokens.titleColor};
-  margin: 0;
 `;
 var Actions = styled2__default.default.div`
   display: flex;
@@ -284,12 +324,8 @@ var UserAvatar = styled2__default.default.div`
 var UserDetails = styled2__default.default.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-`;
-var UserRole = styled2__default.default.span`
-  font-size: ${({ tokens }) => tokens.userRoleFontSize};
-  color: ${({ tokens }) => tokens.userRoleColor};
-  margin-left: 4px;
+  align-items: flex-start;
+  gap: 2px;
 `;
 var UserMenu = styled2__default.default.div`
   position: absolute;
@@ -336,6 +372,116 @@ var Divider = styled2__default.default.div`
   margin: 4px 0 4px 0;
   width: 100%;
 `;
+var TooltipWrapper = styled2__default.default.div`
+  position: relative;
+  display: inline-block;
+`;
+var TooltipBubble = styled2__default.default.div`
+  position: absolute;
+  z-index: 1000;
+  background: #fff;
+  color: #5022bd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 8px 14px;
+  ${({ linebreak, maxWidth }) => linebreak && maxWidth ? `max-width: ${maxWidth};` : ""}
+  white-space: ${({ linebreak }) => linebreak ? "normal" : "nowrap"};
+  overflow-wrap: break-word;
+  display: inline-block;
+  width: max-content;
+  min-width: 40px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 14px;
+  line-height: 1.4;
+  left: 50%;
+  transform: translateX(-50%);
+  ${({ placement }) => placement === "top" && "bottom: 120%;"}
+  ${({ placement }) => placement === "bottom" && `top: 120%; left: 0; right: 0; margin: auto; width: fit-content; transform: none;`}
+  ${({ placement }) => placement === "left" && `
+    right: 120%;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0;
+  `}
+  ${({ placement }) => placement === "right" && "left: 120%; top: 50%; transform: translateY(-50%);"}
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    ${({ placement }) => placement === "top" && `
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px 8px 0 8px;
+      border-color: #fff transparent transparent transparent;
+    `}
+    ${({ placement }) => placement === "bottom" && `
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 8px 8px 8px;
+      border-color: transparent transparent #fff transparent;
+    `}
+    ${({ placement }) => placement === "left" && `
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 8px 0 8px 8px;
+      border-color: transparent transparent transparent #fff;
+    `}
+    ${({ placement }) => placement === "right" && `
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: 8px 8px 8px 0;
+      border-color: transparent #fff transparent transparent;
+    `}
+  }
+  @media (max-width: 600px) {
+    ${({ linebreak }) => linebreak ? "max-width: 95vw;" : ""}
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+var Tooltip = ({
+  content,
+  children,
+  placement = "top",
+  delay = 100,
+  maxWidth = "450px",
+  linebreak = false
+}) => {
+  const [visible, setVisible] = React.useState(false);
+  const timeout = React.useRef(null);
+  const show = () => {
+    timeout.current = setTimeout(() => setVisible(true), delay);
+  };
+  const hide = () => {
+    if (timeout.current)
+      clearTimeout(timeout.current);
+    setVisible(false);
+  };
+  return /* @__PURE__ */ React__default.default.createElement(TooltipWrapper, { onMouseEnter: show, onMouseLeave: hide }, children, /* @__PURE__ */ React__default.default.createElement(
+    TooltipBubble,
+    {
+      className: visible ? "visible" : "",
+      placement,
+      maxWidth: linebreak ? maxWidth : void 0,
+      linebreak,
+      role: "tooltip"
+    },
+    /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "#5022bd" } }, content)
+  ));
+};
 
 // src/components/Header/Header.tsx
 var defaultTokens2 = {
@@ -364,10 +510,10 @@ var defaultMenuOptions = (onLogout) => [
   }, disabled: true },
   { label: "Logout", icon: /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faSignOutAlt }), onClick: onLogout }
 ];
-var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions }) => {
+var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOptions, tooltipIcon, tooltipContent, tooltipPlacement }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const userRef = React.useRef(null);
-  const tokens = chunk3BMWW4FX_cjs.useTokens("header", defaultTokens2);
+  const tokens = useTokens("header", defaultTokens2);
   const mergedTokens = tokensProp || tokens;
   const menuOptions = userMenuOptions || defaultMenuOptions(onLogout);
   React.useEffect(() => {
@@ -381,7 +527,45 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [menuOpen]);
-  return /* @__PURE__ */ React__default.default.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React__default.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, title && (typeof title === "string" ? /* @__PURE__ */ React__default.default.createElement(Title, { tokens: mergedTokens.header }, title) : title)), /* @__PURE__ */ React__default.default.createElement(Actions, null, user && /* @__PURE__ */ React__default.default.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React__default.default.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React__default.default.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React__default.default.createElement(UserDetails, null, /* @__PURE__ */ React__default.default.createElement("span", null, user.name), user.role && /* @__PURE__ */ React__default.default.createElement(UserRole, { tokens: mergedTokens.header }, user.role)), /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React__default.default.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React__default.default.createElement(
+  const renderActions = () => {
+    if (!actions)
+      return null;
+    if (Array.isArray(actions)) {
+      return actions.map((action, index) => /* @__PURE__ */ React__default.default.createElement(
+        "button",
+        {
+          key: index,
+          onClick: action.onClick,
+          disabled: action.disabled,
+          style: {
+            background: "none",
+            border: "none",
+            cursor: action.disabled ? "not-allowed" : "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "8px 12px",
+            borderRadius: "4px",
+            color: mergedTokens.header.titleColor,
+            opacity: action.disabled ? 0.6 : 1,
+            transition: "background-color 0.2s"
+          },
+          onMouseEnter: (e) => {
+            if (!action.disabled) {
+              e.currentTarget.style.backgroundColor = "#f5f5f5";
+            }
+          },
+          onMouseLeave: (e) => {
+            e.currentTarget.style.backgroundColor = "transparent";
+          }
+        },
+        action.icon,
+        /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2" }, action.label)
+      ));
+    }
+    return actions;
+  };
+  return /* @__PURE__ */ React__default.default.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React__default.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, tooltipIcon && tooltipContent && /* @__PURE__ */ React__default.default.createElement(Tooltip, { content: tooltipContent, placement: tooltipPlacement }, tooltipIcon), title && (typeof title === "string" ? /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "h5", weight: "semibold", style: { color: mergedTokens.header.titleColor } }, title) : title)), /* @__PURE__ */ React__default.default.createElement(Actions, null, renderActions && renderActions(), user && /* @__PURE__ */ React__default.default.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React__default.default.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React__default.default.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React__default.default.createElement(UserDetails, null, /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body1", weight: "medium" }, user.name), user.role && /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "caption", style: { color: mergedTokens.header.userRoleColor } }, user.role)), /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React__default.default.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React__default.default.createElement(
     UserMenuItem,
     {
       key: option.label,
@@ -395,8 +579,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: option.label === "Logout"
     },
     option.icon,
-    " ",
-    option.label
+    /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, option.label)
   )), /* @__PURE__ */ React__default.default.createElement(Divider, null), /* @__PURE__ */ React__default.default.createElement(
     UserMenuItem,
     {
@@ -411,8 +594,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: true
     },
     menuOptions[menuOptions.length - 1].icon,
-    " ",
-    menuOptions[menuOptions.length - 1].label
+    /* @__PURE__ */ React__default.default.createElement(chunkPHTFZQKT_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, menuOptions[menuOptions.length - 1].label)
   )))));
 };
 var Header_default = Header;
@@ -5031,7 +5213,7 @@ var IndexedDBStorage = class {
 };
 var CHUNK_SIZE = 1e3;
 var SHARED_BUFFER_SIZE = 16384;
-var TokenManager = class {
+var TokenManager2 = class {
   constructor() {
     this.subscribers = /* @__PURE__ */ new Map();
     this.virtualState = { pending: /* @__PURE__ */ new Set(), processed: /* @__PURE__ */ new Map() };
@@ -5050,10 +5232,10 @@ var TokenManager = class {
     this.setupUpdateChannel();
   }
   static getInstance() {
-    if (!TokenManager.instance) {
-      TokenManager.instance = new TokenManager();
+    if (!TokenManager2.instance) {
+      TokenManager2.instance = new TokenManager2();
     }
-    return TokenManager.instance;
+    return TokenManager2.instance;
   }
   setupUpdateChannel() {
     this.updateChannel.port1.onmessage = (event) => {
@@ -5159,7 +5341,7 @@ var ThemeProvider = ({ tokenUrl, children }) => {
         if (!response.ok)
           throw new Error("Failed to fetch tokens");
         const tokens = await response.json();
-        await TokenManager.getInstance().processTokens(tokens);
+        await TokenManager2.getInstance().processTokens(tokens);
       } catch (e) {
         console.warn("Token fetch failed, using defaults.", e);
       } finally {
@@ -5184,18 +5366,16 @@ comlink/dist/esm/comlink.mjs:
 
 Object.defineProperty(exports, 'Button', {
   enumerable: true,
-  get: function () { return chunk3BMWW4FX_cjs.Button; }
-});
-Object.defineProperty(exports, 'useTokens', {
-  enumerable: true,
-  get: function () { return chunk3BMWW4FX_cjs.useTokens; }
+  get: function () { return chunkEGXKMLWE_cjs.Button; }
 });
 Object.defineProperty(exports, 'Typography', {
   enumerable: true,
-  get: function () { return chunk3Z33FTZD_cjs.Typography; }
+  get: function () { return chunkPHTFZQKT_cjs.Typography; }
 });
 exports.Header = Header_default;
 exports.Sidebar = Sidebar;
 exports.ThemeProvider = ThemeProvider;
+exports.Tooltip = Tooltip;
+exports.useTokens = useTokens;
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.cjs.map

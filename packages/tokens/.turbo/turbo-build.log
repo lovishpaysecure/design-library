@@ -1,6 +1,6 @@
 
 > @paysecure-design/tokens@1.0.2 build /Users/lovish/Desktop/workspace/design-library/packages/tokens
-> tsup src/index.ts --format esm,cjs --dts --external react && pnpm copy-worker
+> tsup src/index.ts --format esm,cjs --dts --external react
 
 [34mCLI[39m Building entry: src/index.ts
 [34mCLI[39m Using tsconfig: tsconfig.json
@@ -10,25 +10,10 @@
 [34mCLI[39m Cleaning output folder
 [34mESM[39m Build start
 [34mCJS[39m Build start
-
-[43m[30m WARN [39m[49m [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m"import.meta" is not available with the "cjs" output format and will be empty[0m [empty-import-meta]
-
-    src/TokenManager.ts:22:86:
-[37m      22 │ ...orker(new URL('./worker/token.worker.ts', [32mimport.meta[37m.url).href));
-         ╵                                              [32m~~~~~~~~~~~[0m
-
-  You need to set the output format to "esm" for "import.meta" to work correctly.
-
-
-
-[32mCJS[39m [1mdist/index.js [22m[32m7.49 KB[39m
-[32mCJS[39m ⚡️ Build success in 11ms
-[32mESM[39m [1mdist/index.mjs [22m[32m6.01 KB[39m
-[32mESM[39m ⚡️ Build success in 12ms
+[32mESM[39m [1mdist/index.mjs [22m[32m5.65 KB[39m
+[32mESM[39m ⚡️ Build success in 7ms
+[32mCJS[39m [1mdist/index.js [22m[32m7.08 KB[39m
+[32mCJS[39m ⚡️ Build success in 7ms
 [34mDTS[39m Build start
-[32mDTS[39m ⚡️ Build success in 443ms
-[32mDTS[39m [1mdist/index.d.ts [22m[32m4.48 KB[39m
-
-> @paysecure-design/tokens@1.0.2 copy-worker /Users/lovish/Desktop/workspace/design-library/packages/tokens
-> mkdir -p dist/worker && cp src/worker/token.worker.ts dist/worker/token.worker.ts
-
+[32mDTS[39m ⚡️ Build success in 449ms
+[32mDTS[39m [1mdist/index.d.ts [22m[32m4.46 KB[39m
