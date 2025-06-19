@@ -1,7 +1,7 @@
 'use strict';
 
 var chunkCTDONTSX_cjs = require('./chunk-CTDONTSX.cjs');
-var chunkSLF6HWDX_cjs = require('./chunk-SLF6HWDX.cjs');
+var chunk6SG7KMQ6_cjs = require('./chunk-6SG7KMQ6.cjs');
 var chunkBK2AYVDS_cjs = require('./chunk-BK2AYVDS.cjs');
 var chunk7K4GYSXH_cjs = require('./chunk-7K4GYSXH.cjs');
 var React = require('react');
@@ -131,7 +131,7 @@ var SearchBar = ({ isCollapsed, value, onChange, onFocus, onExpandClick }) => /*
 var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
   const isSubmenuOpen = activeSubmenu === item.label;
   if (item.header) {
-    return !isCollapsed ? /* @__PURE__ */ React__default.default.createElement("div", { style: { padding: "12px 20px", marginTop: "10px" } }, /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "caption", weight: "semibold", style: { color: "#666", textTransform: "uppercase" } }, item.label)) : null;
+    return !isCollapsed ? /* @__PURE__ */ React__default.default.createElement("div", { style: { padding: "12px 20px", marginTop: "10px" } }, /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "caption", weight: "semibold", style: { color: "#666", textTransform: "uppercase" } }, item.label)) : null;
   }
   return /* @__PURE__ */ React__default.default.createElement("div", { style: { position: "relative" } }, /* @__PURE__ */ React__default.default.createElement(
     "div",
@@ -153,7 +153,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
       onClick: () => item.submenu && onSubmenuClick(item.label)
     },
     item.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: isCollapsed ? 0 : 8 } }, item.icon),
-    !isCollapsed && /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", weight: "semibold", style: { flex: 1, marginRight: 10, color: "inherit" } }, item.label),
+    !isCollapsed && /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body2", weight: "semibold", style: { flex: 1, marginRight: 10, color: "inherit" } }, item.label),
     !isCollapsed && item.submenu && /* @__PURE__ */ React__default.default.createElement(
       reactFontawesome.FontAwesomeIcon,
       {
@@ -161,7 +161,7 @@ var NavigationItem = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
         style: { marginLeft: "auto", fontSize: 12, transition: "transform 0.3s ease", transform: isSubmenuOpen ? "rotate(180deg)" : void 0 }
       }
     )
-  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React__default.default.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React__default.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease" } }, subItem.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, subItem.label)))));
+  ), !isCollapsed && item.submenu && isSubmenuOpen && /* @__PURE__ */ React__default.default.createElement("div", { style: { borderRadius: "0 0 10px 10px", marginBottom: 4, overflow: "hidden" } }, item.submenu.map((subItem, index) => /* @__PURE__ */ React__default.default.createElement("div", { key: index, style: { display: "flex", alignItems: "center", padding: "10px 12px 10px 40px", color: "#666", cursor: "pointer", transition: "all 0.3s ease" } }, subItem.icon && /* @__PURE__ */ React__default.default.createElement("span", { style: { display: "flex", alignItems: "center", marginRight: 8, opacity: 0.8 } }, subItem.icon), /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, subItem.label)))));
 };
 var Sidebar = ({ menuItems, logo, collapsed, onToggleCollapse, onMenuClick, tokens: tokensProp }) => {
   const [searchValue, setSearchValue] = React.useState("");
@@ -456,7 +456,7 @@ var Tooltip = ({
       tokens,
       role: "tooltip"
     },
-    /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: tokens.bubble.color } }, content)
+    /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body2", style: { color: tokens.bubble.color } }, content)
   ));
 };
 
@@ -539,12 +539,12 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
           }
         },
         action.icon,
-        /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2" }, action.label)
+        /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body2" }, action.label)
       ));
     }
     return actions;
   };
-  return /* @__PURE__ */ React__default.default.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React__default.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, tooltipIcon && tooltipContent && /* @__PURE__ */ React__default.default.createElement(Tooltip, { content: tooltipContent, placement: tooltipPlacement }, tooltipIcon), title && (typeof title === "string" ? /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "h5", weight: "semibold", style: { color: mergedTokens.header.titleColor } }, title) : title)), /* @__PURE__ */ React__default.default.createElement(Actions, null, renderActions && renderActions(), user && /* @__PURE__ */ React__default.default.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React__default.default.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React__default.default.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React__default.default.createElement(UserDetails, null, /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body1", weight: "medium" }, user.name), user.role && /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "caption", style: { color: mergedTokens.header.userRoleColor } }, user.role)), /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React__default.default.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React__default.default.createElement(
+  return /* @__PURE__ */ React__default.default.createElement(HeaderBar, { tokens: mergedTokens.header }, /* @__PURE__ */ React__default.default.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } }, tooltipIcon && tooltipContent && /* @__PURE__ */ React__default.default.createElement(Tooltip, { content: tooltipContent, placement: tooltipPlacement }, tooltipIcon), title && (typeof title === "string" ? /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "h5", weight: "semibold", style: { color: mergedTokens.header.titleColor } }, title) : title)), /* @__PURE__ */ React__default.default.createElement(Actions, null, renderActions && renderActions(), user && /* @__PURE__ */ React__default.default.createElement(UserMenuContainer, { ref: userRef }, /* @__PURE__ */ React__default.default.createElement(UserButton, { tokens: mergedTokens.header, onClick: () => setMenuOpen((open) => !open) }, /* @__PURE__ */ React__default.default.createElement(UserAvatar, null, user.avatar), /* @__PURE__ */ React__default.default.createElement(UserDetails, null, /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body1", weight: "medium" }, user.name), user.role && /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "caption", style: { color: mergedTokens.header.userRoleColor } }, user.role)), /* @__PURE__ */ React__default.default.createElement(reactFontawesome.FontAwesomeIcon, { icon: freeSolidSvgIcons.faChevronDown, style: { marginLeft: 8, fontSize: 16 } })), menuOpen && /* @__PURE__ */ React__default.default.createElement(UserMenu, { tokens: mergedTokens.header }, menuOptions.slice(0, -1).map((option, idx) => /* @__PURE__ */ React__default.default.createElement(
     UserMenuItem,
     {
       key: option.label,
@@ -558,7 +558,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: option.label === "Logout"
     },
     option.icon,
-    /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, option.label)
+    /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, option.label)
   )), /* @__PURE__ */ React__default.default.createElement(Divider, null), /* @__PURE__ */ React__default.default.createElement(
     UserMenuItem,
     {
@@ -573,7 +573,7 @@ var Header = ({ title, actions, user, tokens: tokensProp, onLogout, userMenuOpti
       gray: true
     },
     menuOptions[menuOptions.length - 1].icon,
-    /* @__PURE__ */ React__default.default.createElement(chunkSLF6HWDX_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, menuOptions[menuOptions.length - 1].label)
+    /* @__PURE__ */ React__default.default.createElement(chunk6SG7KMQ6_cjs.Typography, { variant: "body2", style: { color: "inherit" } }, menuOptions[menuOptions.length - 1].label)
   )))));
 };
 var Header_default = Header;
@@ -5349,7 +5349,7 @@ Object.defineProperty(exports, 'Button', {
 });
 Object.defineProperty(exports, 'Typography', {
   enumerable: true,
-  get: function () { return chunkSLF6HWDX_cjs.Typography; }
+  get: function () { return chunk6SG7KMQ6_cjs.Typography; }
 });
 Object.defineProperty(exports, 'Card', {
   enumerable: true,

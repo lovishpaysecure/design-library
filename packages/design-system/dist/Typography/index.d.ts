@@ -8,6 +8,7 @@ interface TypographyProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'co
     weight?: TypographyWeight;
     align?: TypographyAlign;
     component?: keyof JSX.IntrinsicElements;
+    margin?: string;
     children: React.ReactNode;
 }
 interface TypographyTokens {
@@ -16,7 +17,6 @@ interface TypographyTokens {
             fontSize: string;
             lineHeight: string;
             letterSpacing: string;
-            marginBottom?: string;
             textTransform?: string;
         };
     };

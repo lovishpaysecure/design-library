@@ -10,6 +10,7 @@ export const Typography = React.forwardRef<HTMLDivElement, TypographyProps>(
     weight = 'regular',
     align = 'left',
     component,
+    margin,
     children,
     ...props
   }, ref) => {
@@ -23,6 +24,7 @@ export const Typography = React.forwardRef<HTMLDivElement, TypographyProps>(
         $variant={variant}
         $weight={weight}
         $align={align}
+        $margin={margin}
         tokens={tokens}
         {...props}
       >

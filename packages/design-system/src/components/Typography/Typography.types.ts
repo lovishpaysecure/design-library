@@ -14,6 +14,7 @@ export interface TypographyProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   weight?: TypographyWeight;
   align?: TypographyAlign;
   component?: keyof JSX.IntrinsicElements;
+  margin?: string;
   children: React.ReactNode;
 }
 
@@ -21,6 +22,7 @@ export interface StyledTypographyProps {
   $variant: TypographyVariant;
   $weight: TypographyWeight;
   $align: TypographyAlign;
+  $margin?: string;
 }
 
 export interface TypographyTokens {
@@ -29,7 +31,6 @@ export interface TypographyTokens {
       fontSize: string;
       lineHeight: string;
       letterSpacing: string;
-      marginBottom?: string;
       textTransform?: string;
     };
   };

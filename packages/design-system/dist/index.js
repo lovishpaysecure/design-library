@@ -1,6 +1,6 @@
 export { Button } from './chunk-ESVE2HZE.js';
-import { Typography } from './chunk-FLUOFIYY.js';
-export { Typography } from './chunk-FLUOFIYY.js';
+import { Typography } from './chunk-FUZMWTGI.js';
+export { Typography } from './chunk-FUZMWTGI.js';
 export { Card } from './chunk-DQGT6YOO.js';
 import { __export, useTokens } from './chunk-LRXJK6ZR.js';
 export { useTokens } from './chunk-LRXJK6ZR.js';
