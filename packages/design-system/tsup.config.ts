@@ -5,6 +5,7 @@ export default defineConfig({
     'index': 'src/index.ts',
     'Button/index': 'src/components/Button/index.ts',
     'Typography/index': 'src/components/Typography/index.ts',
+    'Card/index': 'src/components/Card/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,

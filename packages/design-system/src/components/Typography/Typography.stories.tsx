@@ -11,6 +11,10 @@ const meta: Meta<typeof Typography> = {
       control: 'select',
       options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body1', 'body2', 'caption'],
     },
+    margin: {
+      control: 'text',
+      description: 'Custom margin (e.g., "16px", "1rem", "10px 0")',
+    },
     children: {
       control: 'text',
     },
@@ -116,4 +120,43 @@ export const CenterAligned: Story = {
     align: 'center',
     children: 'Center Aligned Text',
   },
+};
+
+export const WithCustomMargin: Story = {
+  args: {
+    variant: 'h2',
+    margin: '24px 0',
+    children: 'Heading with Custom Margin',
+  },
+};
+
+export const ZeroMarginDemo: Story = {
+  render: () => (
+    <div style={{ border: '1px solid #ddd', padding: '16px' }}>
+      <Typography variant="h3">Default (No Margin)</Typography>
+      <Typography variant="body1">This paragraph follows immediately after the heading with no margin.</Typography>
+      <Typography variant="body1" margin="16px 0">This paragraph has custom margin: 16px 0</Typography>
+      <Typography variant="body1">And this follows with default zero margin again.</Typography>
+    </div>
+  ),
+};
+
+export const MarginComparison: Story = {
+  render: () => (
+    <div>
+      <div style={{ border: '1px solid #e0e0e0', padding: '16px', marginBottom: '16px' }}>
+        <h3>Without Typography Component (Browser Default)</h3>
+        <h2>Native H2 Tag</h2>
+        <p>Native paragraph with browser default margins</p>
+        <p>Another native paragraph</p>
+      </div>
+      
+      <div style={{ border: '1px solid #e0e0e0', padding: '16px' }}>
+        <h3>With Typography Component (Zero Margin Default)</h3>
+        <Typography variant="h2">Typography H2</Typography>
+        <Typography variant="body1">Typography paragraph with zero margin</Typography>
+        <Typography variant="body1">Another Typography paragraph</Typography>
+      </div>
+    </div>
+  ),
 }; 

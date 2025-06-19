@@ -1,5 +1,5 @@
 
-> @paysecure-design/tokens@1.0.2 build /Users/lovish/Desktop/workspace/design-library/packages/tokens
+> @paysecure-design/tokens@1.0.3 build /Users/lovish/Desktop/workspace/design-library/packages/tokens
 > tsup src/index.ts --format esm,cjs --dts --external react
 
 [34mCLI[39m Building entry: src/index.ts
@@ -10,10 +10,10 @@
 [34mCLI[39m Cleaning output folder
 [34mESM[39m Build start
 [34mCJS[39m Build start
-[32mESM[39m [1mdist/index.mjs [22m[32m5.65 KB[39m
-[32mESM[39m ⚡️ Build success in 7ms
 [32mCJS[39m [1mdist/index.js [22m[32m7.08 KB[39m
 [32mCJS[39m ⚡️ Build success in 7ms
+[32mESM[39m [1mdist/index.mjs [22m[32m5.65 KB[39m
+[32mESM[39m ⚡️ Build success in 7ms
 [34mDTS[39m Build start
-[32mDTS[39m ⚡️ Build success in 449ms
+[32mDTS[39m ⚡️ Build success in 481ms
 [32mDTS[39m [1mdist/index.d.ts [22m[32m4.46 KB[39m
