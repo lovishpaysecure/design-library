@@ -1,0 +1,15 @@
+/* DM Sans Font Family */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../assests/fonts/dm-sans.woff2') format('woff2'),
+       url('../assests/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables for font family */
+:root {
+  --font-family-primary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-secondary: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+} 

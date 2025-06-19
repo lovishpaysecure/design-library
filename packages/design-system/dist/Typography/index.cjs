@@ -1,12 +1,12 @@
 'use strict';
 
-var chunk3Z33FTZD_cjs = require('../chunk-3Z33FTZD.cjs');
+var chunkQCVPZXSW_cjs = require('../chunk-QCVPZXSW.cjs');
 
 
 
 Object.defineProperty(exports, 'Typography', {
   enumerable: true,
-  get: function () { return chunk3Z33FTZD_cjs.Typography; }
+  get: function () { return chunkQCVPZXSW_cjs.Typography; }
 });
 //# sourceMappingURL=out.js.map
 //# sourceMappingURL=index.cjs.map

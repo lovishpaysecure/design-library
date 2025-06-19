@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { StyledButtonProps } from '../components/Button/Button.types';
+import { buttonTokens } from '../components/Button/Button.tokens';
 
 export const StyledButton = styled.button<StyledButtonProps>`
   position: relative;
@@ -8,69 +9,50 @@ export const StyledButton = styled.button<StyledButtonProps>`
   justify-content: center;
   gap: 8px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: inherit;
-  font-weight: 500;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 600;
   transition: all 0.2s ease;
   width: ${props => props.$fullWidth ? '100%' : 'auto'};
-  padding: ${props => {
-    switch (props.$size) {
-      case 'small': return '8px 16px';
-      case 'large': return '16px 24px';
-      default: return '12px 20px';
-    }
-  }};
-  font-size: ${props => {
-    switch (props.$size) {
-      case 'small': return '14px';
-      case 'large': return '18px';
-      default: return '16px';
-    }
-  }};
+  padding: ${props => buttonTokens.sizes[props.$size].padding};
+  font-size: ${props => buttonTokens.sizes[props.$size].fontSize};
 
   ${props => {
-    switch (props.$variant) {
-      case 'primary':
-        return `
-          background: #0066FF;
-          color: #FFFFFF;
-          &:hover:not(:disabled) {
-            background: #0052CC;
-          }
-        `;
-      case 'secondary':
-        return `
-          background: #F5F5F5;
-          color: #333333;
-          &:hover:not(:disabled) {
-            background: #E5E5E5;
-          }
-        `;
-      case 'tertiary':
-        return `
-          background: transparent;
-          color: #0066FF;
-          border: 1px solid #0066FF;
-          &:hover:not(:disabled) {
-            background: #F0F7FF;
-          }
-        `;
-      case 'ghost':
-        return `
-          background: transparent;
-          color: #666666;
-          &:hover:not(:disabled) {
-            background: #F5F5F5;
-          }
-        `;
-      default:
-        return '';
-    }
+    const variant = buttonTokens.variants[props.$variant];
+    return `
+      background: ${variant.background};
+      color: ${variant.color};
+      ${variant.border ? `border: ${variant.border};` : ''}
+      ${variant.borderColor ? `border-color: ${variant.borderColor};` : ''}
+
+      &:hover:not(:disabled) {
+        ${variant.hover?.background ? `background: ${variant.hover.background};` : ''}
+        ${variant.hover?.color ? `color: ${variant.hover.color};` : ''}
+        ${props.$variant === 'link' ? 'text-decoration: underline;' : ''}
+      }
+
+      &:active:not(:disabled) {
+        ${variant.active?.background ? `background: ${variant.active.background};` : ''}
+        ${variant.active?.color ? `color: ${variant.active.color};` : ''}
+      }
+
+      &:focus-visible {
+        ${variant.focus?.outline ? `outline: ${variant.focus.outline};` : ''}
+        ${variant.focus?.ring ? `box-shadow: ${variant.focus.ring};` : ''}
+      }
+    `;
   }}
 
   &:disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.5;
+    background: #F2F4F7;
+    color: #667085;
+    border: none;
+  }
+
+  &:focus {
+    outline: none;
   }
 `; 

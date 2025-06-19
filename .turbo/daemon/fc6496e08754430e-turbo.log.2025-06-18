@@ -181,3 +181,5 @@
 2025-06-18T10:03:11.439518Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
 2025-06-18T10:03:47.139518Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/design-system/package.json")}
 2025-06-18T10:03:47.139535Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@paysecure-design/design-system"), path: AnchoredSystemPathBuf("packages/design-system") }}))
+2025-06-18T10:13:13.244220Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package.json")}
+2025-06-18T10:13:13.244237Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All)

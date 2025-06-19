@@ -31,9 +31,6 @@ __export(src_exports, {
 });
 module.exports = __toCommonJS(src_exports);
 
-// src/TokenManager.ts
-var import_comlink = require("comlink");
-
 // src/storage/indexeddb.ts
 var import_idb = require("idb");
 var DB_NAME = "design-tokens";
@@ -85,8 +82,6 @@ var IndexedDBStorage = class {
 };
 
 // src/TokenManager.ts
-var import_meta = {};
-var CHUNK_SIZE = 1e3;
 var SHARED_BUFFER_SIZE = 16384;
 var TokenManager = class {
   constructor() {
@@ -95,7 +90,6 @@ var TokenManager = class {
     this.updateScheduled = false;
     this.loadPromises = /* @__PURE__ */ new Map();
     this.storage = new IndexedDBStorage();
-    this.worker = (0, import_comlink.wrap)(new Worker(new URL("./worker/token.worker.ts", import_meta.url).href));
     this.updateChannel = new MessageChannel();
     try {
       if (typeof SharedArrayBuffer !== "undefined") {
@@ -145,21 +139,20 @@ var TokenManager = class {
     this.updateScheduled = false;
   }
   async processTokens(tokens) {
-    const entries = Object.entries(tokens);
-    const chunks = [];
-    for (let i = 0; i < entries.length; i += CHUNK_SIZE) {
-      chunks.push(Object.fromEntries(entries.slice(i, i + CHUNK_SIZE)));
+    const processedTokens = {};
+    for (const [key, value] of Object.entries(tokens)) {
+      processedTokens[key] = {
+        ...value,
+        processed: true,
+        timestamp: Date.now()
+      };
     }
-    const promises = chunks.map((chunk) => this.worker.processTokens(chunk));
-    const results = await Promise.all(promises);
-    const mergedState = {
-      components: {},
+    const state = {
+      components: processedTokens,
       timestamp: Date.now()
     };
-    results.forEach((result) => {
-      Object.assign(mergedState.components, result.components);
-    });
-    return mergedState;
+    await this.handleTokenUpdate(state);
+    return state;
   }
   async getTokens(componentTypes) {
     const cached = await this.storage.getTokens(componentTypes);

@@ -13,7 +13,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['@pay-design/design-system/worker/token.worker'],
+      // Remove the external configuration that was causing issues
     },
+  },
+  optimizeDeps: {
+    exclude: ['@paysecure-design/tokens']
   }
 }); 

@@ -1,6 +1,6 @@
 {
   "name": "paysecure-design",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -21,7 +21,6 @@
     "@types/react-dom": "^18.0.0",
     "eslint": "^8.0.0",
     "prettier": "^2.8.0",
-    "eslint-config-custom": "file:/Users/lovish/Desktop/projects/pay-design/packages/eslint-config-custom",
-    "@paysecure-design/tokens": "workspace:*"
+    "eslint-config-custom": "file:/Users/lovish/Desktop/projects/pay-design/packages/eslint-config-custom"
   }
 } 

@@ -1,9 +1,14 @@
+// Import global styles including fonts
+import './styles/fonts.css';
+import './styles/global.css';
+
 // Components
 export * from './components/Button';
 export * from './components/Typography';
 export * from './components/Sidebar';
 export * from './components/Header';
 export * from './components/DatePicker';
+export * from './components/Tooltip';
 
 // Hooks
 export * from './hooks/useTokens';

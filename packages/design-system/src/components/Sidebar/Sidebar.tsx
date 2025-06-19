@@ -4,6 +4,7 @@ import { faChevronRight, faChevronLeft, faSearch, faChevronDown } from '@fortawe
 import { SidebarProps, MenuItemConfig, SidebarTokens } from './types';
 import { SidebarContainer, SidebarHeader, LogoContainer, ToggleSidebarButton, SidebarContent } from '../../styles/Sidebar.styles';
 import { useTokens } from '../../hooks/useTokens';
+import { Typography } from '../Typography/Typography';
 
 const defaultTokens: SidebarTokens = {
   sidebar: {
@@ -78,7 +79,13 @@ const NavigationItem: React.FC<{
   const isSubmenuOpen = activeSubmenu === item.label;
 
   if (item.header) {
-    return !isCollapsed ? <div style={{ padding: '12px 20px', fontSize: '12px', fontWeight: 600, color: '#666', textTransform: 'uppercase', marginTop: '10px' }}>{item.label}</div> : null;
+    return !isCollapsed ? (
+      <div style={{ padding: '12px 20px', marginTop: '10px' }}>
+        <Typography variant="caption" weight="semibold" style={{ color: '#666', textTransform: 'uppercase' }}>
+          {item.label}
+        </Typography>
+      </div>
+    ) : null;
   }
 
   return (
@@ -94,8 +101,6 @@ const NavigationItem: React.FC<{
           position: 'relative',
           whiteSpace: 'nowrap',
           marginBottom: 4,
-          fontSize: 14,
-          fontWeight: 600,
           background: isSubmenuOpen || item.active ? '#efefef' : undefined,
           borderRadius: isSubmenuOpen || item.active ? 10 : undefined,
           justifyContent: isCollapsed ? 'center' : undefined
@@ -103,7 +108,11 @@ const NavigationItem: React.FC<{
         onClick={() => item.submenu && onSubmenuClick(item.label)}
       >
         {item.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: isCollapsed ? 0 : 8 }}>{item.icon}</span>}
-        {!isCollapsed && <span style={{ flex: 1, marginRight: 10 }}>{item.label}</span>}
+        {!isCollapsed && (
+          <Typography variant="body2" weight="semibold" style={{ flex: 1, marginRight: 10, color: 'inherit' }}>
+            {item.label}
+          </Typography>
+        )}
         {!isCollapsed && item.submenu && (
           <FontAwesomeIcon 
             icon={isSubmenuOpen ? faChevronDown : faChevronRight} 
@@ -114,9 +123,11 @@ const NavigationItem: React.FC<{
       {!isCollapsed && item.submenu && isSubmenuOpen && (
         <div style={{ borderRadius: '0 0 10px 10px', marginBottom: 4, overflow: 'hidden' }}>
           {item.submenu.map((subItem, index) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '10px 12px 10px 40px', color: '#666', cursor: 'pointer', transition: 'all 0.3s ease', fontSize: 14 }}>
+            <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '10px 12px 10px 40px', color: '#666', cursor: 'pointer', transition: 'all 0.3s ease' }}>
               {subItem.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: 8, opacity: 0.8 }}>{subItem.icon}</span>}
-              <span>{subItem.label}</span>
+              <Typography variant="body2" style={{ color: 'inherit' }}>
+                {subItem.label}
+              </Typography>
             </div>
           ))}
         </div>
