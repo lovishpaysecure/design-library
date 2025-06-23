@@ -14,4 +14,36 @@ body {
 /* Ensure all text elements inherit the font family */
 h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select {
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Reset Chart styles to remove any default borders/padding */
+.chart-wrapper {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.chart-wrapper * {
+  border: none !important;
+  outline: none !important;
+}
+
+/* Ensure ECharts container has no default styling */
+.chart-wrapper > div {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Reset any ECharts specific styling */
+.chart-wrapper .echarts-for-react {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 } 

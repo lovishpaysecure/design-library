@@ -543,10 +543,15 @@ export const Chart: React.FC<ChartProps> = ({
 
   return (
     <div
-      className={className}
+      className={`chart-wrapper ${className || ''}`}
       style={{
         width,
         height: typeof height === 'number' ? `${height}px` : height,
+        border: 'none',
+        padding: 0,
+        margin: 0,
+        background: 'transparent',
+        boxShadow: 'none',
         ...style,
       }}
     >
@@ -563,7 +568,14 @@ export const Chart: React.FC<ChartProps> = ({
       ) : (
         <ReactECharts
           option={option}
-          style={{ height: '100%', width: '100%' }}
+          style={{ 
+            height: '100%', 
+            width: '100%',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            outline: 'none'
+          }}
           showLoading={loading}
           onEvents={onEvents}
           opts={{
