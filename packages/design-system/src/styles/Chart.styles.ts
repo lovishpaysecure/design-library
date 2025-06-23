@@ -1,31 +1,6 @@
 import styled from 'styled-components';
 import { ChartTokens } from '../components/Chart/Chart.types';
 
-export const ChartContainer = styled.div<{ tokens: ChartTokens }>`
-  background-color: ${props => props.tokens.container.backgroundColor};
-  border: ${props => props.tokens.container.border};
-  border-radius: ${props => props.tokens.container.borderRadius};
-  padding: ${props => props.tokens.container.padding};
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
-  
-  .echarts-legend {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-  
-  .echarts-legend-item {
-    margin-right: ${props => props.tokens.legend.spacing};
-  }
-  
-  .echarts-legend-item-icon {
-    border-radius: 2px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .echarts-legend-item.echarts-legend-item-inactive .echarts-legend-item-icon {
-    opacity: 0.3;
-    background-color: ${props => props.tokens.legend.inactiveColor} !important;
-  }
-`;
 
 export const ChartTitle = styled.div<{ tokens: ChartTokens }>`
   font-size: 16px;

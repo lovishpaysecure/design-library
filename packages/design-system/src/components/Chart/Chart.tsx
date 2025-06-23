@@ -186,9 +186,6 @@ export const Chart: React.FC<ChartProps> = ({
         },
       }];
     }
-
-
-
     // Handle geographic map data
     if (variant === 'map') {
       try {
@@ -284,7 +281,7 @@ export const Chart: React.FC<ChartProps> = ({
         return {
           ...baseConfig,
           type: 'line' as const,
-          smooth: item.smooth ?? false, // Make lines less curved to match design
+          smooth: item.smooth ?? false,
           showSymbol: item.showSymbol ?? false,
           symbol: 'circle' as const,
           symbolSize: 6,
