@@ -62,6 +62,11 @@
       "import": "./dist/CheckBox/index.js",
       "require": "./dist/CheckBox/index.cjs",
       "types": "./dist/CheckBox/index.d.ts"
+    },
+    "./Table": {
+      "import": "./dist/Table/index.js",
+      "require": "./dist/Table/index.cjs",
+      "types": "./dist/Table/index.d.ts"
     }
   },
   "main": "./dist/index.cjs",
