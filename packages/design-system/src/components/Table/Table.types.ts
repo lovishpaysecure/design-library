@@ -50,6 +50,7 @@ export interface TableColumn<T> {
   align?: 'left' | 'center' | 'right';
   sortable?: boolean;
   sortFn?: (a: T, b: T) => number;
+  render?: (value: any, row: T, rowIndex: number) => React.ReactNode;
 }
 
 export interface TableHeaderCellProps {

@@ -756,4 +756,471 @@ export const PaginationLargeDataset: Story = {
     hoverable: true,
     showHeader: true,
   },
+};
+
+// New story for custom cell renderers
+export const CustomCellRenderers: Story = {
+  render: (args) => {
+    const [data, setData] = useState(mockPaginationData.slice(0, 10)); // Use first 10 items
+
+    // Custom columns with various cell renderers
+    const customColumns: TableColumn<BankData>[] = [
+      {
+        key: 'midName',
+        header: 'MID Name',
+        accessor: 'midName',
+        width: '180px',
+        render: (value, row, rowIndex) => (
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px' 
+          }}>
+            <div style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: rowIndex % 2 === 0 ? '#10B981' : '#F59E0B'
+            }} />
+            <span style={{ fontWeight: 600, color: '#374151' }}>
+              {value}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: 'bankName',
+        header: 'Bank Name',
+        accessor: 'bankName',
+        width: '200px',
+        render: (value, row) => (
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '2px' 
+          }}>
+            <span style={{ fontWeight: 500, color: '#111827' }}>
+              {value}
+            </span>
+            <span style={{ fontSize: '12px', color: '#6B7280' }}>
+              Group: {row.GroupLimit}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: 'trafficPercentage',
+        header: '% Traffic',
+        accessor: 'trafficPercentage',
+        align: 'center',
+        width: '120px',
+        render: (value) => {
+          const percentage = parseFloat(value);
+          const color = percentage >= 10 ? '#10B981' : percentage >= 5 ? '#F59E0B' : '#EF4444';
+          return (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              padding: '4px 8px',
+              borderRadius: '12px',
+              backgroundColor: `${color}15`,
+              border: `1px solid ${color}30`,
+              fontSize: '12px',
+              fontWeight: 600,
+              color: color
+            }}>
+              {value}
+            </div>
+          );
+        },
+      },
+      {
+        key: 'successOrders',
+        header: 'Success Orders',
+        accessor: 'successOrders',
+        align: 'right',
+        width: '140px',
+        render: (value) => (
+          <span style={{ 
+            fontFamily: 'monospace', 
+            fontWeight: 600,
+            color: '#374151'
+          }}>
+            {value.toLocaleString()}
+          </span>
+        ),
+      },
+      {
+        key: 'amountApproved',
+        header: 'Amount Approved',
+        accessor: 'amountApproved',
+        align: 'right',
+        width: '150px',
+        render: (value) => (
+          <div style={{ textAlign: 'right' }}>
+            <span style={{ 
+              fontWeight: 600, 
+              color: '#059669',
+              fontSize: '14px'
+            }}>
+              {value}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: 'chargebackRate',
+        header: 'Chargeback Rate',
+        accessor: 'chargebackRate',
+        align: 'center',
+        width: '140px',
+        render: (value) => {
+          const rate = parseFloat(value);
+          const isLow = rate < 0.3;
+          const isMedium = rate >= 0.3 && rate < 0.5;
+          
+          return (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <div style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: isLow ? '#10B981' : isMedium ? '#F59E0B' : '#EF4444'
+              }} />
+              <span style={{ 
+                fontWeight: 500,
+                color: isLow ? '#059669' : isMedium ? '#D97706' : '#DC2626'
+              }}>
+                {value}
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        key: 'actions',
+        header: 'Actions',
+        accessor: 'midName', // Using midName as a unique identifier
+        width: '120px',
+        align: 'center',
+        sortable: false,
+        render: (value, row, rowIndex) => (
+          <div style={{ 
+            display: 'flex', 
+            gap: '4px', 
+            justifyContent: 'center' 
+          }}>
+            <button
+              style={{
+                padding: '4px 8px',
+                fontSize: '12px',
+                border: '1px solid #D1D5DB',
+                borderRadius: '4px',
+                backgroundColor: '#FFFFFF',
+                color: '#374151',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onClick={() => alert(`Edit ${row.midName}`)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#F3F4F6';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#FFFFFF';
+              }}
+            >
+              Edit
+            </button>
+            <button
+              style={{
+                padding: '4px 8px',
+                fontSize: '12px',
+                border: '1px solid #FCA5A5',
+                borderRadius: '4px',
+                backgroundColor: '#FEF2F2',
+                color: '#DC2626',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onClick={() => {
+                if (confirm(`Delete ${row.midName}?`)) {
+                  setData(prev => prev.filter((_, index) => index !== rowIndex));
+                }
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#FEE2E2';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#FEF2F2';
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        ),
+      },
+    ];
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Custom Cell Renderers</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          This table demonstrates various custom cell renderers including badges, indicators, 
+          formatted text, and interactive buttons. Each column shows different rendering possibilities.
+        </p>
+        <Table
+          {...args}
+          columns={customColumns}
+          data={data}
+          sortable={true}
+          hoverable={true}
+          showHeader={true}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: [],
+    data: [],
+    variant: 'default',
+    size: 'medium',
+    fixedLeftmost: false,
+    fixedRightmost: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the power of custom cell renderers. You can render any React component inside table cells including buttons, badges, indicators, formatted text, and interactive elements. The render function receives the cell value, full row data, and row index.',
+      },
+    },
+  },
+};
+
+// New story for toggle/status renderers
+export const InteractiveCellRenderers: Story = {
+  render: (args) => {
+    const [data, setData] = useState(
+      mockPaginationData.slice(0, 8).map(item => ({
+        ...item,
+        status: Math.random() > 0.5 ? 'active' : 'inactive',
+        enabled: Math.random() > 0.3
+      }))
+    );
+
+    const interactiveColumns: TableColumn<typeof data[0]>[] = [
+      {
+        key: 'midName',
+        header: 'MID Name',
+        accessor: 'midName',
+        width: '180px',
+      },
+      {
+        key: 'bankName',
+        header: 'Bank Name',
+        accessor: 'bankName',
+        width: '180px',
+      },
+      {
+        key: 'status',
+        header: 'Status',
+        accessor: 'status',
+        align: 'center',
+        width: '120px',
+        render: (value, row, rowIndex) => (
+          <button
+            style={{
+              padding: '6px 12px',
+              border: 'none',
+              borderRadius: '16px',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              backgroundColor: value === 'active' ? '#10B981' : '#6B7280',
+              color: 'white',
+              transition: 'all 0.2s'
+            }}
+            onClick={() => {
+              setData(prev => prev.map((item, index) => 
+                index === rowIndex 
+                  ? { ...item, status: item.status === 'active' ? 'inactive' : 'active' }
+                  : item
+              ));
+            }}
+          >
+            {value === 'active' ? 'Active' : 'Inactive'}
+          </button>
+        ),
+      },
+      {
+        key: 'enabled',
+        header: 'Enabled',
+        accessor: 'enabled',
+        align: 'center',
+        width: '100px',
+        render: (value, row, rowIndex) => (
+          <label style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            cursor: 'pointer' 
+          }}>
+            <input
+              type="checkbox"
+              checked={value}
+              onChange={(e) => {
+                setData(prev => prev.map((item, index) => 
+                  index === rowIndex 
+                    ? { ...item, enabled: e.target.checked }
+                    : item
+                ));
+              }}
+              style={{
+                width: '16px',
+                height: '16px',
+                cursor: 'pointer'
+              }}
+            />
+          </label>
+        ),
+      },
+      {
+        key: 'trafficPercentage',
+        header: 'Traffic %',
+        accessor: 'trafficPercentage',
+        align: 'center',
+        width: '140px',
+        render: (value) => {
+          const percentage = parseFloat(value);
+          return (
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              justifyContent: 'center'
+            }}>
+              <div style={{
+                width: '60px',
+                height: '6px',
+                backgroundColor: '#E5E7EB',
+                borderRadius: '3px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  width: `${Math.min(percentage * 5, 100)}%`,
+                  height: '100%',
+                  backgroundColor: percentage >= 10 ? '#10B981' : percentage >= 5 ? '#F59E0B' : '#EF4444',
+                  borderRadius: '3px',
+                  transition: 'width 0.3s ease'
+                }} />
+              </div>
+              <span style={{ fontSize: '12px', fontWeight: 500 }}>
+                {value}
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        key: 'actions',
+        header: 'Quick Actions',
+        accessor: 'midName',
+        width: '180px',
+        align: 'center',
+        sortable: false,
+        render: (value, row, rowIndex) => (
+          <div style={{ 
+            display: 'flex', 
+            gap: '4px', 
+            justifyContent: 'center' 
+          }}>
+            <button
+              style={{
+                padding: '4px',
+                border: '1px solid #D1D5DB',
+                borderRadius: '4px',
+                backgroundColor: '#FFFFFF',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onClick={() => alert(`View details for ${row.midName}`)}
+              title="View Details"
+            >
+              👁️
+            </button>
+            <button
+              style={{
+                padding: '4px',
+                border: '1px solid #D1D5DB',
+                borderRadius: '4px',
+                backgroundColor: '#FFFFFF',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onClick={() => alert(`Configure ${row.midName}`)}
+              title="Configure"
+            >
+              ⚙️
+            </button>
+            <button
+              style={{
+                padding: '4px',
+                border: '1px solid #D1D5DB',
+                borderRadius: '4px',
+                backgroundColor: '#FFFFFF',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onClick={() => alert(`Download report for ${row.midName}`)}
+              title="Download"
+            >
+              📥
+            </button>
+          </div>
+        ),
+      },
+    ];
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Interactive Cell Renderers</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          This table shows interactive elements like toggles, checkboxes, progress bars, and action buttons. 
+          Try clicking the status buttons, checkboxes, and action icons to see the interactivity.
+        </p>
+        <Table
+          {...args}
+          columns={interactiveColumns}
+          data={data}
+          sortable={true}
+          hoverable={true}
+          showHeader={true}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: [],
+    data: [],
+    variant: 'default',
+    size: 'medium',
+    fixedLeftmost: false,
+    fixedRightmost: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates interactive cell renderers including clickable status buttons, checkboxes, progress bars, and action buttons. All interactions update the table data in real-time, showing how custom renderers can create fully interactive table experiences.',
+      },
+    },
+  },
 }; 

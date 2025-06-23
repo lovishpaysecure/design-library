@@ -288,6 +288,7 @@ const Table = <T extends Record<string, any>>({
     const fixedPosition = getColumnFixedPosition(index);
     const isLastFixed = isLastFixedColumn(index);
     const isRowStriped = variant === 'striped' && rowIndex % 2 === 1;
+    const cellValue = getCellValue(row, column);
 
     return (
       <StyledTableCell
@@ -299,12 +300,16 @@ const Table = <T extends Record<string, any>>({
         isLastFixed={isLastFixed}
         isStriped={isRowStriped}
       >
-        <Typography 
-          variant={getCellTypographyVariant()} 
-          component="span"
-        >
-          {getCellValue(row, column)}
-        </Typography>
+        {column.render ? (
+          column.render(cellValue, row, rowIndex)
+        ) : (
+          <Typography 
+            variant={getCellTypographyVariant()} 
+            component="span"
+          >
+            {cellValue}
+          </Typography>
+        )}
       </StyledTableCell>
     );
   };
