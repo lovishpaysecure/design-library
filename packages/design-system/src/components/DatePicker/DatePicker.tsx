@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useTokens } from '../../hooks/useTokens';
+import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DatePickerProps, DatePickerTokens, DateRange, PresetOption } from './DatePicker.types';
 import { defaultDatePickerTokens } from './DatePicker.tokens';
 import {
   DatePickerContainer,
   DatePickerTrigger,
   DatePickerTriggerText,
+  DatePickerIcon,
   DatePickerTriggerIcon,
   DatePickerPopup,
   DatePickerSidebar,
@@ -101,6 +103,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   value,
   onChange,
   placeholder = "Select date range",
+  preIcon,
+  postIcon,
   disabled = false,
   presets = DEFAULT_PRESETS,
   showTime = true,
@@ -114,6 +118,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   onApply,
   dateFormat = 'MMM dd, yyyy',
   firstDayOfWeek = 0,
+  placement = 'auto',
+  align = 'auto',
+  zIndex = 1000,
 }) => {
   const tokens = useTokens<DatePickerTokens>('datePicker', defaultDatePickerTokens);
   const [isOpen, setIsOpen] = useState(false);
@@ -127,6 +134,15 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   });
   const [selectingStart, setSelectingStart] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  
+  // Use smart positioning - use stable object reference
+  const minSpaceRequired = useMemo(() => ({ width: 800, height: 500 }), []);
+  const smartPosition = useSmartPosition(triggerRef, isOpen, {
+    placement,
+    align,
+    minSpaceRequired
+  });
 
   // Close on outside click
   useEffect(() => {
@@ -144,7 +160,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]); // Removed onClose from dependencies
 
   const formatDateRange = (range: DateRange | null): string => {
     if (!range || !range.startDate || !range.endDate) return '';
@@ -311,13 +327,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       <SingleCalendar>
         <CalendarHeader tokens={tokens}>
           <CalendarNavButton tokens={tokens} onClick={goToPrevMonth}>
-            ←
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </CalendarNavButton>
           <CalendarHeaderText tokens={tokens}>
             {MONTHS[month]} {year}
           </CalendarHeaderText>
           <CalendarNavButton tokens={tokens} onClick={goToNextMonth}>
-            →
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </CalendarNavButton>
         </CalendarHeader>
 
@@ -411,17 +431,39 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <DatePickerContainer ref={containerRef} className={className} style={style}>
       <DatePickerTrigger
+        ref={triggerRef}
         tokens={tokens}
         disabled={disabled}
         onClick={handleTriggerClick}
       >
+        {preIcon && (
+          <DatePickerIcon tokens={tokens} position="pre">
+            {preIcon}
+          </DatePickerIcon>
+        )}
         <DatePickerTriggerText tokens={tokens} hasValue={!!value}>
           {value ? formatDateRange(value) : placeholder}
         </DatePickerTriggerText>
-        <DatePickerTriggerIcon tokens={tokens}>📅</DatePickerTriggerIcon>
+        {postIcon && (
+          <DatePickerIcon tokens={tokens} position="post">
+            {postIcon}
+          </DatePickerIcon>
+        )}
+        <DatePickerTriggerIcon tokens={tokens}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </DatePickerTriggerIcon>
       </DatePickerTrigger>
 
-      <DatePickerPopup tokens={tokens} isOpen={isOpen}>
+      <DatePickerPopup 
+        tokens={tokens} 
+        isOpen={isOpen}
+        $placement={smartPosition.placement}
+        $align={smartPosition.align}
+        $zIndex={zIndex}
+        style={smartPosition.adjustments}
+      >
         <DatePickerSidebar tokens={tokens}>
           {presets.map((preset) => (
             <SidebarItem

@@ -35,6 +35,9 @@ export interface DatePickerTokens {
   otherMonthColor: string;
   timeSelectBackgroundColor: string;
   timeSelectBorderColor: string;
+  iconColor: string;
+  iconSize: string;
+  iconSpacing: string;
 }
 
 export interface PresetOption {
@@ -69,6 +72,14 @@ export interface DatePickerProps {
    * Placeholder text for the trigger input
    */
   placeholder?: string;
+  /**
+   * Icon to display at the start of the input
+   */
+  preIcon?: React.ReactNode;
+  /**
+   * Icon to display at the end of the input
+   */
+  postIcon?: React.ReactNode;
   /**
    * Whether the date picker is disabled
    */
@@ -121,4 +132,16 @@ export interface DatePickerProps {
    * First day of week (0 = Sunday, 1 = Monday)
    */
   firstDayOfWeek?: number;
+  /**
+   * Preferred popup placement (will auto-adjust based on available space)
+   */
+  placement?: 'bottom' | 'top' | 'auto';
+  /**
+   * Preferred horizontal alignment (will auto-adjust based on available space)
+   */
+  align?: 'left' | 'right' | 'auto';
+  /**
+   * Z-index for the popup
+   */
+  zIndex?: number;
 } 

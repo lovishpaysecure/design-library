@@ -51,24 +51,57 @@ export const DatePickerTriggerText = styled.span<{ tokens: DatePickerTokens; has
   white-space: nowrap;
 `;
 
-export const DatePickerTriggerIcon = styled.span<{ tokens: DatePickerTokens }>`
-  color: ${props => props.tokens.disabledColor};
-  font-size: 16px;
-  margin-left: 8px;
+export const DatePickerIcon = styled.span<{ tokens: DatePickerTokens; position: 'pre' | 'post' }>`
+  color: ${props => props.tokens.iconColor};
+  font-size: ${props => props.tokens.iconSize};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${props => props.tokens.iconSize};
+  height: ${props => props.tokens.iconSize};
+  margin-${props => props.position === 'pre' ? 'right' : 'left'}: ${props => props.tokens.iconSpacing};
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
 `;
 
-export const DatePickerPopup = styled.div<{ tokens: DatePickerTokens; isOpen: boolean }>`
+export const DatePickerTriggerIcon = styled.span<{ tokens: DatePickerTokens }>`
+  color: ${props => props.tokens.iconColor};
+  font-size: 16px;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+  }
+`;
+
+export const DatePickerPopup = styled.div<{ 
+  tokens: DatePickerTokens; 
+  isOpen: boolean;
+  $placement?: 'top' | 'bottom';
+  $align?: 'left' | 'right';
+  $zIndex?: number;
+}>`
   position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  margin-top: 8px;
+  ${props => props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 8px;' : 'top: 100%; margin-top: 8px;'}
+  ${props => props.$align === 'right' ? 'right: 0;' : 'left: 0;'}
+  z-index: ${props => props.$zIndex || 1000};
   background-color: ${props => props.tokens.backgroundColor};
   border: 1px solid ${props => props.tokens.borderColor};
   border-radius: ${props => props.tokens.borderRadius};
   box-shadow: ${props => props.tokens.shadowColor};
   display: ${props => props.isOpen ? 'flex' : 'none'};
   min-width: 800px;
+  max-width: 90vw;
   overflow: hidden;
 `;
 
@@ -171,6 +204,12 @@ export const CalendarNavButton = styled.button<{ tokens: DatePickerTokens }>`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px ${props => props.tokens.primaryColorLight};
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
   }
 `;
 

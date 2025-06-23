@@ -58,7 +58,7 @@ function App() {
           </Button>
           
           <Button 
-            variant="secondary"
+            variant="tertiary"
             onClick={() => window.open('https://github.com/apache/echarts', '_blank')}
           >
             Learn About ECharts

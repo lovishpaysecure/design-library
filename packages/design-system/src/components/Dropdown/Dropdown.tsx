@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTokens } from '../../hooks/useTokens';
+import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DropdownProps, DropdownTokens, DropdownOption } from './Dropdown.types';
 import { CheckBox } from '../CheckBox/CheckBox';
 import { defaultDropdownTokens } from './Dropdown.tokens';
@@ -12,6 +13,7 @@ import {
   DropdownTag,
   DropdownTagText,
   DropdownTagRemove,
+  DropdownIcon,
   DropdownChevron,
   DropdownClearButton,
   DropdownMenu,
@@ -43,6 +45,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   value,
   onChange,
   placeholder = "Select option",
+  preIcon,
+  postIcon,
   disabled = false,
   multiple = false,
   searchable = false,
@@ -59,8 +63,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
   filterOption = defaultFilterOption,
   renderOption,
   renderValue,
+  renderDropdown,
   maxTagCount = 3,
-  placement = 'bottom',
+  placement = 'auto',
+  align = 'auto',
+  zIndex = 1000,
   dropdownWidth,
   showSelectAll = false,
   groupBy = false,
@@ -69,7 +76,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  
+  // Use smart positioning - use stable object reference
+  const minSpaceRequired = useMemo(() => ({ width: 250, height: 200 }), []);
+  const smartPosition = useSmartPosition(triggerRef, isOpen, {
+    placement,
+    align,
+    minSpaceRequired
+  });
 
   // Normalize value to array for easier handling
   const selectedValues = useMemo(() => {
@@ -117,7 +133,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]); // Removed onClose from dependencies
 
   // Focus search input when dropdown opens
   useEffect(() => {
@@ -382,15 +398,26 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <DropdownContainer ref={containerRef} className={className} style={style}>
       <DropdownTrigger
+        ref={triggerRef}
         tokens={tokens}
         isOpen={isOpen}
         disabled={disabled}
         error={error}
         onClick={handleTriggerClick}
       >
+        {preIcon && (
+          <DropdownIcon tokens={tokens} position="pre">
+            {preIcon}
+          </DropdownIcon>
+        )}
         <DropdownTriggerContent>
           {renderSelectedValue()}
         </DropdownTriggerContent>
+        {postIcon && (
+          <DropdownIcon tokens={tokens} position="post">
+            {postIcon}
+          </DropdownIcon>
+        )}
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           {showClearButton && (
@@ -402,7 +429,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
             </DropdownClearButton>
           )}
           <DropdownChevron tokens={tokens} isOpen={isOpen}>
-            ▼
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </DropdownChevron>
         </div>
       </DropdownTrigger>
@@ -410,35 +439,64 @@ export const Dropdown: React.FC<DropdownProps> = ({
       <DropdownMenu
         tokens={tokens}
         isOpen={isOpen}
-        placement={placement}
+        $placement={smartPosition.placement}
+        $align={smartPosition.align}
+        $zIndex={zIndex}
         width={dropdownWidth}
+        style={smartPosition.adjustments}
       >
-        {searchable && (
+        {renderDropdown ? (
+          renderDropdown({
+            options,
+            filteredOptions,
+            selectedOptions,
+            searchValue,
+            onOptionClick: handleOptionClick,
+            onSearchChange: (value: string) => {
+              setSearchValue(value);
+              onSearch?.(value);
+            },
+            onSelectAll: handleSelectAll,
+            isOpen,
+            loading,
+            error,
+            errorMessage,
+            multiple,
+            searchable,
+            showSelectAll,
+            groupBy,
+            tokens,
+          })
+        ) : (
           <>
-            <DropdownSearch
-              ref={searchInputRef}
-              tokens={tokens}
-              type="text"
-              placeholder={searchPlaceholder}
-              value={searchValue}
-              onChange={handleSearchChange}
-            />
-            <DropdownDivider tokens={tokens} />
+            {searchable && (
+              <>
+                <DropdownSearch
+                  ref={searchInputRef}
+                  tokens={tokens}
+                  type="text"
+                  placeholder={searchPlaceholder}
+                  value={searchValue}
+                  onChange={handleSearchChange}
+                />
+                <DropdownDivider tokens={tokens} />
+              </>
+            )}
+
+            {error && errorMessage && (
+              <>
+                <DropdownError tokens={tokens}>
+                  {errorMessage}
+                </DropdownError>
+                <DropdownDivider tokens={tokens} />
+              </>
+            )}
+
+            <DropdownOptionsList tokens={tokens}>
+              {renderOptions()}
+            </DropdownOptionsList>
           </>
         )}
-
-        {error && errorMessage && (
-          <>
-            <DropdownError tokens={tokens}>
-              {errorMessage}
-            </DropdownError>
-            <DropdownDivider tokens={tokens} />
-          </>
-        )}
-
-        <DropdownOptionsList tokens={tokens}>
-          {renderOptions()}
-        </DropdownOptionsList>
       </DropdownMenu>
     </DropdownContainer>
   );

@@ -209,6 +209,7 @@ export const WithDescriptions: Story = {
   },
 };
 
+<<<<<<< HEAD
 // New stories showcasing enhanced checkbox functionality
 export const EnhancedMultiSelectWithSkills: Story = {
   render: DropdownWithState,
@@ -307,6 +308,23 @@ export const PartialSelectionDemo: Story = {
         story: 'Demonstrates how the Select All checkbox properly shows indeterminate state when partially selected, and how individual checkboxes maintain their checked state independently.',
       },
     },
+=======
+export const WithIcons: Story = {
+  render: DropdownWithState,
+  args: {
+    options: basicOptions,
+    placeholder: 'Filters',
+    preIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 4.5H21L15 12V18.5L9 16.5V12L3 4.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    postIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+>>>>>>> a117401544f5ebff7975b3a4285058dc8d61fc27
   },
 };
 
@@ -372,6 +390,8 @@ export const InteractiveDemo: Story = {
     const [error, setError] = useState(false);
     const [groupBy, setGroupBy] = useState(false);
     const [showSelectAll, setShowSelectAll] = useState(false);
+    const [showPreIcon, setShowPreIcon] = useState(false);
+    const [showPostIcon, setShowPostIcon] = useState(false);
 
     const handleChange = (value: string | number | (string | number)[]) => {
       setSelectedValue(value);
@@ -449,16 +469,32 @@ export const InteractiveDemo: Story = {
             />
             Group By
           </label>
-          {multiple && (
-            <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <input
-                type="checkbox"
-                checked={showSelectAll}
-                onChange={(e) => setShowSelectAll(e.target.checked)}
-              />
-              Show Select All
-            </label>
-          )}
+                     {multiple && (
+             <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+               <input
+                 type="checkbox"
+                 checked={showSelectAll}
+                 onChange={(e) => setShowSelectAll(e.target.checked)}
+               />
+               Show Select All
+             </label>
+           )}
+           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+             <input
+               type="checkbox"
+               checked={showPreIcon}
+               onChange={(e) => setShowPreIcon(e.target.checked)}
+             />
+             Pre Icon
+           </label>
+           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+             <input
+               type="checkbox"
+               checked={showPostIcon}
+               onChange={(e) => setShowPostIcon(e.target.checked)}
+             />
+             Post Icon
+           </label>
           <button 
             onClick={resetValue}
             style={{ 
@@ -474,20 +510,30 @@ export const InteractiveDemo: Story = {
           </button>
         </div>
 
-        <Dropdown
-          options={getOptions()}
-          value={selectedValue}
-          onChange={handleChange}
-          placeholder={`Try different combinations of features...`}
-          multiple={multiple}
-          searchable={searchable}
-          clearable={clearable}
-          disabled={disabled}
-          loading={loading}
-          error={error}
-          groupBy={groupBy}
-          showSelectAll={showSelectAll}
-        />
+                 <Dropdown
+           options={getOptions()}
+           value={selectedValue}
+           onChange={handleChange}
+           placeholder={`Try different combinations of features...`}
+           multiple={multiple}
+           searchable={searchable}
+           clearable={clearable}
+           disabled={disabled}
+           loading={loading}
+           error={error}
+           groupBy={groupBy}
+           showSelectAll={showSelectAll}
+           preIcon={showPreIcon ? (
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M3 4.5H21L15 12V18.5L9 16.5V12L3 4.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           ) : undefined}
+           postIcon={showPostIcon ? (
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           ) : undefined}
+         />
 
         <div style={{ 
           padding: '10px', 
@@ -507,5 +553,342 @@ export const InteractiveDemo: Story = {
         story: 'Interactive demo showcasing all dropdown features with toggleable options.',
       },
     },
+  },
+};
+
+export const SmartPositioning: Story = {
+  render: () => {
+    const [value, setValue] = useState<string | number | (string | number)[] | undefined>();
+    
+    return (
+      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', minHeight: '600px' }}>
+        <h3>Smart Positioning Demo</h3>
+        <p>These Dropdowns will automatically adjust their position based on available viewport space.</p>
+        
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
+          <div style={{ width: '200px' }}>
+            <h4>Top Left (auto positioning)</h4>
+            <Dropdown
+              options={basicOptions}
+              value={value}
+              onChange={setValue}
+              placement="auto"
+              align="auto"
+              placeholder="Auto position"
+              searchable={true}
+            />
+          </div>
+          
+          <div style={{ width: '200px' }}>
+            <h4>Top Right (right aligned)</h4>
+            <Dropdown
+              options={countryOptions.slice(0, 5)}
+              value={value}
+              onChange={setValue}
+              placement="auto"
+              align="right"
+              placeholder="Right aligned"
+              multiple={true}
+              searchable={true}
+            />
+          </div>
+        </div>
+        
+        <div style={{ marginTop: '250px', display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
+          <div style={{ width: '200px' }}>
+            <h4>Bottom Left (forced top)</h4>
+            <Dropdown
+              options={basicOptions}
+              value={value}
+              onChange={setValue}
+              placement="top"
+              align="left"
+              placeholder="Top placement"
+              searchable={true}
+            />
+          </div>
+          
+          <div style={{ width: '200px' }}>
+            <h4>Bottom Right (auto adjust)</h4>
+            <Dropdown
+              options={countryOptions}
+              value={value}
+              onChange={setValue}
+              placement="auto"
+              align="auto"
+              placeholder="Auto adjust"
+              searchable={true}
+              groupBy={true}
+            />
+          </div>
+        </div>
+        
+        <div style={{ height: '100px' }} />
+        
+        <div style={{ padding: '16px', backgroundColor: '#f0f9ff', borderRadius: '8px', border: '1px solid #0284c7' }}>
+          <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', color: '#0284c7' }}>
+            🎯 Smart Positioning Features:
+          </h4>
+          <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '13px', color: '#0369a1' }}>
+            <li><strong>Auto placement:</strong> Automatically chooses top/bottom based on available space</li>
+            <li><strong>Auto alignment:</strong> Adjusts left/right alignment to stay within viewport</li>
+            <li><strong>Responsive sizing:</strong> Constrains width/height when space is limited</li>
+            <li><strong>Scroll awareness:</strong> Updates position on scroll events</li>
+            <li><strong>Window resize:</strong> Recalculates position on window resize</li>
+            <li><strong>Viewport constraints:</strong> Never extends outside the visible area</li>
+          </ul>
+        </div>
+      </div>
+         );
+   },
+ };
+
+export const CustomDropdownView: Story = {
+  render: () => {
+    const [value, setValue] = useState<string | number | (string | number)[] | undefined>();
+    
+    return (
+      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <h3>Custom Dropdown View</h3>
+        <p>This example shows how to completely customize the dropdown content using the `renderDropdown` prop.</p>
+        
+        <div style={{ width: '300px' }}>
+          <Dropdown
+            options={countryOptions}
+            value={value}
+            onChange={setValue}
+            placeholder="Select with custom view"
+            renderDropdown={({ 
+              filteredOptions, 
+              selectedOptions, 
+              searchValue, 
+              onOptionClick, 
+              onSearchChange,
+              tokens 
+            }) => (
+              <div style={{ padding: '16px' }}>
+                {/* Custom search */}
+                <div style={{ marginBottom: '12px' }}>
+                  <input
+                    type="text"
+                    placeholder="🔍 Search countries..."
+                    value={searchValue}
+                    onChange={(e) => onSearchChange(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 12px',
+                      border: `1px solid ${tokens.borderColor}`,
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                    }}
+                  />
+                </div>
+                
+                {/* Custom header */}
+                <div style={{ 
+                  marginBottom: '8px', 
+                  fontSize: '12px', 
+                  fontWeight: '600', 
+                  color: tokens.disabledColor,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px'
+                }}>
+                  {filteredOptions.length} countries available
+                </div>
+                
+                {/* Custom options list */}
+                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                  {filteredOptions.map((option) => {
+                    const isSelected = selectedOptions.some(s => s.value === option.value);
+                    return (
+                      <div
+                        key={option.value}
+                        onClick={() => onOptionClick(option)}
+                        style={{
+                          padding: '12px',
+                          margin: '4px 0',
+                          backgroundColor: isSelected ? tokens.primaryColorLight : 'transparent',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          border: `1px solid ${isSelected ? tokens.primaryColor : 'transparent'}`,
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        <div style={{
+                          width: '20px',
+                          height: '20px',
+                          borderRadius: '50%',
+                          backgroundColor: isSelected ? tokens.primaryColor : tokens.borderColor,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontSize: '12px',
+                          fontWeight: '600'
+                        }}>
+                          {isSelected ? '✓' : ''}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ fontWeight: '500', color: tokens.textColor }}>
+                            {option.label}
+                          </div>
+                          {option.description && (
+                            <div style={{ fontSize: '12px', color: tokens.disabledColor }}>
+                              {option.description}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                {filteredOptions.length === 0 && (
+                  <div style={{ 
+                    textAlign: 'center', 
+                    padding: '24px', 
+                    color: tokens.disabledColor,
+                    fontStyle: 'italic'
+                  }}>
+                    No countries found matching "{searchValue}"
+                  </div>
+                )}
+              </div>
+            )}
+          />
+        </div>
+        
+        {value && (
+          <div style={{ 
+            padding: '12px', 
+            backgroundColor: '#f0f9ff', 
+            borderRadius: '6px',
+            border: '1px solid #0284c7'
+          }}>
+            <strong>Selected:</strong> {JSON.stringify(value)}
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+export const CustomDropdownGrid: Story = {
+  render: () => {
+    const [value, setValue] = useState<string | number | (string | number)[] | undefined>();
+    
+    const productOptions = [
+      { value: 'laptop', label: 'Laptop', description: '$999', icon: '💻' },
+      { value: 'phone', label: 'Smartphone', description: '$699', icon: '📱' },
+      { value: 'tablet', label: 'Tablet', description: '$499', icon: '📱' },
+      { value: 'watch', label: 'Smartwatch', description: '$299', icon: '⌚' },
+      { value: 'headphones', label: 'Headphones', description: '$199', icon: '🎧' },
+      { value: 'speaker', label: 'Smart Speaker', description: '$149', icon: '🔊' },
+    ];
+    
+    return (
+      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <h3>Custom Grid Dropdown</h3>
+        <p>This example shows a custom grid layout for product selection.</p>
+        
+        <div style={{ width: '300px' }}>
+          <Dropdown
+            options={productOptions}
+            value={value}
+            onChange={setValue}
+            placeholder="Select products"
+            multiple={true}
+            renderDropdown={({ 
+              filteredOptions, 
+              selectedOptions, 
+              onOptionClick,
+              tokens 
+            }) => (
+              <div style={{ padding: '16px' }}>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(2, 1fr)', 
+                  gap: '12px',
+                  maxHeight: '300px',
+                  overflowY: 'auto'
+                }}>
+                  {filteredOptions.map((option) => {
+                    const isSelected = selectedOptions.some(s => s.value === option.value);
+                    return (
+                      <div
+                        key={option.value}
+                        onClick={() => onOptionClick(option)}
+                        style={{
+                          padding: '16px',
+                          backgroundColor: isSelected ? tokens.primaryColorLight : tokens.backgroundColor,
+                          border: `2px solid ${isSelected ? tokens.primaryColor : tokens.borderColor}`,
+                          borderRadius: '12px',
+                          cursor: 'pointer',
+                          textAlign: 'center',
+                          transition: 'all 0.2s ease',
+                          position: 'relative',
+                        }}
+                      >
+                        {isSelected && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '8px',
+                            right: '8px',
+                            width: '20px',
+                            height: '20px',
+                            backgroundColor: tokens.primaryColor,
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontSize: '12px',
+                            fontWeight: '600'
+                          }}>
+                            ✓
+                          </div>
+                        )}
+                        <div style={{ fontSize: '24px', marginBottom: '8px' }}>
+                          {option.icon}
+                        </div>
+                        <div style={{ 
+                          fontWeight: '600', 
+                          fontSize: '14px',
+                          color: tokens.textColor,
+                          marginBottom: '4px'
+                        }}>
+                          {option.label}
+                        </div>
+                        <div style={{ 
+                          fontSize: '12px', 
+                          color: tokens.primaryColor,
+                          fontWeight: '500'
+                        }}>
+                          {option.description}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          />
+        </div>
+        
+        {value && Array.isArray(value) && value.length > 0 && (
+          <div style={{ 
+            padding: '12px', 
+            backgroundColor: '#f0f9ff', 
+            borderRadius: '6px',
+            border: '1px solid #0284c7'
+          }}>
+            <strong>Selected ({value.length}):</strong> {value.join(', ')}
+          </div>
+        )}
+      </div>
+    );
   },
 }; 

@@ -112,8 +112,26 @@ export const DropdownTagRemove = styled.button<{ tokens: DropdownTokens }>`
   }
 `;
 
+export const DropdownIcon = styled.span<{ tokens: DropdownTokens; position: 'pre' | 'post' }>`
+  color: ${props => props.tokens.iconColor};
+  font-size: ${props => props.tokens.iconSize};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${props => props.tokens.iconSize};
+  height: ${props => props.tokens.iconSize};
+  margin-${props => props.position === 'pre' ? 'right' : 'left'}: ${props => props.tokens.iconSpacing};
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+`;
+
 export const DropdownChevron = styled.span<{ tokens: DropdownTokens; isOpen: boolean }>`
-  color: ${props => props.tokens.disabledColor};
+  color: ${props => props.tokens.iconColor};
   font-size: 12px;
   transition: transform 0.2s ease-in-out;
   transform: ${props => props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};
@@ -122,6 +140,12 @@ export const DropdownChevron = styled.span<{ tokens: DropdownTokens; isOpen: boo
   justify-content: center;
   width: 16px;
   height: 16px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+  }
 `;
 
 export const DropdownClearButton = styled.button<{ tokens: DropdownTokens }>`
@@ -149,20 +173,22 @@ export const DropdownClearButton = styled.button<{ tokens: DropdownTokens }>`
 export const DropdownMenu = styled.div<{ 
   tokens: DropdownTokens; 
   isOpen: boolean; 
-  placement?: 'top' | 'bottom';
+  $placement?: 'top' | 'bottom';
+  $align?: 'left' | 'right';
+  $zIndex?: number;
   width?: string | number;
 }>`
   position: absolute;
-  ${props => props.placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  ${props => props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
+  ${props => props.$align === 'right' ? 'right: 0;' : 'left: 0; right: 0;'}
+  z-index: ${props => props.$zIndex || 1000};
   background-color: ${props => props.tokens.backgroundColor};
   border: 1px solid ${props => props.tokens.borderColor};
   border-radius: ${props => props.tokens.borderRadius};
   box-shadow: ${props => props.tokens.shadowColor};
   display: ${props => props.isOpen ? 'block' : 'none'};
   max-height: ${props => props.tokens.maxHeight};
+  max-width: 90vw;
   overflow: hidden;
   ${props => props.width && `width: ${typeof props.width === 'number' ? props.width + 'px' : props.width};`}
 `;
