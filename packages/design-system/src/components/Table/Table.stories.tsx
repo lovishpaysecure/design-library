@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Table from './Table';
-import { TableColumn } from './Table.types';
+import { TableColumn, SortConfig, TableProps } from './Table.types';
 
 // Sample data based on the bank table in the image
 interface BankData {
@@ -67,12 +68,14 @@ const bankColumns: TableColumn<BankData>[] = [
     header: 'MID name',
     accessor: 'midName',
     width: '200px',
+    sortable: true,
   },
   {
     key: 'bankName',
     header: 'Bank Name',
     accessor: 'bankName',
     width: '200px',
+    sortable: true,
   },
   {
     key: 'trafficPercentage',
@@ -80,6 +83,12 @@ const bankColumns: TableColumn<BankData>[] = [
     accessor: 'trafficPercentage',
     align: 'right',
     width: '200px',
+    sortable: true,
+    sortFn: (a, b) => {
+      const aValue = parseFloat(a.trafficPercentage);
+      const bValue = parseFloat(b.trafficPercentage);
+      return aValue - bValue;
+    },
   },
   {
     key: 'successOrders',
@@ -87,6 +96,7 @@ const bankColumns: TableColumn<BankData>[] = [
     accessor: 'successOrders',
     align: 'right',
     width: '200px',
+    sortable: true,
   },
   {
     key: 'amountApproved',
@@ -94,6 +104,12 @@ const bankColumns: TableColumn<BankData>[] = [
     accessor: 'amountApproved',
     align: 'right',
     width: '200px',
+    sortable: true,
+    sortFn: (a, b) => {
+      const aValue = parseFloat(a.amountApproved.replace(/[^0-9.-]+/g, ''));
+      const bValue = parseFloat(b.amountApproved.replace(/[^0-9.-]+/g, ''));
+      return aValue - bValue;
+    },
   },
   {
     key: 'chargebackRate',
@@ -101,6 +117,12 @@ const bankColumns: TableColumn<BankData>[] = [
     accessor: 'chargebackRate',
     align: 'right',
     width: '200px',
+    sortable: true,
+    sortFn: (a, b) => {
+      const aValue = parseFloat(a.chargebackRate);
+      const bValue = parseFloat(b.chargebackRate);
+      return aValue - bValue;
+    },
   },
   {
     key: 'GroupLimit',
@@ -108,12 +130,13 @@ const bankColumns: TableColumn<BankData>[] = [
     accessor: 'GroupLimit',
     align: 'right',
     width: '200px',
+    sortable: true,
   },
 ];
 
-const meta: Meta<typeof Table> = {
+const meta = {
   title: 'Components/Table',
-  component: Table,
+  component: Table<BankData>,
   parameters: {
     layout: 'padded',
   },
@@ -145,10 +168,54 @@ const meta: Meta<typeof Table> = {
       description: 'Fix the rightmost column',
     },
   },
-};
+} satisfies Meta<typeof Table<BankData>>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+const TableWithSorting = (args: TableProps<BankData>) => {
+  const [sortConfig, setSortConfig] = useState<SortConfig | undefined>(args.sortConfig);
+  const [data, setData] = useState(args.data);
+
+  const handleSort = (newSortConfig: SortConfig) => {
+    setSortConfig(newSortConfig);
+    
+    const column = bankColumns.find(col => col.key === newSortConfig.columnKey);
+    if (!column) return;
+
+    const sortedData = [...data].sort((a, b) => {
+      if (column.sortFn) {
+        return newSortConfig.direction === 'asc' 
+          ? column.sortFn(a, b) 
+          : column.sortFn(b, a);
+      }
+      
+      const aValue = a[column.accessor];
+      const bValue = b[column.accessor];
+      
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return newSortConfig.direction === 'asc'
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue);
+      }
+      
+      return newSortConfig.direction === 'asc'
+        ? (aValue as number) - (bValue as number)
+        : (bValue as number) - (aValue as number);
+    });
+
+    setData(newSortConfig.direction === 'none' ? args.data : sortedData);
+  };
+
+  return (
+    <Table 
+      {...args} 
+      data={data}
+      sortConfig={sortConfig}
+      onSort={handleSort}
+    />
+  );
+};
 
 export const Default: Story = {
   args: {
@@ -158,7 +225,9 @@ export const Default: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const WithFixedLeftmostColumn: Story = {
@@ -169,8 +238,10 @@ export const WithFixedLeftmostColumn: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
     fixedLeftmost: true,
   },
+  render: (args) => <TableWithSorting {...args} />,
   parameters: {
     docs: {
       description: {
@@ -188,8 +259,10 @@ export const WithFixedRightmostColumn: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
     fixedRightmost: true,
   },
+  render: (args) => <TableWithSorting {...args} />,
   parameters: {
     docs: {
       description: {
@@ -207,9 +280,11 @@ export const WithBothEdgesFixed: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
     fixedLeftmost: true,
     fixedRightmost: true,
   },
+  render: (args) => <TableWithSorting {...args} />,
   parameters: {
     docs: {
       description: {
@@ -227,12 +302,14 @@ export const WithFixedColumnAndSelection: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
     isRowSelection: true,
     fixedLeftmost: true,
     onRowSelect: (selectedRows: any[]) => {
       console.log('Selected rows:', selectedRows);
     },
   },
+  render: (args) => <TableWithSorting {...args} />,
   parameters: {
     docs: {
       description: {
@@ -250,7 +327,9 @@ export const Striped: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const Bordered: Story = {
@@ -261,7 +340,9 @@ export const Bordered: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const SmallSize: Story = {
@@ -272,7 +353,9 @@ export const SmallSize: Story = {
     size: 'small',
     hoverable: true,
     showHeader: true,
+    sortable: false,
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const LargeSize: Story = {
@@ -283,7 +366,9 @@ export const LargeSize: Story = {
     size: 'large',
     hoverable: true,
     showHeader: true,
+    sortable: false,
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const NoHeader: Story = {
@@ -294,7 +379,9 @@ export const NoHeader: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: false,
+    sortable: false,
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const WithClickableRows: Story = {
@@ -305,23 +392,56 @@ export const WithClickableRows: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
     onRowClick: (row: BankData, index: number) => {
       alert(`Clicked on row ${index + 1}: ${row.bankName}`);
     },
   },
+  render: (args) => <TableWithSorting {...args} />,
 };
 
 export const WithSorting: Story = {
   args: {
     columns: bankColumns,
     data: sampleBankData,
-    variant: 'default',
+    variant: 'striped',
     size: 'medium',
     hoverable: true,
     showHeader: true,
     sortable: true,
-    onSort: (column: TableColumn<BankData>, direction: 'asc' | 'desc') => {
-      alert(`Sort ${column.header} in ${direction} order`);
+    sortConfig: {
+      columnKey: 'successOrders',
+      direction: 'desc',
+    },
+  },
+  render: (args) => <TableWithSorting {...args} />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Table with sorting enabled. Click on column headers to sort. Each click cycles through ascending, descending, and no sort. Custom sort functions are implemented for percentage and currency columns.',
+      },
+    },
+  },
+};
+
+export const WithSortingAndFixedColumns: Story = {
+  args: {
+    columns: bankColumns,
+    data: sampleBankData,
+    variant: 'striped',
+    size: 'medium',
+    hoverable: true,
+    showHeader: true,
+    sortable: true,
+    fixedLeftmost: true,
+    fixedRightmost: true,
+  },
+  render: (args) => <TableWithSorting {...args} />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Table with both sorting and fixed columns. The leftmost and rightmost columns stay fixed while allowing sorting on all columns.',
+      },
     },
   },
 };
@@ -334,10 +454,12 @@ export const WithRowSelection: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
+    sortable: false,
     isRowSelection: true,
     selectedRows: [],
     onRowSelect: (selectedIndexes: number[]) => {
       console.log('Selected rows:', selectedIndexes);
     },
   },
+  render: (args) => <TableWithSorting {...args} />,
 }; 

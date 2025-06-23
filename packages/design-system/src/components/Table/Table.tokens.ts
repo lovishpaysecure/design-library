@@ -8,7 +8,7 @@ export const tableTokens: TableTokens = {
   containerBorder: '1px solid #E2E8F0',
 
   // Header
-  headerBackground: '#2563EB',
+  headerBackground: '#5223BC',
   headerBorderBottom: '1px solid #E2E8F0',
   headerPadding: '12px 16px',
 
@@ -31,4 +31,7 @@ export const tableTokens: TableTokens = {
 
   fixedColumnShadowLeft: 'linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)',
   fixedColumnShadowRight: 'linear-gradient(-90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)',
+
+  headerTextColor: '#ffffff',
+  sortIconColor: '#ffffff',
 }; 

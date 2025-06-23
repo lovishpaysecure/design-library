@@ -1,13 +1,27 @@
 import { ReactNode } from 'react';
 
 export type FixedColumnPosition = 'left' | 'right' | 'none';
+export type SortDirection = 'asc' | 'desc' | 'none';
+
+export interface SortConfig {
+  columnKey: string;
+  direction: SortDirection;
+}
 
 export interface TableColumn<T> {
   key: string;
   header: string;
-  accessor: keyof T | ((row: T) => string | number);
-  align?: 'left' | 'center' | 'right';
+  accessor: keyof T;
   width?: string;
+  align?: 'left' | 'center' | 'right';
+  sortable?: boolean;
+  sortFn?: (a: T, b: T) => number;
+}
+
+export interface TableHeaderCellProps {
+  tokens: TableTokens;
+  fixed?: boolean;
+  side?: 'left' | 'right';
   sortable?: boolean;
 }
 
@@ -30,6 +44,8 @@ export interface TableTokens {
   borderedBorder: string;
   fixedColumnShadowLeft: string;
   fixedColumnShadowRight: string;
+  headerTextColor: string;
+  sortIconColor: string;
 }
 
 export interface TableProps<T> {
@@ -37,15 +53,15 @@ export interface TableProps<T> {
   data: T[];
   variant?: 'default' | 'striped' | 'bordered';
   size?: 'small' | 'medium' | 'large';
+  hoverable?: boolean;
   showHeader?: boolean;
   sortable?: boolean;
-  hoverable?: boolean;
-  className?: string;
-  onRowClick?: (row: T, index: number) => void;
-  onSort?: (column: TableColumn<T>, direction: 'asc' | 'desc') => void;
-  isRowSelection?: boolean;
-  selectedRows?: T[];
-  onRowSelect?: (selectedRows: T[]) => void;
+  sortConfig?: SortConfig;
+  onSort?: (config: SortConfig) => void;
   fixedLeftmost?: boolean;
   fixedRightmost?: boolean;
+  isRowSelection?: boolean;
+  selectedRows?: number[];
+  onRowSelect?: (selectedRows: number[]) => void;
+  onRowClick?: (row: T, index: number) => void;
 } 

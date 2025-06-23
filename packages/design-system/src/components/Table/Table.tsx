@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography';
 import { CheckBox } from '../CheckBox';
-import { TableProps, TableColumn } from './Table.types';
+import {
+  TableProps,
+  TableColumn,
+  TableTokens,
+  TableHeaderCellProps,
+  SortConfig,
+  SortDirection
+} from './Table.types';
 import { tableTokens } from './Table.tokens';
+import SortIcon from './SortIcon';
 import {
   StyledTableContainer,
   StyledTableWrapper,
@@ -14,6 +22,60 @@ import {
   StyledTableRow,
   StyledTableCell,
 } from '../../styles/Table.styles';
+import styled, { css } from 'styled-components';
+
+const TableHeaderCell = styled.th<TableHeaderCellProps>`
+  position: relative;
+  padding: ${({ tokens }) => tokens.headerPadding};
+  background: ${({ tokens }) => tokens.headerBackground};
+  color: ${({ tokens }) => tokens.headerTextColor};
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: ${({ tokens }) => tokens.headerBorderBottom};
+  ${({ fixed, side, tokens }) =>
+    fixed &&
+    side === 'left' &&
+    css`
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -8px;
+        bottom: 0;
+        width: 8px;
+        background: ${tokens.fixedColumnShadowLeft};
+        pointer-events: none;
+      }
+    `}
+  ${({ fixed, side, tokens }) =>
+    fixed &&
+    side === 'right' &&
+    css`
+      position: sticky;
+      right: 0;
+      z-index: 2;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -8px;
+        bottom: 0;
+        width: 8px;
+        background: ${tokens.fixedColumnShadowRight};
+        pointer-events: none;
+      }
+    `}
+  ${({ sortable }) =>
+    sortable &&
+    css`
+      cursor: pointer;
+      user-select: none;
+    `}
+`;
 
 const Table = <T extends Record<string, any>>({
   columns,
@@ -22,10 +84,10 @@ const Table = <T extends Record<string, any>>({
   size = 'medium',
   showHeader = true,
   sortable = false,
-  hoverable = true,
-  className,
-  onRowClick,
+  sortConfig,
   onSort,
+  hoverable = true,
+  onRowClick,
   isRowSelection = false,
   selectedRows = [],
   onRowSelect,
@@ -33,7 +95,7 @@ const Table = <T extends Record<string, any>>({
   fixedRightmost = false,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
-  const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(selectedRows);
+  const [internalSelectedRows, setInternalSelectedRows] = useState<number[]>(selectedRows);
 
   // If row selection is enabled, we should not allow row clicking
   const effectiveOnRowClick = isRowSelection ? undefined : onRowClick;
@@ -44,37 +106,111 @@ const Table = <T extends Record<string, any>>({
   }, [selectedRows]);
 
   const handleSelectAll = (checked: boolean) => {
-    const newSelectedRows = checked ? [...data] : [];
+    const newSelectedRows = checked ? data.map((_, index) => index) : [];
     setInternalSelectedRows(newSelectedRows);
     onRowSelect?.(newSelectedRows);
   };
 
-  const handleSelectRow = (row: T, checked: boolean) => {
+  const handleSelectRow = (rowIndex: number, checked: boolean) => {
     const newSelectedRows = checked
-      ? [...internalSelectedRows, row]
-      : internalSelectedRows.filter(selectedRow => selectedRow !== row);
+      ? [...internalSelectedRows, rowIndex]
+      : internalSelectedRows.filter(selectedIndex => selectedIndex !== rowIndex);
     setInternalSelectedRows(newSelectedRows);
     onRowSelect?.(newSelectedRows);
   };
 
-  const isRowSelected = (row: T) => {
-    return internalSelectedRows.some(selectedRow => 
-      Object.keys(row).every(key => selectedRow[key] === row[key])
-    );
+  const isRowSelected = (rowIndex: number) => {
+    return internalSelectedRows.includes(rowIndex);
   };
 
   const getCellValue = (row: T, column: TableColumn<T>) => {
-    if (typeof column.accessor === 'function') {
-      return column.accessor(row);
-    }
     return row[column.accessor];
   };
 
-  const handleHeaderClick = (column: TableColumn<T>) => {
-    if (sortable && onSort && (column.sortable !== false)) {
-      onSort(column, 'asc');
+  const handleAscSort = (columnKey: string, e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    if (!onSort) return;
+    onSort({ columnKey, direction: 'asc' } as SortConfig);
+  };
+
+  const handleDescSort = (columnKey: string, e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    if (!onSort) return;
+    onSort({ columnKey, direction: 'desc' } as SortConfig);
+  };
+
+  const renderSortIcon = (column: TableColumn<T>) => {
+    const isColumnSorted = sortConfig?.columnKey === column.key;
+    const sortDirection = isColumnSorted ? sortConfig.direction : 'none';
+    
+    return (
+      <SortIcon 
+        direction={sortDirection} 
+        active={isColumnSorted}
+        color={tokens.sortIconColor}
+        onAscClick={(e) => handleAscSort(column.key, e)}
+        onDescClick={(e) => handleDescSort(column.key, e)}
+      />
+    );
+  };
+
+  const getNextSortDirection = (currentDirection?: SortDirection): SortDirection => {
+    switch (currentDirection) {
+      case 'asc':
+        return 'desc';
+      case 'desc':
+        return 'none';
+      default:
+        return 'asc';
     }
   };
+
+  const sortData = (dataToSort: T[]): T[] => {
+    if (!sortConfig || sortConfig.direction === 'none') return dataToSort;
+
+    const column = columns.find(col => col.key === sortConfig.columnKey);
+    if (!column) return dataToSort;
+
+    return [...dataToSort].sort((a, b) => {
+      if (column.sortFn) {
+        return sortConfig.direction === 'asc' 
+          ? column.sortFn(a, b) 
+          : column.sortFn(b, a);
+      }
+
+      const aValue = getCellValue(a, column);
+      const bValue = getCellValue(b, column);
+
+      // Convert values to strings for string comparison
+      const aString = String(aValue);
+      const bString = String(bValue);
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return sortConfig.direction === 'asc'
+          ? aString.localeCompare(bString)
+          : bString.localeCompare(aString);
+      }
+
+      // Numeric comparison
+      const aNum = Number(aValue);
+      const bNum = Number(bValue);
+
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        if (aNum < bNum) return sortConfig.direction === 'asc' ? -1 : 1;
+        if (aNum > bNum) return sortConfig.direction === 'asc' ? 1 : -1;
+        return 0;
+      }
+
+      // Fallback to string comparison
+      return sortConfig.direction === 'asc'
+        ? aString.localeCompare(bString)
+        : bString.localeCompare(aString);
+    });
+  };
+
+  const sortedData = useMemo(() => {
+    return sortData(data);
+  }, [data, sortConfig, columns]);
 
   const handleRowClick = (row: T, index: number) => {
     if (effectiveOnRowClick) {
@@ -115,32 +251,33 @@ const Table = <T extends Record<string, any>>({
   };
 
   const renderHeaderCell = (column: TableColumn<T>, index: number) => {
-    const fixedPosition = getColumnFixedPosition(index);
-    const isLastFixed = isLastFixedColumn(index);
-
+    const isFixed =
+      (fixedLeftmost && index === 0) ||
+      (fixedRightmost && index === columns.length - 1);
+    const side = index === 0 ? 'left' : 'right';
+    const isColumnSortable = sortable && column.sortable !== false;
+    
     return (
-      <StyledTableHeaderCell
+      <TableHeaderCell
         key={column.key}
         tokens={tokens}
-        size={size}
-        align={column.align}
-        fixed={fixedPosition}
-        isLastFixed={isLastFixed}
-        style={{ 
-          width: column.width,
-          cursor: sortable && column.sortable !== false ? 'pointer' : 'default'
-        }}
-        onClick={() => handleHeaderClick(column)}
+        fixed={isFixed}
+        side={isFixed ? side : undefined}
+        sortable={false}
       >
         <Typography 
-          variant={getHeaderTypographyVariant()} 
-          weight="semibold"
-          component="span"
-          style={{ color: '#ffffff' }}
+          variant="subtitle1" 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '4px',
+            color: tokens.headerTextColor 
+          }}
         >
           {column.header}
+          {isColumnSortable && renderSortIcon(column)}
         </Typography>
-      </StyledTableHeaderCell>
+      </TableHeaderCell>
     );
   };
 
@@ -173,7 +310,6 @@ const Table = <T extends Record<string, any>>({
     <StyledTableContainer 
       tokens={tokens} 
       variant={variant}
-      className={className}
     >
       <StyledTableWrapper>
         <StyledTable tokens={tokens}>
@@ -206,7 +342,7 @@ const Table = <T extends Record<string, any>>({
           )}
           
           <StyledTableBody tokens={tokens}>
-            {data.map((row, rowIndex) => (
+            {sortedData.map((row, rowIndex) => (
               <StyledTableRow
                 key={rowIndex}
                 tokens={tokens}
@@ -226,8 +362,8 @@ const Table = <T extends Record<string, any>>({
                     style={{ width: '48px', padding: '0 8px' }}
                   >
                     <CheckBox
-                      checked={isRowSelected(row)}
-                      onChange={(checked: boolean) => handleSelectRow(row, checked)}
+                      checked={isRowSelected(rowIndex)}
+                      onChange={(checked: boolean) => handleSelectRow(rowIndex, checked)}
                       onClick={(e) => e.stopPropagation()}
                     />
                   </StyledTableCell>
