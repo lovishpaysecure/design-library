@@ -104,12 +104,6 @@ export interface ChartZoomConfig {
 }
 
 export interface ChartTokens {
-  container: {
-    backgroundColor: string;
-    border: string;
-    borderRadius: string;
-    padding: string;
-  };
   legend: {
     fontSize: string;
     fontWeight: string;

@@ -51,6 +51,7 @@ export const Chart: React.FC<ChartProps> = ({
   const tokens = useTokens<ChartTokens>('chart', chartTokens, customTokens);
   const [isMapReady, setIsMapReady] = useState(variant !== 'map');
 
+
   // Register map data when map variant is used
   useEffect(() => {
     if (variant === 'map') {
@@ -186,9 +187,6 @@ export const Chart: React.FC<ChartProps> = ({
         },
       }];
     }
-
-
-
     // Handle geographic map data
     if (variant === 'map') {
       try {
@@ -284,7 +282,7 @@ export const Chart: React.FC<ChartProps> = ({
         return {
           ...baseConfig,
           type: 'line' as const,
-          smooth: item.smooth ?? false, // Make lines less curved to match design
+          smooth: item.smooth ?? false,
           showSymbol: item.showSymbol ?? false,
           symbol: 'circle' as const,
           symbolSize: 6,
@@ -546,14 +544,18 @@ export const Chart: React.FC<ChartProps> = ({
 
   return (
     <div
-      className={className}
+      className={`chart-wrapper ${className || ''}`}
       style={{
-        backgroundColor: tokens.container.backgroundColor,
-        border: tokens.container.border,
-        borderRadius: tokens.container.borderRadius,
-        padding: tokens.container.padding,
         width,
         height: typeof height === 'number' ? `${height}px` : height,
+        border: 'none',
+        padding: 0,
+        margin: 0,
+        background: 'transparent',
+        boxShadow: 'none',
+        overflow: 'hidden',
+        contain: 'layout style paint',
+        isolation: 'isolate',
         ...style,
       }}
     >
@@ -570,7 +572,15 @@ export const Chart: React.FC<ChartProps> = ({
       ) : (
         <ReactECharts
           option={option}
-          style={{ height: '100%', width: '100%' }}
+          style={{ 
+            height: '100%', 
+            width: '100%',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            outline: 'none',
+            background: 'transparent'
+          }}
           showLoading={loading}
           onEvents={onEvents}
           opts={{
