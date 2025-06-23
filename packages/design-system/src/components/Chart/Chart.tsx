@@ -548,10 +548,6 @@ export const Chart: React.FC<ChartProps> = ({
     <div
       className={className}
       style={{
-        backgroundColor: tokens.container.backgroundColor,
-        border: tokens.container.border,
-        borderRadius: tokens.container.borderRadius,
-        padding: tokens.container.padding,
         width,
         height: typeof height === 'number' ? `${height}px` : height,
         ...style,

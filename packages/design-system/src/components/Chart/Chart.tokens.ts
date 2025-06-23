@@ -1,12 +1,6 @@
 import { ChartTokens } from './Chart.types';
 
 export const chartTokens: ChartTokens = {
-  container: {
-    backgroundColor: '#ffffff',
-    border: '1px solid #f1f3f4',
-    borderRadius: '12px',
-    padding: '24px',
-  },
   legend: {
     fontSize: '13px',
     fontWeight: '400',
