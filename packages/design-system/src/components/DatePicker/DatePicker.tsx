@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useTokens } from '../../hooks/useTokens';
+import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DatePickerProps, DatePickerTokens, DateRange, PresetOption } from './DatePicker.types';
 import { defaultDatePickerTokens } from './DatePicker.tokens';
 import {
@@ -117,6 +118,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   onApply,
   dateFormat = 'MMM dd, yyyy',
   firstDayOfWeek = 0,
+  placement = 'auto',
+  align = 'auto',
+  zIndex = 1000,
 }) => {
   const tokens = useTokens<DatePickerTokens>('datePicker', defaultDatePickerTokens);
   const [isOpen, setIsOpen] = useState(false);
@@ -130,6 +134,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   });
   const [selectingStart, setSelectingStart] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  
+  // Use smart positioning
+  const smartPosition = useSmartPosition(triggerRef, isOpen, {
+    placement,
+    align,
+    minSpaceRequired: { width: 800, height: 500 }
+  });
 
   // Close on outside click
   useEffect(() => {
@@ -418,6 +430,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <DatePickerContainer ref={containerRef} className={className} style={style}>
       <DatePickerTrigger
+        ref={triggerRef}
         tokens={tokens}
         disabled={disabled}
         onClick={handleTriggerClick}
@@ -442,7 +455,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         </DatePickerTriggerIcon>
       </DatePickerTrigger>
 
-      <DatePickerPopup tokens={tokens} isOpen={isOpen}>
+      <DatePickerPopup 
+        tokens={tokens} 
+        isOpen={isOpen}
+        $placement={smartPosition.placement}
+        $align={smartPosition.align}
+        $zIndex={zIndex}
+        style={smartPosition.adjustments}
+      >
         <DatePickerSidebar tokens={tokens}>
           {presets.map((preset) => (
             <SidebarItem

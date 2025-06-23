@@ -173,20 +173,22 @@ export const DropdownClearButton = styled.button<{ tokens: DropdownTokens }>`
 export const DropdownMenu = styled.div<{ 
   tokens: DropdownTokens; 
   isOpen: boolean; 
-  placement?: 'top' | 'bottom';
+  $placement?: 'top' | 'bottom';
+  $align?: 'left' | 'right';
+  $zIndex?: number;
   width?: string | number;
 }>`
   position: absolute;
-  ${props => props.placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  ${props => props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
+  ${props => props.$align === 'right' ? 'right: 0;' : 'left: 0; right: 0;'}
+  z-index: ${props => props.$zIndex || 1000};
   background-color: ${props => props.tokens.backgroundColor};
   border: 1px solid ${props => props.tokens.borderColor};
   border-radius: ${props => props.tokens.borderRadius};
   box-shadow: ${props => props.tokens.shadowColor};
   display: ${props => props.isOpen ? 'block' : 'none'};
   max-height: ${props => props.tokens.maxHeight};
+  max-width: 90vw;
   overflow: hidden;
   ${props => props.width && `width: ${typeof props.width === 'number' ? props.width + 'px' : props.width};`}
 `;

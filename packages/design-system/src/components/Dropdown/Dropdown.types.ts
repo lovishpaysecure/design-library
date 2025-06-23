@@ -179,13 +179,39 @@ export interface DropdownProps {
    */
   renderValue?: (selectedOptions: DropdownOption[]) => React.ReactNode;
   /**
+   * Custom render function for the entire dropdown content
+   * When provided, this overrides all default dropdown content rendering
+   */
+  renderDropdown?: (props: {
+    options: DropdownOption[];
+    filteredOptions: DropdownOption[];
+    selectedOptions: DropdownOption[];
+    searchValue: string;
+    onOptionClick: (option: DropdownOption) => void;
+    onSearchChange: (value: string) => void;
+    onSelectAll: () => void;
+    isOpen: boolean;
+    loading: boolean;
+    error: boolean;
+    errorMessage?: string;
+    multiple: boolean;
+    searchable: boolean;
+    showSelectAll: boolean;
+    groupBy: boolean;
+    tokens: DropdownTokens;
+  }) => React.ReactNode;
+  /**
    * Maximum number of selected items to display
    */
   maxTagCount?: number;
   /**
-   * Position of the dropdown
+   * Position of the dropdown (will auto-adjust based on available space)
    */
-  placement?: 'bottom' | 'top';
+  placement?: 'bottom' | 'top' | 'auto';
+  /**
+   * Preferred horizontal alignment (will auto-adjust based on available space)
+   */
+  align?: 'left' | 'right' | 'auto';
   /**
    * Custom width for dropdown
    */
@@ -198,4 +224,8 @@ export interface DropdownProps {
    * Group options by the group property
    */
   groupBy?: boolean;
+  /**
+   * Z-index for the dropdown menu
+   */
+  zIndex?: number;
 } 

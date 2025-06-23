@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTokens } from '../../hooks/useTokens';
+import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DropdownProps, DropdownTokens, DropdownOption } from './Dropdown.types';
 import { defaultDropdownTokens } from './Dropdown.tokens';
 import {
@@ -62,8 +63,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
   filterOption = defaultFilterOption,
   renderOption,
   renderValue,
+  renderDropdown,
   maxTagCount = 3,
-  placement = 'bottom',
+  placement = 'auto',
+  align = 'auto',
+  zIndex = 1000,
   dropdownWidth,
   showSelectAll = false,
   groupBy = false,
@@ -72,7 +76,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  
+  // Use smart positioning
+  const smartPosition = useSmartPosition(triggerRef, isOpen, {
+    placement,
+    align,
+    minSpaceRequired: { width: 250, height: 200 }
+  });
 
   // Normalize value to array for easier handling
   const selectedValues = useMemo(() => {
@@ -370,6 +382,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <DropdownContainer ref={containerRef} className={className} style={style}>
       <DropdownTrigger
+        ref={triggerRef}
         tokens={tokens}
         isOpen={isOpen}
         disabled={disabled}
@@ -410,35 +423,64 @@ export const Dropdown: React.FC<DropdownProps> = ({
       <DropdownMenu
         tokens={tokens}
         isOpen={isOpen}
-        placement={placement}
+        $placement={smartPosition.placement}
+        $align={smartPosition.align}
+        $zIndex={zIndex}
         width={dropdownWidth}
+        style={smartPosition.adjustments}
       >
-        {searchable && (
+        {renderDropdown ? (
+          renderDropdown({
+            options,
+            filteredOptions,
+            selectedOptions,
+            searchValue,
+            onOptionClick: handleOptionClick,
+            onSearchChange: (value: string) => {
+              setSearchValue(value);
+              onSearch?.(value);
+            },
+            onSelectAll: handleSelectAll,
+            isOpen,
+            loading,
+            error,
+            errorMessage,
+            multiple,
+            searchable,
+            showSelectAll,
+            groupBy,
+            tokens,
+          })
+        ) : (
           <>
-            <DropdownSearch
-              ref={searchInputRef}
-              tokens={tokens}
-              type="text"
-              placeholder={searchPlaceholder}
-              value={searchValue}
-              onChange={handleSearchChange}
-            />
-            <DropdownDivider tokens={tokens} />
+            {searchable && (
+              <>
+                <DropdownSearch
+                  ref={searchInputRef}
+                  tokens={tokens}
+                  type="text"
+                  placeholder={searchPlaceholder}
+                  value={searchValue}
+                  onChange={handleSearchChange}
+                />
+                <DropdownDivider tokens={tokens} />
+              </>
+            )}
+
+            {error && errorMessage && (
+              <>
+                <DropdownError tokens={tokens}>
+                  {errorMessage}
+                </DropdownError>
+                <DropdownDivider tokens={tokens} />
+              </>
+            )}
+
+            <DropdownOptionsList tokens={tokens}>
+              {renderOptions()}
+            </DropdownOptionsList>
           </>
         )}
-
-        {error && errorMessage && (
-          <>
-            <DropdownError tokens={tokens}>
-              {errorMessage}
-            </DropdownError>
-            <DropdownDivider tokens={tokens} />
-          </>
-        )}
-
-        <DropdownOptionsList tokens={tokens}>
-          {renderOptions()}
-        </DropdownOptionsList>
       </DropdownMenu>
     </DropdownContainer>
   );

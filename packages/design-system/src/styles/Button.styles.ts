@@ -54,4 +54,26 @@ export const StyledButton = styled.button<StyledButtonProps & { tokens: ButtonTo
   &:focus {
     outline: none;
   }
+`;
+
+export const ButtonIcon = styled.span<{ 
+  tokens: ButtonTokens; 
+  size: 'small' | 'medium' | 'large';
+  position: 'pre' | 'post';
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${props => props.tokens.sizes[props.size].iconSize || props.tokens.icon.size};
+  height: ${props => props.tokens.sizes[props.size].iconSize || props.tokens.icon.size};
+  margin-${props => props.position === 'pre' ? 'right' : 'left'}: ${props => 
+    props.tokens.sizes[props.size].iconSpacing || props.tokens.icon.spacing};
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    stroke: currentColor;
+  }
 `; 

@@ -132,4 +132,16 @@ export interface DatePickerProps {
    * First day of week (0 = Sunday, 1 = Monday)
    */
   firstDayOfWeek?: number;
+  /**
+   * Preferred popup placement (will auto-adjust based on available space)
+   */
+  placement?: 'bottom' | 'top' | 'auto';
+  /**
+   * Preferred horizontal alignment (will auto-adjust based on available space)
+   */
+  align?: 'left' | 'right' | 'auto';
+  /**
+   * Z-index for the popup
+   */
+  zIndex?: number;
 } 

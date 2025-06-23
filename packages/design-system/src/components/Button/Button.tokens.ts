@@ -92,15 +92,25 @@ export const buttonTokens: ButtonTokens = {
   sizes: {
     small: {
       padding: '8px 14px',
-      fontSize: '14px'
+      fontSize: '14px',
+      iconSize: '14px',
+      iconSpacing: '6px'
     },
     medium: {
       padding: '10px 16px',
-      fontSize: '14px'
+      fontSize: '14px',
+      iconSize: '16px',
+      iconSpacing: '8px'
     },
     large: {
       padding: '12px 20px',
-      fontSize: '16px'
+      fontSize: '16px',
+      iconSize: '18px',
+      iconSpacing: '10px'
     }
+  },
+  icon: {
+    size: '16px',
+    spacing: '8px'
   }
 }; 

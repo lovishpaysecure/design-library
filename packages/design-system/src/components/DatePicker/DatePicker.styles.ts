@@ -84,18 +84,24 @@ export const DatePickerTriggerIcon = styled.span<{ tokens: DatePickerTokens }>`
   }
 `;
 
-export const DatePickerPopup = styled.div<{ tokens: DatePickerTokens; isOpen: boolean }>`
+export const DatePickerPopup = styled.div<{ 
+  tokens: DatePickerTokens; 
+  isOpen: boolean;
+  $placement?: 'top' | 'bottom';
+  $align?: 'left' | 'right';
+  $zIndex?: number;
+}>`
   position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  margin-top: 8px;
+  ${props => props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 8px;' : 'top: 100%; margin-top: 8px;'}
+  ${props => props.$align === 'right' ? 'right: 0;' : 'left: 0;'}
+  z-index: ${props => props.$zIndex || 1000};
   background-color: ${props => props.tokens.backgroundColor};
   border: 1px solid ${props => props.tokens.borderColor};
   border-radius: ${props => props.tokens.borderRadius};
   box-shadow: ${props => props.tokens.shadowColor};
   display: ${props => props.isOpen ? 'flex' : 'none'};
   min-width: 800px;
+  max-width: 90vw;
   overflow: hidden;
 `;
 

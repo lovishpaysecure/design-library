@@ -14,6 +14,14 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: ButtonVariant;
   size?: ButtonSize;
   fullWidth?: boolean;
+  /**
+   * Icon to display at the start of the button
+   */
+  preIcon?: React.ReactNode;
+  /**
+   * Icon to display at the end of the button
+   */
+  postIcon?: React.ReactNode;
 }
 
 export interface ButtonTokens {
@@ -41,6 +49,12 @@ export interface ButtonTokens {
     [key in ButtonSize]: {
       padding: string;
       fontSize: string;
+      iconSize?: string;
+      iconSpacing?: string;
     };
+  };
+  icon: {
+    size: string;
+    spacing: string;
   };
 } 
