@@ -13,6 +13,7 @@ export * from './components/Sidebar';
 export * from './components/Chart';
 export * from './components/DatePicker';
 export * from './components/Dropdown';
+export * from './components/CheckBox';
 
 // Hooks
 export * from './hooks/useTokens';

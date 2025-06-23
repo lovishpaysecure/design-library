@@ -21,8 +21,8 @@ importers:
         specifier: ^8.0.0
         version: 8.57.1
       eslint-config-custom:
-        specifier: file:/Users/lovish/Desktop/projects/pay-design/packages/eslint-config-custom
-        version: file:../../projects/pay-design/packages/eslint-config-custom(eslint@8.57.1)(typescript@5.8.3)
+        specifier: workspace:*
+        version: link:packages/eslint-config-custom
       prettier:
         specifier: ^2.8.0
         version: 2.8.8
@@ -1944,9 +1944,6 @@ packages:
   escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
-
-  eslint-config-custom@file:../../projects/pay-design/packages/eslint-config-custom:
-    resolution: {directory: ../../projects/pay-design/packages/eslint-config-custom, type: directory}
 
   eslint-config-next@13.5.11:
     resolution: {integrity: sha512-jImZvfc4htMMsiW3nCY/UOxXrI4DbEI4JrdWOEfSNkMipi4j3ZukUhvv4TGQnP6d6lvPTh6uHisQbMl3Ozga1w==}
@@ -5106,19 +5103,6 @@ snapshots:
   escalade@3.2.0: {}
 
   escape-string-regexp@4.0.0: {}
-
-  eslint-config-custom@file:../../projects/pay-design/packages/eslint-config-custom(eslint@8.57.1)(typescript@5.8.3):
-    dependencies:
-      eslint-config-next: 13.5.11(eslint@8.57.1)(typescript@5.8.3)
-      eslint-config-prettier: 8.10.0(eslint@8.57.1)
-      eslint-config-turbo: 1.13.4(eslint@8.57.1)
-      eslint-plugin-react: 7.28.0(eslint@8.57.1)
-    transitivePeerDependencies:
-      - eslint
-      - eslint-import-resolver-webpack
-      - eslint-plugin-import-x
-      - supports-color
-      - typescript
 
   eslint-config-next@13.5.11(eslint@8.57.1)(typescript@5.8.3):
     dependencies:
