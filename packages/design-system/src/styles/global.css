@@ -24,6 +24,9 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select {
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
+  overflow: hidden !important;
+  contain: layout style paint !important;
+  isolation: isolate !important;
 }
 
 .chart-wrapper * {

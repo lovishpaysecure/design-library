@@ -51,6 +51,7 @@ export const Chart: React.FC<ChartProps> = ({
   const tokens = useTokens<ChartTokens>('chart', chartTokens, customTokens);
   const [isMapReady, setIsMapReady] = useState(variant !== 'map');
 
+
   // Register map data when map variant is used
   useEffect(() => {
     if (variant === 'map') {
@@ -552,6 +553,9 @@ export const Chart: React.FC<ChartProps> = ({
         margin: 0,
         background: 'transparent',
         boxShadow: 'none',
+        overflow: 'hidden',
+        contain: 'layout style paint',
+        isolation: 'isolate',
         ...style,
       }}
     >
@@ -574,7 +578,8 @@ export const Chart: React.FC<ChartProps> = ({
             border: 'none',
             padding: 0,
             margin: 0,
-            outline: 'none'
+            outline: 'none',
+            background: 'transparent'
           }}
           showLoading={loading}
           onEvents={onEvents}
