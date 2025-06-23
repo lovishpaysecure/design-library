@@ -13,6 +13,7 @@ export default defineConfig({
     'Tooltip/index': 'src/components/Tooltip/index.ts',
     'DatePicker/index': 'src/components/DatePicker/index.ts',
     'Dropdown/index': 'src/components/Dropdown/index.ts',
+    'CheckBox/index': 'src/components/CheckBox/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,

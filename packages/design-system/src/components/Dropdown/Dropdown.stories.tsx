@@ -10,7 +10,7 @@ const meta: Meta<typeof Dropdown> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A customizable dropdown component with single and multi-select capabilities, search functionality, and more.',
+        component: 'A customizable dropdown component with single and multi-select capabilities, search functionality, and proper checkbox integration for enhanced UX.',
       },
     },
   },
@@ -90,6 +90,17 @@ const userOptions: DropdownOption[] = [
   { label: 'Bob Johnson', value: 'bob', description: 'Manager' },
   { label: 'Alice Brown', value: 'alice', description: 'Product Manager' },
   { label: 'Charlie Wilson', value: 'charlie', description: 'QA Engineer' },
+];
+
+const skillOptions: DropdownOption[] = [
+  { label: 'JavaScript', value: 'js', description: 'Programming Language' },
+  { label: 'TypeScript', value: 'ts', description: 'Programming Language' },
+  { label: 'React', value: 'react', description: 'Frontend Framework' },
+  { label: 'Node.js', value: 'node', description: 'Runtime Environment' },
+  { label: 'Python', value: 'python', description: 'Programming Language' },
+  { label: 'Docker', value: 'docker', description: 'Containerization' },
+  { label: 'AWS', value: 'aws', description: 'Cloud Platform' },
+  { label: 'Git', value: 'git', description: 'Version Control' },
 ];
 
 const DropdownWithState = (args: any) => {
@@ -195,6 +206,107 @@ export const WithDescriptions: Story = {
     options: userOptions,
     placeholder: 'Select a team member',
     searchable: true,
+  },
+};
+
+// New stories showcasing enhanced checkbox functionality
+export const EnhancedMultiSelectWithSkills: Story = {
+  render: DropdownWithState,
+  args: {
+    options: skillOptions,
+    placeholder: 'Select your technical skills...',
+    searchable: true,
+    multiple: true,
+    showSelectAll: true,
+    clearable: true,
+    maxTagCount: 2,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates the enhanced multi-select dropdown with proper CheckBox components integrated. Features include: small-sized checkboxes, indeterminate state for "Select All", individual option selection, and proper state management.',
+      },
+    },
+  },
+};
+
+export const CheckboxSelectAllDemo: Story = {
+  render: () => {
+    const [selectedValue, setSelectedValue] = useState<(string | number)[]>(['apple', 'banana']);
+
+    return (
+      <div style={{ width: '300px' }}>
+        <h4 style={{ marginBottom: '16px', color: '#333' }}>
+          Select All with Indeterminate State
+        </h4>
+        <Dropdown
+          options={groupedOptions}
+          value={selectedValue}
+          onChange={(value) => setSelectedValue(value as (string | number)[])}
+          placeholder="Select food items..."
+          searchable={true}
+          multiple={true}
+          showSelectAll={true}
+          clearable={true}
+          groupBy={true}
+        />
+        <div style={{ marginTop: '12px', padding: '8px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
+          <small>
+            <strong>Selected ({selectedValue.length}):</strong>{' '}
+            {selectedValue.length > 0 ? selectedValue.join(', ') : 'None'}
+          </small>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Shows the "Select All" checkbox functionality with proper indeterminate state when some (but not all) options are selected. The checkbox uses our design system CheckBox component with small size and primary color.',
+      },
+    },
+  },
+};
+
+export const PartialSelectionDemo: Story = {
+  render: () => {
+    const [selectedSkills, setSelectedSkills] = useState<(string | number)[]>(['js', 'react']);
+
+    return (
+      <div style={{ width: '320px' }}>
+        <h4 style={{ marginBottom: '16px', color: '#333' }}>
+          Partial Selection State
+        </h4>
+        <Dropdown
+          options={skillOptions}
+          value={selectedSkills}
+          onChange={(value) => setSelectedSkills(value as (string | number)[])}
+          placeholder="Choose technical skills..."
+          searchable={true}
+          multiple={true}
+          showSelectAll={true}
+          clearable={true}
+          maxTagCount={3}
+        />
+        <div style={{ marginTop: '12px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px', border: '1px solid #e9ecef' }}>
+          <div style={{ marginBottom: '8px' }}>
+            <strong>Selection Status:</strong>
+          </div>
+          <div style={{ fontSize: '14px', lineHeight: '1.4' }}>
+            • Selected: {selectedSkills.length}/{skillOptions.length} skills<br/>
+            • Select All state: {selectedSkills.length === 0 ? 'Unchecked' : selectedSkills.length === skillOptions.length ? 'Checked' : 'Indeterminate'}<br/>
+            • Current: {selectedSkills.length > 0 ? selectedSkills.join(', ') : 'None'}
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates how the Select All checkbox properly shows indeterminate state when partially selected, and how individual checkboxes maintain their checked state independently.',
+      },
+    },
   },
 };
 
@@ -357,32 +469,32 @@ export const InteractiveDemo: Story = {
             />
             Group By
           </label>
-                     {multiple && (
-             <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-               <input
-                 type="checkbox"
-                 checked={showSelectAll}
-                 onChange={(e) => setShowSelectAll(e.target.checked)}
-               />
-               Show Select All
-             </label>
-           )}
-           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-             <input
-               type="checkbox"
-               checked={showPreIcon}
-               onChange={(e) => setShowPreIcon(e.target.checked)}
-             />
-             Pre Icon
-           </label>
-           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-             <input
-               type="checkbox"
-               checked={showPostIcon}
-               onChange={(e) => setShowPostIcon(e.target.checked)}
-             />
-             Post Icon
-           </label>
+          {multiple && (
+            <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <input
+                type="checkbox"
+                checked={showSelectAll}
+                onChange={(e) => setShowSelectAll(e.target.checked)}
+              />
+              Show Select All
+            </label>
+          )}
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <input
+              type="checkbox"
+              checked={showPreIcon}
+              onChange={(e) => setShowPreIcon(e.target.checked)}
+            />
+            Pre Icon
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <input
+              type="checkbox"
+              checked={showPostIcon}
+              onChange={(e) => setShowPostIcon(e.target.checked)}
+            />
+            Post Icon
+          </label>
           <button 
             onClick={resetValue}
             style={{ 

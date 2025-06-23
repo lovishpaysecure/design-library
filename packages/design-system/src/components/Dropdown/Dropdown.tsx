@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DropdownProps, DropdownTokens, DropdownOption } from './Dropdown.types';
+import { CheckBox } from '../CheckBox/CheckBox';
 import { defaultDropdownTokens } from './Dropdown.tokens';
 import {
   DropdownContainer,
@@ -22,7 +23,6 @@ import {
   DropdownOptionContent,
   DropdownOptionLabel,
   DropdownOptionDescription,
-  DropdownCheckbox,
   DropdownDivider,
   DropdownGroup,
   DropdownGroupLabel,
@@ -155,6 +155,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
+  const isOptionSelected = (option: DropdownOption): boolean => {
+    return selectedValues.includes(option.value);
+  };
+
   const handleOptionClick = (option: DropdownOption) => {
     if (option.disabled) return;
 
@@ -214,16 +218,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
     onSearch?.(value);
   };
 
-  const isOptionSelected = (option: DropdownOption): boolean => {
-    return selectedValues.includes(option.value);
-  };
-
   const renderSelectedValue = () => {
-    if (renderValue) {
+    if (renderValue && selectedOptions.length > 0) {
       return renderValue(selectedOptions);
     }
 
-    if (selectedOptions.length === 0) {
+    if (selectedValues.length === 0) {
       return (
         <DropdownPlaceholder tokens={tokens}>
           {placeholder}
@@ -232,16 +232,22 @@ export const Dropdown: React.FC<DropdownProps> = ({
     }
 
     if (!multiple) {
-      return (
+      const option = selectedOptions[0];
+      return option ? (
         <DropdownValue tokens={tokens}>
-          {selectedOptions[0]?.label}
+          {option.icon && (
+            <span style={{ marginRight: '8px' }}>
+              {option.icon}
+            </span>
+          )}
+          {option.label}
         </DropdownValue>
-      );
+      ) : null;
     }
 
     // Multiple selection - show tags
     const visibleOptions = selectedOptions.slice(0, maxTagCount);
-    const remainingCount = selectedOptions.length - maxTagCount;
+    const remainingCount = Math.max(0, selectedOptions.length - maxTagCount);
 
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', alignItems: 'center' }}>
@@ -277,12 +283,14 @@ export const Dropdown: React.FC<DropdownProps> = ({
     return (
       <DropdownOptionContent>
         {multiple && (
-          <DropdownCheckbox
-            tokens={tokens}
+          <CheckBox
+            variant="checkbox"
+            size="small"
+            color="primary"
             checked={isSelected}
-          >
-            {isSelected && '✓'}
-          </DropdownCheckbox>
+            disabled={option.disabled}
+            onChange={() => {}} // Handled by parent click
+          />
         )}
         {option.icon && (
           <span style={{ marginRight: '8px' }}>
@@ -331,6 +339,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
         .map(option => option.value);
       const allSelected = allFilteredValues.length > 0 && 
         allFilteredValues.every(val => selectedValues.includes(val));
+      const someSelected = allFilteredValues.some(val => selectedValues.includes(val));
+      const indeterminate = someSelected && !allSelected;
 
       content.push(
         <DropdownSelectAll
@@ -338,9 +348,14 @@ export const Dropdown: React.FC<DropdownProps> = ({
           tokens={tokens}
           onClick={handleSelectAll}
         >
-          <DropdownCheckbox tokens={tokens} checked={allSelected}>
-            {allSelected && '✓'}
-          </DropdownCheckbox>
+          <CheckBox
+            variant="checkbox"
+            size="small"
+            color="primary"
+            checked={allSelected}
+            indeterminate={indeterminate}
+            onChange={() => {}} // Handled by parent click
+          />
           <span>Select All</span>
         </DropdownSelectAll>
       );

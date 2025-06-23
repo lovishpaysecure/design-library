@@ -57,6 +57,11 @@
       "import": "./dist/Dropdown/index.js",
       "require": "./dist/Dropdown/index.cjs",
       "types": "./dist/Dropdown/index.d.ts"
+    },
+    "./CheckBox": {
+      "import": "./dist/CheckBox/index.js",
+      "require": "./dist/CheckBox/index.cjs",
+      "types": "./dist/CheckBox/index.d.ts"
     }
   },
   "main": "./dist/index.cjs",
