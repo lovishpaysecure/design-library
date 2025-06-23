@@ -51,10 +51,37 @@ export const DatePickerTriggerText = styled.span<{ tokens: DatePickerTokens; has
   white-space: nowrap;
 `;
 
+export const DatePickerIcon = styled.span<{ tokens: DatePickerTokens; position: 'pre' | 'post' }>`
+  color: ${props => props.tokens.iconColor};
+  font-size: ${props => props.tokens.iconSize};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${props => props.tokens.iconSize};
+  height: ${props => props.tokens.iconSize};
+  margin-${props => props.position === 'pre' ? 'right' : 'left'}: ${props => props.tokens.iconSpacing};
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+`;
+
 export const DatePickerTriggerIcon = styled.span<{ tokens: DatePickerTokens }>`
-  color: ${props => props.tokens.disabledColor};
+  color: ${props => props.tokens.iconColor};
   font-size: 16px;
   margin-left: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+  }
 `;
 
 export const DatePickerPopup = styled.div<{ tokens: DatePickerTokens; isOpen: boolean }>`
@@ -171,6 +198,12 @@ export const CalendarNavButton = styled.button<{ tokens: DatePickerTokens }>`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px ${props => props.tokens.primaryColorLight};
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
   }
 `;
 

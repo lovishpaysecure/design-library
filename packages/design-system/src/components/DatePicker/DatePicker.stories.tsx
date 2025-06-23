@@ -113,6 +113,23 @@ export const WithConstraints: Story = {
   },
 };
 
+export const WithIcons: Story = {
+  render: DatePickerWithState,
+  args: {
+    placeholder: '5th June - 11th June 2025',
+    preIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2V6M16 2V6M3 10H21M5 4H19C20.1046 4 21 4.89543 21 6V20C21 21.1046 20.1046 3 20V6C3 4.89543 3.89543 4 5 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    postIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+};
+
 export const Interactive: Story = {
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(null);

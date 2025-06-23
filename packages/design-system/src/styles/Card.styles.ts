@@ -25,7 +25,6 @@ export const StyledCard = styled.div<{
       ${$shadow === false ? 'box-shadow: none;' : ''}
       transition: all 0.2s ease;
       position: relative;
-      overflow: hidden;
     `;
   }}
   

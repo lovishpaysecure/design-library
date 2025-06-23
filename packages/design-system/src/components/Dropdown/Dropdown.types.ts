@@ -50,6 +50,9 @@ export interface DropdownTokens {
   errorColor: string;
   errorBackgroundColor: string;
   maxHeight: string;
+  iconColor: string;
+  iconSize: string;
+  iconSpacing: string;
 }
 
 export interface StyledDropdownProps {
@@ -103,6 +106,14 @@ export interface DropdownProps {
    * Placeholder text when no selection
    */
   placeholder?: string;
+  /**
+   * Icon to display at the start of the input
+   */
+  preIcon?: React.ReactNode;
+  /**
+   * Icon to display at the end of the input
+   */
+  postIcon?: React.ReactNode;
   /**
    * Whether the dropdown is disabled
    */

@@ -30,4 +30,7 @@ export const defaultDatePickerTokens: DatePickerTokens = {
   otherMonthColor: '#d1d5db',
   timeSelectBackgroundColor: '#ffffff',
   timeSelectBorderColor: '#d1d5db',
+  iconColor: '#6b7280',
+  iconSize: '16px',
+  iconSpacing: '8px',
 }; 

@@ -198,6 +198,24 @@ export const WithDescriptions: Story = {
   },
 };
 
+export const WithIcons: Story = {
+  render: DropdownWithState,
+  args: {
+    options: basicOptions,
+    placeholder: 'Filters',
+    preIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 4.5H21L15 12V18.5L9 16.5V12L3 4.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    postIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+};
+
 export const Disabled: Story = {
   render: DropdownWithState,
   args: {
@@ -260,6 +278,8 @@ export const InteractiveDemo: Story = {
     const [error, setError] = useState(false);
     const [groupBy, setGroupBy] = useState(false);
     const [showSelectAll, setShowSelectAll] = useState(false);
+    const [showPreIcon, setShowPreIcon] = useState(false);
+    const [showPostIcon, setShowPostIcon] = useState(false);
 
     const handleChange = (value: string | number | (string | number)[]) => {
       setSelectedValue(value);
@@ -337,16 +357,32 @@ export const InteractiveDemo: Story = {
             />
             Group By
           </label>
-          {multiple && (
-            <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <input
-                type="checkbox"
-                checked={showSelectAll}
-                onChange={(e) => setShowSelectAll(e.target.checked)}
-              />
-              Show Select All
-            </label>
-          )}
+                     {multiple && (
+             <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+               <input
+                 type="checkbox"
+                 checked={showSelectAll}
+                 onChange={(e) => setShowSelectAll(e.target.checked)}
+               />
+               Show Select All
+             </label>
+           )}
+           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+             <input
+               type="checkbox"
+               checked={showPreIcon}
+               onChange={(e) => setShowPreIcon(e.target.checked)}
+             />
+             Pre Icon
+           </label>
+           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+             <input
+               type="checkbox"
+               checked={showPostIcon}
+               onChange={(e) => setShowPostIcon(e.target.checked)}
+             />
+             Post Icon
+           </label>
           <button 
             onClick={resetValue}
             style={{ 
@@ -362,20 +398,30 @@ export const InteractiveDemo: Story = {
           </button>
         </div>
 
-        <Dropdown
-          options={getOptions()}
-          value={selectedValue}
-          onChange={handleChange}
-          placeholder={`Try different combinations of features...`}
-          multiple={multiple}
-          searchable={searchable}
-          clearable={clearable}
-          disabled={disabled}
-          loading={loading}
-          error={error}
-          groupBy={groupBy}
-          showSelectAll={showSelectAll}
-        />
+                 <Dropdown
+           options={getOptions()}
+           value={selectedValue}
+           onChange={handleChange}
+           placeholder={`Try different combinations of features...`}
+           multiple={multiple}
+           searchable={searchable}
+           clearable={clearable}
+           disabled={disabled}
+           loading={loading}
+           error={error}
+           groupBy={groupBy}
+           showSelectAll={showSelectAll}
+           preIcon={showPreIcon ? (
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M3 4.5H21L15 12V18.5L9 16.5V12L3 4.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           ) : undefined}
+           postIcon={showPostIcon ? (
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           ) : undefined}
+         />
 
         <div style={{ 
           padding: '10px', 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SidebarTokens } from '../components/Sidebar/types';
+import { SidebarTokens } from '../components/Sidebar/Sidebar.types';
 
 export const SidebarContainer = styled.div<{ $collapsed: boolean; tokens: SidebarTokens['sidebar'] }>`
   width: ${({ $collapsed, tokens }) => $collapsed ? tokens.collapsedWidth : tokens.width};
@@ -59,7 +59,6 @@ export const ToggleSidebarButton = styled.button<{ tokens: SidebarTokens['sideba
 export const SidebarContent = styled.div`
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
   padding: 0;
   display: flex;
   flex-direction: column;

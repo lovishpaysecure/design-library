@@ -112,8 +112,26 @@ export const DropdownTagRemove = styled.button<{ tokens: DropdownTokens }>`
   }
 `;
 
+export const DropdownIcon = styled.span<{ tokens: DropdownTokens; position: 'pre' | 'post' }>`
+  color: ${props => props.tokens.iconColor};
+  font-size: ${props => props.tokens.iconSize};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${props => props.tokens.iconSize};
+  height: ${props => props.tokens.iconSize};
+  margin-${props => props.position === 'pre' ? 'right' : 'left'}: ${props => props.tokens.iconSpacing};
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+  }
+`;
+
 export const DropdownChevron = styled.span<{ tokens: DropdownTokens; isOpen: boolean }>`
-  color: ${props => props.tokens.disabledColor};
+  color: ${props => props.tokens.iconColor};
   font-size: 12px;
   transition: transform 0.2s ease-in-out;
   transform: ${props => props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};
@@ -122,6 +140,12 @@ export const DropdownChevron = styled.span<{ tokens: DropdownTokens; isOpen: boo
   justify-content: center;
   width: 16px;
   height: 16px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+  }
 `;
 
 export const DropdownClearButton = styled.button<{ tokens: DropdownTokens }>`

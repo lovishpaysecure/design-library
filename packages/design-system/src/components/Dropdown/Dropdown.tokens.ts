@@ -29,4 +29,7 @@ export const defaultDropdownTokens: DropdownTokens = {
   errorColor: '#ef4444',
   errorBackgroundColor: '#fef2f2',
   maxHeight: '300px',
+  iconColor: '#6b7280',
+  iconSize: '16px',
+  iconSpacing: '8px',
 }; 

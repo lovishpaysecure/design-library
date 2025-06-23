@@ -6,6 +6,7 @@ import {
   DatePickerContainer,
   DatePickerTrigger,
   DatePickerTriggerText,
+  DatePickerIcon,
   DatePickerTriggerIcon,
   DatePickerPopup,
   DatePickerSidebar,
@@ -101,6 +102,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   value,
   onChange,
   placeholder = "Select date range",
+  preIcon,
+  postIcon,
   disabled = false,
   presets = DEFAULT_PRESETS,
   showTime = true,
@@ -311,13 +314,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       <SingleCalendar>
         <CalendarHeader tokens={tokens}>
           <CalendarNavButton tokens={tokens} onClick={goToPrevMonth}>
-            ←
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </CalendarNavButton>
           <CalendarHeaderText tokens={tokens}>
             {MONTHS[month]} {year}
           </CalendarHeaderText>
           <CalendarNavButton tokens={tokens} onClick={goToNextMonth}>
-            →
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </CalendarNavButton>
         </CalendarHeader>
 
@@ -415,10 +422,24 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         disabled={disabled}
         onClick={handleTriggerClick}
       >
+        {preIcon && (
+          <DatePickerIcon tokens={tokens} position="pre">
+            {preIcon}
+          </DatePickerIcon>
+        )}
         <DatePickerTriggerText tokens={tokens} hasValue={!!value}>
           {value ? formatDateRange(value) : placeholder}
         </DatePickerTriggerText>
-        <DatePickerTriggerIcon tokens={tokens}>📅</DatePickerTriggerIcon>
+        {postIcon && (
+          <DatePickerIcon tokens={tokens} position="post">
+            {postIcon}
+          </DatePickerIcon>
+        )}
+        <DatePickerTriggerIcon tokens={tokens}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </DatePickerTriggerIcon>
       </DatePickerTrigger>
 
       <DatePickerPopup tokens={tokens} isOpen={isOpen}>
