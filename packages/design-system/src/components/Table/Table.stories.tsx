@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Table from './Table';
 import { TableColumn, SortConfig, TableProps } from './Table.types';
+import { 
+  BankData, 
+  mockPaginationData, 
+  smallMockData, 
+  largeMockData, 
+  samplePaginationData,
+  paginationTestConfigs 
+} from '../../utils/mockPaginationData';
 
-// Sample data based on the bank table in the image
-interface BankData {
-  midName: string;
-  bankName: string;
-  trafficPercentage: string;
-  successOrders: number;
-  amountApproved: string;
-  chargebackRate: string;   
-  GroupLimit: string;
-}
+// Sample data based on the bank table in the image (keeping original for backwards compatibility)
 
 const sampleBankData: BankData[] = [
   {
@@ -462,4 +461,299 @@ export const WithRowSelection: Story = {
     },
   },
   render: (args) => <TableWithSorting {...args} />,
+};
+
+export const WithPagination: Story = {
+  render: (args) => {
+    const [sortConfig, setSortConfig] = useState<SortConfig | undefined>(args.sortConfig);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [data, setData] = useState(args.data);
+
+    const pageSize = 10; // Items per page
+    const totalItems = data.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    
+    // Calculate the data for the current page
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentPageData = data.slice(startIndex, endIndex);
+
+    const handleSort = (newSortConfig: SortConfig) => {
+      setSortConfig(newSortConfig);
+      
+      const column = bankColumns.find(col => col.key === newSortConfig.columnKey);
+      if (!column) return;
+
+      const sortedData = [...data].sort((a, b) => {
+        if (column.sortFn) {
+          return newSortConfig.direction === 'asc' 
+            ? column.sortFn(a, b) 
+            : column.sortFn(b, a);
+        }
+        
+        const aValue = a[column.accessor];
+        const bValue = b[column.accessor];
+        
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return newSortConfig.direction === 'asc'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+        
+        const aNum = Number(aValue);
+        const bNum = Number(bValue);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          if (aNum < bNum) return newSortConfig.direction === 'asc' ? -1 : 1;
+          if (aNum > bNum) return newSortConfig.direction === 'asc' ? 1 : -1;
+          return 0;
+        }
+        
+        return newSortConfig.direction === 'asc'
+          ? String(aValue).localeCompare(String(bValue))
+          : String(bValue).localeCompare(String(aValue));
+      });
+
+      setData(sortedData);
+      setCurrentPage(1); // Reset to first page when sorting
+    };
+
+    const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+    };
+
+    const paginationConfig = {
+      currentPage,
+      totalPages,
+      pageSize,
+      totalItems,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5
+    };
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Table with Pagination (87 items)</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          Table with pagination controls showing {pageSize} items per page from a dataset of {totalItems} entries.
+          Test navigation between pages, sorting, and different page sizes.
+        </p>
+        <Table
+          {...args}
+          data={currentPageData}
+          sortConfig={sortConfig}
+          onSort={handleSort}
+          pagination={paginationConfig}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: mockPaginationData, // Using the larger mock dataset
+    variant: 'default',
+    size: 'medium',
+    sortable: true,
+    hoverable: true,
+    showHeader: true,
+    fixedLeftmost: false,
+    fixedRightmost: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the table with pagination functionality using a larger dataset (87 items). The pagination shows information about the current page and provides navigation controls including First, Previous, page numbers, Next, and Last buttons.',
+      },
+    },
+  },
+};
+
+// New story for small dataset pagination
+export const PaginationSmallDataset: Story = {
+  render: (args) => {
+    const { data: testData, description } = paginationTestConfigs.small;
+    const [sortConfig, setSortConfig] = useState<SortConfig | undefined>();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [data, setData] = useState(testData);
+
+    const pageSize = 10; // Standardized to 10 items per page
+    const totalItems = data.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentPageData = data.slice(startIndex, endIndex);
+
+    const handleSort = (newSortConfig: SortConfig) => {
+      setSortConfig(newSortConfig);
+      
+      const column = bankColumns.find(col => col.key === newSortConfig.columnKey);
+      if (!column) return;
+
+      const sortedData = [...data].sort((a, b) => {
+        if (column.sortFn) {
+          return newSortConfig.direction === 'asc' 
+            ? column.sortFn(a, b) 
+            : column.sortFn(b, a);
+        }
+        
+        const aValue = a[column.accessor];
+        const bValue = b[column.accessor];
+        
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return newSortConfig.direction === 'asc'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+        
+        const aNum = Number(aValue);
+        const bNum = Number(bValue);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          if (aNum < bNum) return newSortConfig.direction === 'asc' ? -1 : 1;
+          if (aNum > bNum) return newSortConfig.direction === 'asc' ? 1 : -1;
+          return 0;
+        }
+        
+        return newSortConfig.direction === 'asc'
+          ? String(aValue).localeCompare(String(bValue))
+          : String(bValue).localeCompare(String(aValue));
+      });
+
+      setData(sortedData);
+      setCurrentPage(1);
+    };
+
+    const paginationConfig = {
+      currentPage,
+      totalPages,
+      pageSize,
+      totalItems,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5
+    };
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Small Dataset Pagination</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          {description} - Shows {pageSize} items per page.
+        </p>
+        <Table
+          {...args}
+          data={currentPageData}
+          sortConfig={sortConfig}
+          onSort={handleSort}
+          pagination={paginationConfig}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: smallMockData,
+    variant: 'default',
+    size: 'medium',
+    sortable: true,
+    hoverable: true,
+    showHeader: true,
+  },
+};
+
+// New story for large dataset pagination
+export const PaginationLargeDataset: Story = {
+  render: (args) => {
+    const { data: testData, description } = paginationTestConfigs.large;
+    const [sortConfig, setSortConfig] = useState<SortConfig | undefined>();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [data, setData] = useState(testData);
+
+    const pageSize = 10; // Standardized to 10 items per page
+    const totalItems = data.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentPageData = data.slice(startIndex, endIndex);
+
+    const handleSort = (newSortConfig: SortConfig) => {
+      setSortConfig(newSortConfig);
+      
+      const column = bankColumns.find(col => col.key === newSortConfig.columnKey);
+      if (!column) return;
+
+      const sortedData = [...data].sort((a, b) => {
+        if (column.sortFn) {
+          return newSortConfig.direction === 'asc' 
+            ? column.sortFn(a, b) 
+            : column.sortFn(b, a);
+        }
+        
+        const aValue = a[column.accessor];
+        const bValue = b[column.accessor];
+        
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return newSortConfig.direction === 'asc'
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue);
+        }
+        
+        const aNum = Number(aValue);
+        const bNum = Number(bValue);
+        
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+          if (aNum < bNum) return newSortConfig.direction === 'asc' ? -1 : 1;
+          if (aNum > bNum) return newSortConfig.direction === 'asc' ? 1 : -1;
+          return 0;
+        }
+        
+        return newSortConfig.direction === 'asc'
+          ? String(aValue).localeCompare(String(bValue))
+          : String(bValue).localeCompare(String(aValue));
+      });
+
+      setData(sortedData);
+      setCurrentPage(1);
+    };
+
+    const paginationConfig = {
+      currentPage,
+      totalPages,
+      pageSize,
+      totalItems,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 7
+    };
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Large Dataset Pagination</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          {description} - Shows {pageSize} items per page across {totalPages} pages.
+        </p>
+        <Table
+          {...args}
+          data={currentPageData}
+          sortConfig={sortConfig}
+          onSort={handleSort}
+          pagination={paginationConfig}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: largeMockData,
+    variant: 'striped',
+    size: 'medium',
+    sortable: true,
+    hoverable: true,
+    showHeader: true,
+  },
 }; 

@@ -8,6 +8,40 @@ export interface SortConfig {
   direction: SortDirection;
 }
 
+export interface TablePaginationConfig {
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+  totalItems: number;
+  showFirstLast?: boolean;
+  showPrevNext?: boolean;
+  maxVisiblePages?: number;
+}
+
+export interface PaginationTokens {
+  containerPadding: string;
+  containerBorderTop: string;
+  containerBackground: string;
+  infoTextColor: string;
+  infoFontSize: string;
+  buttonPadding: string;
+  buttonMargin: string;
+  buttonBackground: string;
+  buttonBackgroundHover: string;
+  buttonBackgroundActive: string;
+  buttonBackgroundDisabled: string;
+  buttonTextColor: string;
+  buttonTextColorActive: string;
+  buttonTextColorDisabled: string;
+  buttonBorder: string;
+  buttonBorderRadius: string;
+  buttonFontSize: string;
+  buttonFontWeight: string;
+  currentPageBackground: string;
+  currentPageTextColor: string;
+  currentPageBorder: string;
+}
+
 export interface TableColumn<T> {
   key: string;
   header: string;
@@ -64,4 +98,6 @@ export interface TableProps<T> {
   selectedRows?: number[];
   onRowSelect?: (selectedRows: number[]) => void;
   onRowClick?: (row: T, index: number) => void;
+  pagination?: TablePaginationConfig;
+  onPageChange?: (page: number) => void;
 } 

@@ -12,6 +12,7 @@ import {
 } from './Table.types';
 import { tableTokens } from './Table.tokens';
 import SortIcon from './SortIcon';
+import Pagination from './Pagination';
 import {
   StyledTableContainer,
   StyledTableWrapper,
@@ -93,6 +94,8 @@ const Table = <T extends Record<string, any>>({
   onRowSelect,
   fixedLeftmost = false,
   fixedRightmost = false,
+  pagination,
+  onPageChange,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
   const [internalSelectedRows, setInternalSelectedRows] = useState<number[]>(selectedRows);
@@ -374,6 +377,13 @@ const Table = <T extends Record<string, any>>({
           </StyledTableBody>
         </StyledTable>
       </StyledTableWrapper>
+      
+      {pagination && (
+        <Pagination
+          config={pagination}
+          onPageChange={onPageChange || (() => {})}
+        />
+      )}
     </StyledTableContainer>
   );
 };
