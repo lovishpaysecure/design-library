@@ -98,7 +98,7 @@ export const useSmartPosition = (
       align: optimalAlign,
       adjustments
     });
-  }, [triggerRef, isOpen, placement, align, offset, minSpaceRequired]);
+  }, [triggerRef, isOpen, placement, align, offset, minSpaceRequired.width, minSpaceRequired.height]);
 
   // Recalculate on window resize and scroll
   useEffect(() => {

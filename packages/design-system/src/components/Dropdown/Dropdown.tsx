@@ -79,11 +79,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   
-  // Use smart positioning
+  // Use smart positioning - use stable object reference
+  const minSpaceRequired = useMemo(() => ({ width: 250, height: 200 }), []);
   const smartPosition = useSmartPosition(triggerRef, isOpen, {
     placement,
     align,
-    minSpaceRequired: { width: 250, height: 200 }
+    minSpaceRequired
   });
 
   // Normalize value to array for easier handling
@@ -132,7 +133,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]); // Removed onClose from dependencies
 
   // Focus search input when dropdown opens
   useEffect(() => {

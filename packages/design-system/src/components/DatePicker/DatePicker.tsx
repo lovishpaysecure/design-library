@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DatePickerProps, DatePickerTokens, DateRange, PresetOption } from './DatePicker.types';
@@ -136,11 +136,12 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   
-  // Use smart positioning
+  // Use smart positioning - use stable object reference
+  const minSpaceRequired = useMemo(() => ({ width: 800, height: 500 }), []);
   const smartPosition = useSmartPosition(triggerRef, isOpen, {
     placement,
     align,
-    minSpaceRequired: { width: 800, height: 500 }
+    minSpaceRequired
   });
 
   // Close on outside click
@@ -159,7 +160,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]); // Removed onClose from dependencies
 
   const formatDateRange = (range: DateRange | null): string => {
     if (!range || !range.startDate || !range.endDate) return '';
