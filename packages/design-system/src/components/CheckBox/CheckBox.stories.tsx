@@ -180,10 +180,12 @@ export const SelectAll: Story = {
     
     const allChecked = items.every(Boolean);
     const someChecked = items.some(Boolean);
-    const indeterminate = someChecked && !allChecked;
     
-    const handleSelectAll = (checked: boolean) => {
-      setItems(items.map(() => checked));
+    const handleSelectAll = () => {
+      // If all are checked, unselect all
+      // If some or none are checked, select all
+      const shouldSelectAll = !allChecked;
+      setItems(items.map(() => shouldSelectAll));
     };
     
     const handleItemChange = (index: number, checked: boolean) => {
@@ -195,9 +197,9 @@ export const SelectAll: Story = {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <CheckBox
-          label="Select All"
-          checked={allChecked}
-          indeterminate={indeterminate}
+          label={`Select All (${items.filter(Boolean).length}/${items.length} selected)`}
+          checked={false}
+          indeterminate={true}
           onChange={handleSelectAll}
         />
         <div style={{ paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>

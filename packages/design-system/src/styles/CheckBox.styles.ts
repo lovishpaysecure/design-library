@@ -66,6 +66,8 @@ export const StyledCheckboxContainer = styled.label<StyledCheckboxContainerProps
   cursor: ${({ isDisabled }) => (isDisabled ? 'not-allowed' : 'pointer')};
   color: ${({ isDisabled }) =>
     isDisabled ? checkboxTokens.labelDisabledColor : checkboxTokens.labelColor};
+  line-height: 1;
+  vertical-align: top;
 `;
 
 export const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })<StyledCheckboxInputProps>`
@@ -79,6 +81,8 @@ export const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })<StyledChe
   place-content: center;
   cursor: ${({ isDisabled }) => (isDisabled ? 'not-allowed' : 'pointer')};
   transition: all 0.2s ease;
+  flex-shrink: 0;
+  align-self: center;
 
   ${({ checked, indeterminate, color, isDisabled }) => {
     const state: CheckboxState = indeterminate ? 'indeterminate' : checked ? 'checked' : 'unchecked';
@@ -98,11 +102,13 @@ export const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })<StyledChe
     transform: scale(0);
     transition: transform 0.1s ease-in-out;
     box-shadow: inset ${({ indeterminate }) =>
-      indeterminate ? '1em 0 0 0' : '1em 1em 0 0'} currentColor;
+      indeterminate ? '0 1em 0 0' : '1em 1em 0 0'} currentColor;
     transform-origin: center;
+    
+    /* Figma design: checkmark for checked, horizontal line for indeterminate */
     clip-path: ${({ indeterminate }) =>
       indeterminate
-        ? 'polygon(20% 0%, 80% 0%, 80% 100%, 20% 100%)'
+        ? 'polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%)'
         : 'polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%)'};
   }
 

@@ -209,7 +209,6 @@ export const WithDescriptions: Story = {
   },
 };
 
-<<<<<<< HEAD
 // New stories showcasing enhanced checkbox functionality
 export const EnhancedMultiSelectWithSkills: Story = {
   render: DropdownWithState,
@@ -308,7 +307,9 @@ export const PartialSelectionDemo: Story = {
         story: 'Demonstrates how the Select All checkbox properly shows indeterminate state when partially selected, and how individual checkboxes maintain their checked state independently.',
       },
     },
-=======
+  },
+};
+
 export const WithIcons: Story = {
   render: DropdownWithState,
   args: {
@@ -324,7 +325,6 @@ export const WithIcons: Story = {
         <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
->>>>>>> a117401544f5ebff7975b3a4285058dc8d61fc27
   },
 };
 
@@ -469,32 +469,32 @@ export const InteractiveDemo: Story = {
             />
             Group By
           </label>
-                     {multiple && (
-             <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-               <input
-                 type="checkbox"
-                 checked={showSelectAll}
-                 onChange={(e) => setShowSelectAll(e.target.checked)}
-               />
-               Show Select All
-             </label>
-           )}
-           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-             <input
-               type="checkbox"
-               checked={showPreIcon}
-               onChange={(e) => setShowPreIcon(e.target.checked)}
-             />
-             Pre Icon
-           </label>
-           <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-             <input
-               type="checkbox"
-               checked={showPostIcon}
-               onChange={(e) => setShowPostIcon(e.target.checked)}
-             />
-             Post Icon
-           </label>
+          {multiple && (
+            <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <input
+                type="checkbox"
+                checked={showSelectAll}
+                onChange={(e) => setShowSelectAll(e.target.checked)}
+              />
+              Show Select All
+            </label>
+          )}
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <input
+              type="checkbox"
+              checked={showPreIcon}
+              onChange={(e) => setShowPreIcon(e.target.checked)}
+            />
+            Pre Icon
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <input
+              type="checkbox"
+              checked={showPostIcon}
+              onChange={(e) => setShowPostIcon(e.target.checked)}
+            />
+            Post Icon
+          </label>
           <button 
             onClick={resetValue}
             style={{ 

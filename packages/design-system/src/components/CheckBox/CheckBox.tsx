@@ -94,7 +94,10 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             component="label"
             style={{
               cursor: isDisabled ? 'not-allowed' : 'pointer',
-              userSelect: 'none'
+              userSelect: 'none',
+              lineHeight: '1.2',
+              display: 'flex',
+              alignItems: 'center'
             }}
             onClick={() => {
               if (!isDisabled && finalRef.current) {
