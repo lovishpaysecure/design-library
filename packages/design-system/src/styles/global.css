@@ -23,11 +23,18 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select {
   margin: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .chart-wrapper * {
   border: none !important;
   outline: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 /* Ensure ECharts container has no default styling */
@@ -36,7 +43,9 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select {
   padding: 0 !important;
   margin: 0 !important;
   background: transparent !important;
+  background-color: transparent !important;
   box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 /* Reset any ECharts specific styling */
@@ -45,5 +54,21 @@ h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select {
   padding: 0 !important;
   margin: 0 !important;
   background: transparent !important;
+  background-color: transparent !important;
   box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Specifically target divs with inline styles that ECharts might be adding */
+.chart-wrapper div[style*="background-color"],
+.chart-wrapper div[style*="border"],
+.chart-wrapper div[style*="padding"],
+.chart-wrapper div[style*="border-radius"] {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 } 
