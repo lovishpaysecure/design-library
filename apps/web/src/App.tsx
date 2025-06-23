@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import { Button } from '@paysecure-design/design-system/Button';
 import { Typography } from '@paysecure-design/design-system/Typography';
 
