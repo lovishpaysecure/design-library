@@ -3,17 +3,17 @@ import { TableTokens } from './Table.types';
 export const tableTokens: TableTokens = {
   // Container
   containerBorderRadius: '8px',
-  containerBoxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
+  containerBoxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
   containerBackground: '#ffffff',
   containerBorder: '1px solid #E2E8F0',
 
   // Header
-  headerBackground: '#7C3AED',
+  headerBackground: '#2563EB',
   headerBorderBottom: '1px solid #E2E8F0',
-  headerPadding: '16px 24px',
+  headerPadding: '12px 16px',
 
   // Cell
-  cellPadding: '16px 24px',
+  cellPadding: '12px 16px',
   cellBorderBottom: '1px solid #E2E8F0',
 
   // Row
@@ -23,9 +23,12 @@ export const tableTokens: TableTokens = {
 
   // Variants
   borderedBorder: '1px solid #E2E8F0',
-  stripedRowBackground: '#F5F3FF',
+  stripedRowBackground: '#F8FAFC',
 
   // Sizes
-  smallPadding: '12px 16px',
-  largePadding: '20px 24px',
+  smallPadding: '8px 12px',
+  largePadding: '16px 20px',
+
+  fixedColumnShadowLeft: 'linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)',
+  fixedColumnShadowRight: 'linear-gradient(-90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%)',
 }; 

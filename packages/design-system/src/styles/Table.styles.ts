@@ -25,6 +25,7 @@ interface StyledTableCellProps {
   align?: 'left' | 'center' | 'right';
   fixed?: 'left' | 'right' | 'none';
   isLastFixed?: boolean;
+  isStriped?: boolean;
 }
 
 interface StyledTableRowProps {
@@ -49,14 +50,21 @@ export const StyledTableWrapper = styled.div<StyledTableWrapperProps>`
   overflow-x: auto;
   position: relative;
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  /* Show scrollbar for better UX */
   &::-webkit-scrollbar {
-    display: none;
+    height: 8px;
+    background-color: #f5f5f5;
   }
 
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
 `;
 
 export const StyledTable = styled.table<StyledTableProps>`
@@ -64,6 +72,7 @@ export const StyledTable = styled.table<StyledTableProps>`
   border-collapse: separate;
   border-spacing: 0;
   font-family: inherit;
+  position: relative;
 `;
 
 export const StyledTableHeader = styled.thead<StyledTableHeaderProps>`
@@ -112,12 +121,13 @@ export const StyledTableHeaderCell = styled.th<StyledTableCellProps>`
     padding-right: 24px;
   }
 
-  ${({ fixed }) => {
+  ${({ fixed, tokens }) => {
     if (fixed === 'left') {
       return css`
         position: sticky;
         left: 0;
         z-index: 3;
+        background: ${tokens.headerBackground};
       `;
     }
     if (fixed === 'right') {
@@ -125,23 +135,25 @@ export const StyledTableHeaderCell = styled.th<StyledTableCellProps>`
         position: sticky;
         right: 0;
         z-index: 3;
+        background: ${tokens.headerBackground};
       `;
     }
     return '';
   }}
 
-  ${({ fixed, isLastFixed }) => {
+  ${({ fixed, isLastFixed, tokens }) => {
     if (fixed === 'left' && isLastFixed) {
       return css`
         &::after {
           content: '';
           position: absolute;
           top: 0;
-          right: 0;
+          right: -8px;
           bottom: 0;
-          width: 4px;
-          background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+          width: 8px;
+          background: ${tokens.fixedColumnShadowLeft};
           pointer-events: none;
+          z-index: 4;
         }
       `;
     }
@@ -151,11 +163,12 @@ export const StyledTableHeaderCell = styled.th<StyledTableCellProps>`
           content: '';
           position: absolute;
           top: 0;
-          left: 0;
+          left: -8px;
           bottom: 0;
-          width: 4px;
-          background: linear-gradient(-90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+          width: 8px;
+          background: ${tokens.fixedColumnShadowRight};
           pointer-events: none;
+          z-index: 4;
         }
       `;
     }
@@ -171,6 +184,7 @@ export const StyledTableBody = styled.tbody<StyledTableProps>`
 export const StyledTableRow = styled.tr<StyledTableRowProps>`
   background: ${({ tokens }) => tokens.rowBackground};
   border-bottom: ${({ tokens }) => tokens.rowBorderBottom};
+  position: relative;
 
   ${({ variant, tokens, isStriped }) =>
     variant === 'striped' &&
@@ -211,7 +225,6 @@ export const StyledTableCell = styled.td<StyledTableCellProps>`
   border-bottom: ${({ tokens }) => tokens.cellBorderBottom};
   text-align: ${({ align = 'left' }) => align};
   color: #1E293B;
-  background: inherit;
   position: relative;
   
   ${({ size, tokens }) => {
@@ -239,13 +252,13 @@ export const StyledTableCell = styled.td<StyledTableCellProps>`
     padding-right: 24px;
   }
 
-  ${({ fixed }) => {
+  ${({ fixed, tokens, isStriped }) => {
     if (fixed === 'left') {
       return css`
         position: sticky;
         left: 0;
         z-index: 2;
-        background: inherit;
+        background: ${isStriped ? tokens.stripedRowBackground : tokens.rowBackground};
       `;
     }
     if (fixed === 'right') {
@@ -253,24 +266,25 @@ export const StyledTableCell = styled.td<StyledTableCellProps>`
         position: sticky;
         right: 0;
         z-index: 2;
-        background: inherit;
+        background: ${isStriped ? tokens.stripedRowBackground : tokens.rowBackground};
       `;
     }
     return '';
   }}
 
-  ${({ fixed, isLastFixed }) => {
+  ${({ fixed, isLastFixed, tokens }) => {
     if (fixed === 'left' && isLastFixed) {
       return css`
         &::after {
           content: '';
           position: absolute;
           top: 0;
-          right: 0;
+          right: -8px;
           bottom: 0;
-          width: 4px;
-          background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+          width: 8px;
+          background: ${tokens.fixedColumnShadowLeft};
           pointer-events: none;
+          z-index: 3;
         }
       `;
     }
@@ -280,11 +294,12 @@ export const StyledTableCell = styled.td<StyledTableCellProps>`
           content: '';
           position: absolute;
           top: 0;
-          left: 0;
+          left: -8px;
           bottom: 0;
-          width: 4px;
-          background: linear-gradient(-90deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+          width: 8px;
+          background: ${tokens.fixedColumnShadowRight};
           pointer-events: none;
+          z-index: 3;
         }
       `;
     }

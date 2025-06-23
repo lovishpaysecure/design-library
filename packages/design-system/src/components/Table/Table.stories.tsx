@@ -136,9 +136,13 @@ const meta: Meta<typeof Table> = {
     sortable: {
       control: { type: 'boolean' },
     },
-    fixedColumn: {
-      control: { type: 'select' },
-      options: ['none', 'left', 'right'],
+    fixedLeftmost: {
+      control: { type: 'boolean' },
+      description: 'Fix the leftmost column',
+    },
+    fixedRightmost: {
+      control: { type: 'boolean' },
+      description: 'Fix the rightmost column',
     },
   },
 };
@@ -157,7 +161,7 @@ export const Default: Story = {
   },
 };
 
-export const WithLeftFixedColumn: Story = {
+export const WithFixedLeftmostColumn: Story = {
   args: {
     columns: bankColumns,
     data: sampleBankData,
@@ -165,11 +169,18 @@ export const WithLeftFixedColumn: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
-    fixedColumn: 'left',
+    fixedLeftmost: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Table with the leftmost column (MID name) fixed while the rest of the content scrolls horizontally.',
+      },
+    },
   },
 };
 
-export const WithRightFixedColumn: Story = {
+export const WithFixedRightmostColumn: Story = {
   args: {
     columns: bankColumns,
     data: sampleBankData,
@@ -177,7 +188,34 @@ export const WithRightFixedColumn: Story = {
     size: 'medium',
     hoverable: true,
     showHeader: true,
-    fixedColumn: 'right',
+    fixedRightmost: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Table with the rightmost column (Group Limit) fixed while the rest of the content scrolls horizontally.',
+      },
+    },
+  },
+};
+
+export const WithBothEdgesFixed: Story = {
+  args: {
+    columns: bankColumns,
+    data: sampleBankData,
+    variant: 'striped',
+    size: 'medium',
+    hoverable: true,
+    showHeader: true,
+    fixedLeftmost: true,
+    fixedRightmost: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Table with both leftmost (MID name) and rightmost (Group Limit) columns fixed while the middle content scrolls horizontally.',
+      },
+    },
   },
 };
 
@@ -190,9 +228,16 @@ export const WithFixedColumnAndSelection: Story = {
     hoverable: true,
     showHeader: true,
     isRowSelection: true,
-    fixedColumn: 'left',
-    onRowSelect: (selectedIndexes: number[]) => {
-      console.log('Selected rows:', selectedIndexes);
+    fixedLeftmost: true,
+    onRowSelect: (selectedRows: any[]) => {
+      console.log('Selected rows:', selectedRows);
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Table with row selection and leftmost column fixed. The selection checkbox column is automatically fixed with the leftmost column.',
+      },
     },
   },
 };

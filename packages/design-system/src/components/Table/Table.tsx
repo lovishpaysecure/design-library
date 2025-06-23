@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography';
 import { CheckBox } from '../CheckBox';
-import { TableProps, TableColumn, FixedColumnPosition } from './Table.types';
+import { TableProps, TableColumn } from './Table.types';
 import { tableTokens } from './Table.tokens';
 import {
   StyledTableContainer,
@@ -29,7 +29,8 @@ const Table = <T extends Record<string, any>>({
   isRowSelection = false,
   selectedRows = [],
   onRowSelect,
-  fixedColumn = 'none',
+  fixedLeftmost = false,
+  fixedRightmost = false,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
   const [internalSelectedRows, setInternalSelectedRows] = useState<T[]>(selectedRows);
@@ -103,48 +104,70 @@ const Table = <T extends Record<string, any>>({
     }
   };
 
-  const renderHeaderCell = (column: TableColumn<T>, index: number, isFixed: boolean = false) => (
-    <StyledTableHeaderCell
-      key={column.key}
-      tokens={tokens}
-      size={size}
-      align={column.align}
-      fixed={isFixed ? fixedColumn : 'none'}
-      isLastFixed={isFixed}
-      style={{ 
-        width: column.width,
-        cursor: sortable && column.sortable !== false ? 'pointer' : 'default'
-      }}
-      onClick={() => handleHeaderClick(column)}
-    >
-      <Typography 
-        variant={getHeaderTypographyVariant()} 
-        weight="semibold"
-        component="span"
-        style={{ color: '#ffffff' }}
-      >
-        {column.header}
-      </Typography>
-    </StyledTableHeaderCell>
-  );
+  const getColumnFixedPosition = (index: number): 'left' | 'right' | 'none' => {
+    if (index === 0 && fixedLeftmost) return 'left';
+    if (index === columns.length - 1 && fixedRightmost) return 'right';
+    return 'none';
+  };
 
-  const renderBodyCell = (row: T, rowIndex: number, column: TableColumn<T>, index: number, isFixed: boolean = false) => (
-    <StyledTableCell
-      key={`${rowIndex}-${column.key}`}
-      tokens={tokens}
-      size={size}
-      align={column.align}
-      fixed={isFixed ? fixedColumn : 'none'}
-      isLastFixed={isFixed}
-    >
-      <Typography 
-        variant={getCellTypographyVariant()} 
-        component="span"
+  const isLastFixedColumn = (index: number): boolean => {
+    return (index === 0 && fixedLeftmost) || (index === columns.length - 1 && fixedRightmost);
+  };
+
+  const renderHeaderCell = (column: TableColumn<T>, index: number) => {
+    const fixedPosition = getColumnFixedPosition(index);
+    const isLastFixed = isLastFixedColumn(index);
+
+    return (
+      <StyledTableHeaderCell
+        key={column.key}
+        tokens={tokens}
+        size={size}
+        align={column.align}
+        fixed={fixedPosition}
+        isLastFixed={isLastFixed}
+        style={{ 
+          width: column.width,
+          cursor: sortable && column.sortable !== false ? 'pointer' : 'default'
+        }}
+        onClick={() => handleHeaderClick(column)}
       >
-        {getCellValue(row, column)}
-      </Typography>
-    </StyledTableCell>
-  );
+        <Typography 
+          variant={getHeaderTypographyVariant()} 
+          weight="semibold"
+          component="span"
+          style={{ color: '#ffffff' }}
+        >
+          {column.header}
+        </Typography>
+      </StyledTableHeaderCell>
+    );
+  };
+
+  const renderBodyCell = (row: T, rowIndex: number, column: TableColumn<T>, index: number) => {
+    const fixedPosition = getColumnFixedPosition(index);
+    const isLastFixed = isLastFixedColumn(index);
+    const isRowStriped = variant === 'striped' && rowIndex % 2 === 1;
+
+    return (
+      <StyledTableCell
+        key={`${rowIndex}-${column.key}`}
+        tokens={tokens}
+        size={size}
+        align={column.align}
+        fixed={fixedPosition}
+        isLastFixed={isLastFixed}
+        isStriped={isRowStriped}
+      >
+        <Typography 
+          variant={getCellTypographyVariant()} 
+          component="span"
+        >
+          {getCellValue(row, column)}
+        </Typography>
+      </StyledTableCell>
+    );
+  };
 
   return (
     <StyledTableContainer 
@@ -166,7 +189,8 @@ const Table = <T extends Record<string, any>>({
                     tokens={tokens}
                     size={size}
                     align="center"
-                    fixed={fixedColumn === 'left' ? 'left' : 'none'}
+                    fixed={fixedLeftmost ? 'left' : 'none'}
+                    isLastFixed={fixedLeftmost && columns.length === 0}
                     style={{ width: '48px', padding: '0 8px' }}
                   >
                     <CheckBox
@@ -176,11 +200,7 @@ const Table = <T extends Record<string, any>>({
                     />
                   </StyledTableHeaderCell>
                 )}
-                {columns.map((column, index) => renderHeaderCell(
-                  column,
-                  index,
-                  (fixedColumn === 'left' && index === 0) || (fixedColumn === 'right' && index === columns.length - 1)
-                ))}
+                {columns.map((column, index) => renderHeaderCell(column, index))}
               </StyledTableRow>
             </StyledTableHeader>
           )}
@@ -201,7 +221,8 @@ const Table = <T extends Record<string, any>>({
                     tokens={tokens}
                     size={size}
                     align="center"
-                    fixed={fixedColumn === 'left' ? 'left' : 'none'}
+                    fixed={fixedLeftmost ? 'left' : 'none'}
+                    isLastFixed={fixedLeftmost && columns.length === 0}
                     style={{ width: '48px', padding: '0 8px' }}
                   >
                     <CheckBox
@@ -211,13 +232,7 @@ const Table = <T extends Record<string, any>>({
                     />
                   </StyledTableCell>
                 )}
-                {columns.map((column, index) => renderBodyCell(
-                  row,
-                  rowIndex,
-                  column,
-                  index,
-                  (fixedColumn === 'left' && index === 0) || (fixedColumn === 'right' && index === columns.length - 1)
-                ))}
+                {columns.map((column, index) => renderBodyCell(row, rowIndex, column, index))}
               </StyledTableRow>
             ))}
           </StyledTableBody>

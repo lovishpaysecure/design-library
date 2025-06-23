@@ -28,6 +28,8 @@ export interface TableTokens {
   rowBorderBottom: string;
   stripedRowBackground: string;
   borderedBorder: string;
+  fixedColumnShadowLeft: string;
+  fixedColumnShadowRight: string;
 }
 
 export interface TableProps<T> {
@@ -44,5 +46,6 @@ export interface TableProps<T> {
   isRowSelection?: boolean;
   selectedRows?: T[];
   onRowSelect?: (selectedRows: T[]) => void;
-  fixedColumn?: FixedColumnPosition;
+  fixedLeftmost?: boolean;
+  fixedRightmost?: boolean;
 } 
