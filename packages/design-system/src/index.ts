@@ -11,6 +11,8 @@ export * from './components/Card';
 export * from './components/Modal';
 export * from './components/Sidebar';
 export * from './components/Chart';
+export * from './components/DatePicker';
+export * from './components/Dropdown';
 
 // Hooks
 export * from './hooks/useTokens';

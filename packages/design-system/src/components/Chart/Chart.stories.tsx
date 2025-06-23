@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Chart } from './Chart';
 import { ChartDataPoint } from './Chart.types';
 
-// Generate sample data for different scenarios
 const generateTimeData = (days: number = 30) => {
   const categories = [];
   const today = new Date();
@@ -88,7 +87,6 @@ const meta: Meta<typeof Chart> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Basic chart with all legends selected - matches Figma design
 export const Default: Story = {
   args: {
     data: generateMerchantData(generateTimeData(25)),

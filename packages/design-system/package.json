@@ -1,6 +1,6 @@
 {
   "name": "@paysecure-design/design-system",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "type": "module",
   "exports": {
     ".": {
@@ -47,6 +47,16 @@
       "import": "./dist/Tooltip/index.js",
       "require": "./dist/Tooltip/index.cjs",
       "types": "./dist/Tooltip/index.d.ts"
+    },
+    "./DatePicker": {
+      "import": "./dist/DatePicker/index.js",
+      "require": "./dist/DatePicker/index.cjs",
+      "types": "./dist/DatePicker/index.d.ts"
+    },
+    "./Dropdown": {
+      "import": "./dist/Dropdown/index.js",
+      "require": "./dist/Dropdown/index.cjs",
+      "types": "./dist/Dropdown/index.d.ts"
     }
   },
   "main": "./dist/index.cjs",

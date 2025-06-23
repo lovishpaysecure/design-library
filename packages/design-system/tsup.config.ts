@@ -11,6 +11,8 @@ export default defineConfig({
     'Modal/index': 'src/components/Modal/index.ts',
     'Sidebar/index': 'src/components/Sidebar/index.ts',
     'Tooltip/index': 'src/components/Tooltip/index.ts',
+    'DatePicker/index': 'src/components/DatePicker/index.ts',
+    'Dropdown/index': 'src/components/Dropdown/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,

@@ -3,9 +3,8 @@ import ReactECharts from 'echarts-for-react';
 import { EChartsOption, SeriesOption } from 'echarts';
 import * as echarts from 'echarts';
 import { useTokens } from '../../hooks/useTokens';
-import { ChartProps, ChartTokens, ChartDataPoint, PieChartDataPoint, MapDataPoint } from './Chart.types';
+import { ChartProps, ChartTokens, ChartDataPoint, MapDataPoint } from './Chart.types';
 import { chartTokens } from './Chart.tokens';
-import { Typography } from '../Typography/Typography';
 
 const DEFAULT_COLORS = [
   '#5b7dff', '#ff5656', '#ff9f40', '#4bc0c0', '#9966ff',
