@@ -101,19 +101,20 @@ export const StyledCheckbox = styled.input.attrs({ type: 'checkbox' })<StyledChe
     height: ${({ size = 'medium' }) => checkboxTokens.sizes[size].iconSize};
     transform: scale(0);
     transition: transform 0.1s ease-in-out;
-    box-shadow: inset ${({ indeterminate }) =>
-      indeterminate ? '0 1em 0 0' : '1em 1em 0 0'} currentColor;
     transform-origin: center;
-    
-    /* Figma design: checkmark for checked, horizontal line for indeterminate */
-    clip-path: ${({ indeterminate }) =>
-      indeterminate
-        ? 'polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%)'
-        : 'polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%)'};
   }
 
-  &:checked::before,
+  /* Indeterminate state (priority) */
   &[data-indeterminate='true']::before {
     transform: scale(1);
+    box-shadow: inset 0 1em 0 0 currentColor;
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+  }
+
+  /* Checked state (only when not indeterminate) */
+  &:checked:not([data-indeterminate='true'])::before {
+    transform: scale(1);
+    box-shadow: inset 1em 1em 0 0 currentColor;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
   }
 `; 

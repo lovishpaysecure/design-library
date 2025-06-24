@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CheckboxProps, CheckboxState } from './CheckBox.types';
 import { Typography } from '../Typography/Typography';
 import { StyledCheckboxContainer, StyledCheckbox } from '../../styles/CheckBox.styles';
@@ -22,7 +22,7 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     size = 'medium',
     color = 'primary',
     label,
-    checked,
+    checked = false,
     indeterminate = false,
     isDisabled = false,
     onChange,
@@ -33,21 +33,7 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const inputRef = useRef<HTMLInputElement>(null);
     const finalRef = (ref || inputRef) as React.RefObject<HTMLInputElement>;
 
-    // Determine if controlled (has checked prop AND onChange) or uncontrolled
-    const isControlled = checked !== undefined && onChange !== undefined;
-    const [internalChecked, setInternalChecked] = useState(checked ?? false);
-    
-    // Update internal state when checked prop changes (for controlled mode)
-    useEffect(() => {
-      if (checked !== undefined) {
-        setInternalChecked(checked);
-      }
-    }, [checked]);
-
-    // Use controlled value if available, otherwise use internal state
-    const actualChecked = isControlled ? checked : internalChecked;
-
-    // Handle indeterminate state
+    // Handle indeterminate state on the native input element
     useEffect(() => {
       if (finalRef.current) {
         finalRef.current.indeterminate = indeterminate;
@@ -56,9 +42,6 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const newChecked = event.target.checked;
-      
-      // Always update internal state for immediate UI feedback
-      setInternalChecked(newChecked);
       
       // Call onChange callback if provided
       if (onChange) {
@@ -78,7 +61,7 @@ export const CheckBox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         <StyledCheckbox
           ref={finalRef}
           id={checkboxId}
-          checked={actualChecked}
+          checked={checked}
           disabled={isDisabled}
           onChange={handleInputChange}
           size={size}
