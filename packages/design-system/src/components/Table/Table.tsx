@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography';
 import { CheckBox } from '../CheckBox';
@@ -98,15 +98,15 @@ const Table = <T extends Record<string, any>>({
   onPageChange,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
-  const [internalSelectedRows, setInternalSelectedRows] = useState<number[]>(selectedRows);
+  // Use controlled state for row selection
+  const [internalSelectedRows, setInternalSelectedRows] = useState<number[]>([]);
+  
+  // Use the prop value if provided, otherwise use internal state
+  const currentSelectedRows = selectedRows.length > 0 ? selectedRows : internalSelectedRows;
 
   // If row selection is enabled, we should not allow row clicking
   const effectiveOnRowClick = isRowSelection ? undefined : onRowClick;
   const effectiveHoverable = isRowSelection ? false : hoverable;
-
-  useEffect(() => {
-    setInternalSelectedRows(selectedRows);
-  }, [selectedRows]);
 
   const handleSelectAll = useCallback((checked: boolean) => {
     const newSelectedRows = checked ? data.map((_, index) => index) : [];
@@ -116,15 +116,15 @@ const Table = <T extends Record<string, any>>({
 
   const handleSelectRow = useCallback((rowIndex: number, checked: boolean) => {
     const newSelectedRows = checked
-      ? [...internalSelectedRows, rowIndex]
-      : internalSelectedRows.filter(selectedIndex => selectedIndex !== rowIndex);
+      ? [...currentSelectedRows, rowIndex]
+      : currentSelectedRows.filter(selectedIndex => selectedIndex !== rowIndex);
     setInternalSelectedRows(newSelectedRows);
     onRowSelect?.(newSelectedRows);
-  }, [internalSelectedRows, onRowSelect]);
+  }, [currentSelectedRows, onRowSelect]);
 
-  const isRowSelected = (rowIndex: number) => {
-    return internalSelectedRows.includes(rowIndex);
-  };
+  const isRowSelected = useCallback((rowIndex: number) => {
+    return currentSelectedRows.includes(rowIndex);
+  }, [currentSelectedRows]);
 
   const getCellValue = (row: T, column: TableColumn<T>) => {
     return row[column.accessor];
@@ -168,18 +168,24 @@ const Table = <T extends Record<string, any>>({
     }
   };
 
-  const sortData = (dataToSort: T[]): T[] => {
-    if (!sortConfig || sortConfig.direction === 'none' || !sortColumn) return dataToSort;
+  // Memoize the sort column to avoid infinite re-renders due to columns array reference changes
+  const sortColumn = useMemo(() => {
+    if (!sortConfig || sortConfig.direction === 'none') return null;
+    return columns.find(col => col.key === sortConfig.columnKey);
+  }, [columns, sortConfig?.columnKey]);
 
-    return [...dataToSort].sort((a, b) => {
+  const sortedData = useMemo(() => {
+    if (!sortConfig || sortConfig.direction === 'none' || !sortColumn) return data;
+
+    return [...data].sort((a, b) => {
       if (sortColumn.sortFn) {
         return sortConfig.direction === 'asc' 
           ? sortColumn.sortFn(a, b) 
           : sortColumn.sortFn(b, a);
       }
 
-      const aValue = getCellValue(a, sortColumn);
-      const bValue = getCellValue(b, sortColumn);
+      const aValue = a[sortColumn.accessor];
+      const bValue = b[sortColumn.accessor];
 
       // Convert values to strings for string comparison
       const aString = String(aValue);
@@ -206,16 +212,6 @@ const Table = <T extends Record<string, any>>({
         ? aString.localeCompare(bString)
         : bString.localeCompare(aString);
     });
-  };
-
-  // Memoize the sort column to avoid infinite re-renders due to columns array reference changes
-  const sortColumn = useMemo(() => {
-    if (!sortConfig || sortConfig.direction === 'none') return null;
-    return columns.find(col => col.key === sortConfig.columnKey);
-  }, [columns, sortConfig?.columnKey]);
-
-  const sortedData = useMemo(() => {
-    return sortData(data);
   }, [data, sortConfig, sortColumn]);
 
   const handleRowClick = useCallback((row: T, index: number) => {
@@ -341,8 +337,8 @@ const Table = <T extends Record<string, any>>({
                     style={{ width: '48px', padding: '0 8px' }}
                   >
                     <CheckBox
-                      checked={data.length > 0 && internalSelectedRows.length === data.length}
-                      indeterminate={internalSelectedRows.length > 0 && internalSelectedRows.length < data.length}
+                      checked={data.length > 0 && currentSelectedRows.length === data.length}
+                      indeterminate={currentSelectedRows.length > 0 && currentSelectedRows.length < data.length}
                       onChange={handleSelectAll}
                     />
                   </StyledTableHeaderCell>
