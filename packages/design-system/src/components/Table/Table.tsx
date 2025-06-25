@@ -169,20 +169,17 @@ const Table = <T extends Record<string, any>>({
   };
 
   const sortData = (dataToSort: T[]): T[] => {
-    if (!sortConfig || sortConfig.direction === 'none') return dataToSort;
-
-    const column = columns.find(col => col.key === sortConfig.columnKey);
-    if (!column) return dataToSort;
+    if (!sortConfig || sortConfig.direction === 'none' || !sortColumn) return dataToSort;
 
     return [...dataToSort].sort((a, b) => {
-      if (column.sortFn) {
+      if (sortColumn.sortFn) {
         return sortConfig.direction === 'asc' 
-          ? column.sortFn(a, b) 
-          : column.sortFn(b, a);
+          ? sortColumn.sortFn(a, b) 
+          : sortColumn.sortFn(b, a);
       }
 
-      const aValue = getCellValue(a, column);
-      const bValue = getCellValue(b, column);
+      const aValue = getCellValue(a, sortColumn);
+      const bValue = getCellValue(b, sortColumn);
 
       // Convert values to strings for string comparison
       const aString = String(aValue);
@@ -211,9 +208,15 @@ const Table = <T extends Record<string, any>>({
     });
   };
 
+  // Memoize the sort column to avoid infinite re-renders due to columns array reference changes
+  const sortColumn = useMemo(() => {
+    if (!sortConfig || sortConfig.direction === 'none') return null;
+    return columns.find(col => col.key === sortConfig.columnKey);
+  }, [columns, sortConfig?.columnKey]);
+
   const sortedData = useMemo(() => {
     return sortData(data);
-  }, [data, sortConfig, columns]);
+  }, [data, sortConfig, sortColumn]);
 
   const handleRowClick = (row: T, index: number) => {
     if (effectiveOnRowClick) {
