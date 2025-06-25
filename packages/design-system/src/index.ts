@@ -14,6 +14,7 @@ export * from './components/Chart';
 export * from './components/DatePicker';
 export * from './components/Dropdown';
 export * from './components/CheckBox';
+export * from './components/Table';
 
 // Hooks
 export * from './hooks/useTokens';

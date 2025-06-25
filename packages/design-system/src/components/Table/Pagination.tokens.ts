@@ -1,0 +1,25 @@
+import { PaginationTokens } from './Table.types';
+
+export const paginationTokens: PaginationTokens = {
+  containerPadding: '16px 20px',
+  containerBorderTop: '1px solid #E2E8F0',
+  containerBackground: '#ffffff',
+  infoTextColor: '#6B7280',
+  infoFontSize: '14px',
+  buttonPadding: '6px 12px',
+  buttonMargin: '0 2px',
+  buttonBackground: '#ffffff',
+  buttonBackgroundHover: '#F8FAFC',
+  buttonBackgroundActive: '#5223BC',
+  buttonBackgroundDisabled: '#F8FAFC',
+  buttonTextColor: '#374151',
+  buttonTextColorActive: '#ffffff',
+  buttonTextColorDisabled: '#9CA3AF',
+  buttonBorder: '1px solid #E2E8F0',
+  buttonBorderRadius: '4px',
+  buttonFontSize: '14px',
+  buttonFontWeight: '500',
+  currentPageBackground: '#5223BC',
+  currentPageTextColor: '#ffffff',
+  currentPageBorder: '1px solid #5223BC',
+}; 

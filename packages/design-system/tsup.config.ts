@@ -14,6 +14,7 @@ export default defineConfig({
     'DatePicker/index': 'src/components/DatePicker/index.ts',
     'Dropdown/index': 'src/components/Dropdown/index.ts',
     'CheckBox/index': 'src/components/CheckBox/index.ts',
+    'Table/index': 'src/components/Table/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,
