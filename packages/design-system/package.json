@@ -67,6 +67,11 @@
       "import": "./dist/Table/index.js",
       "require": "./dist/Table/index.cjs",
       "types": "./dist/Table/index.d.ts"
+    },
+    "./Tags": {
+      "import": "./dist/Tags/index.js",
+      "require": "./dist/Tags/index.cjs",
+      "types": "./dist/Tags/index.d.ts"
     }
   },
   "main": "./dist/index.cjs",
