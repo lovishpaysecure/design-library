@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography';
 import { CheckBox } from '../CheckBox';
@@ -108,19 +108,19 @@ const Table = <T extends Record<string, any>>({
     setInternalSelectedRows(selectedRows);
   }, [selectedRows]);
 
-  const handleSelectAll = (checked: boolean) => {
+  const handleSelectAll = useCallback((checked: boolean) => {
     const newSelectedRows = checked ? data.map((_, index) => index) : [];
     setInternalSelectedRows(newSelectedRows);
     onRowSelect?.(newSelectedRows);
-  };
+  }, [data, onRowSelect]);
 
-  const handleSelectRow = (rowIndex: number, checked: boolean) => {
+  const handleSelectRow = useCallback((rowIndex: number, checked: boolean) => {
     const newSelectedRows = checked
       ? [...internalSelectedRows, rowIndex]
       : internalSelectedRows.filter(selectedIndex => selectedIndex !== rowIndex);
     setInternalSelectedRows(newSelectedRows);
     onRowSelect?.(newSelectedRows);
-  };
+  }, [internalSelectedRows, onRowSelect]);
 
   const isRowSelected = (rowIndex: number) => {
     return internalSelectedRows.includes(rowIndex);
@@ -130,19 +130,19 @@ const Table = <T extends Record<string, any>>({
     return row[column.accessor];
   };
 
-  const handleAscSort = (columnKey: string, e: React.MouseEvent<HTMLSpanElement>) => {
+  const handleAscSort = useCallback((columnKey: string, e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
     if (!onSort) return;
     onSort({ columnKey, direction: 'asc' } as SortConfig);
-  };
+  }, [onSort]);
 
-  const handleDescSort = (columnKey: string, e: React.MouseEvent<HTMLSpanElement>) => {
+  const handleDescSort = useCallback((columnKey: string, e: React.MouseEvent<HTMLSpanElement>) => {
     e.stopPropagation();
     if (!onSort) return;
     onSort({ columnKey, direction: 'desc' } as SortConfig);
-  };
+  }, [onSort]);
 
-  const renderSortIcon = (column: TableColumn<T>) => {
+  const renderSortIcon = useCallback((column: TableColumn<T>) => {
     const isColumnSorted = sortConfig?.columnKey === column.key;
     const sortDirection = isColumnSorted ? sortConfig.direction : 'none';
     
@@ -155,7 +155,7 @@ const Table = <T extends Record<string, any>>({
         onDescClick={(e) => handleDescSort(column.key, e)}
       />
     );
-  };
+  }, [sortConfig, tokens.sortIconColor, handleAscSort, handleDescSort]);
 
   const getNextSortDirection = (currentDirection?: SortDirection): SortDirection => {
     switch (currentDirection) {
@@ -218,11 +218,11 @@ const Table = <T extends Record<string, any>>({
     return sortData(data);
   }, [data, sortConfig, sortColumn]);
 
-  const handleRowClick = (row: T, index: number) => {
+  const handleRowClick = useCallback((row: T, index: number) => {
     if (effectiveOnRowClick) {
       effectiveOnRowClick(row, index);
     }
-  };
+  }, [effectiveOnRowClick]);
 
   const getHeaderTypographyVariant = () => {
     switch (size) {
