@@ -228,4 +228,22 @@ export interface DropdownProps {
    * Z-index for the dropdown menu
    */
   zIndex?: number;
+  /**
+   * Configuration for expanded menu that can be bigger than the trigger
+   * When enabled, allows the menu to size itself naturally and uses smart positioning
+   */
+  expandedMenu?: {
+    /**
+     * Whether to enable expanded menu mode
+     */
+    enabled: boolean;
+    /**
+     * Minimum width for the expanded menu (optional)
+     */
+    minWidth?: number;
+    /**
+     * Minimum height for the expanded menu (optional)
+     */
+    minHeight?: number;
+  };
 } 

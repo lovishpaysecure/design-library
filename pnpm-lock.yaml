@@ -36,8 +36,8 @@ importers:
   apps/web:
     dependencies:
       '@paysecure-design/design-system':
-        specifier: ^0.2.4
-        version: 0.2.4(@fortawesome/fontawesome-svg-core@6.7.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^0.2.5
+        version: 0.2.5(@fortawesome/fontawesome-svg-core@6.7.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       echarts-countries-js:
         specifier: ^1.0.5
         version: 1.0.5
@@ -95,8 +95,8 @@ importers:
         version: 3.0.2(echarts@5.6.0)(react@18.3.1)
     devDependencies:
       '@paysecure-design/tokens':
-        specifier: ^1.0.6
-        version: 1.0.6(react@18.3.1)
+        specifier: ^1.0.7
+        version: 1.0.7(react@18.3.1)
       '@storybook/addon-essentials':
         specifier: ^8.0.0
         version: 8.6.14(@types/react@18.3.23)(storybook@8.6.14(prettier@2.8.8))
@@ -974,15 +974,15 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@paysecure-design/design-system@0.2.4':
-    resolution: {integrity: sha512-VTS8xSJT2xeUvoK+Qu78sYgGE3h0cPznFhixZ95FEaz33La5S+XeHwB1S1U39QXhqxIkDBqxBPtjrwdQH0d4Fw==}
+  '@paysecure-design/design-system@0.2.5':
+    resolution: {integrity: sha512-oYDUomAk+gx33Tv591FTBpzzRxJyBSoBS6LjyLOVgvsJagzEbi+SqVmpKh6qw3mCDgPJRmUzO50QVaLH+Iie5A==}
     peerDependencies:
       react: ^18.2.0 || ^19.0.0
       react-dom: ^18.2.0 || ^19.0.0
       styled-components: ^6.0.0-rc.1
 
-  '@paysecure-design/tokens@1.0.6':
-    resolution: {integrity: sha512-SxITM1Rx6MX2kP5DQDAeU1Uh9HPYuQjtjsQB3/h7Lh2MquW6iNeBQYdjnKO8sSi9Ba8HaIU4eclIQAB5eKu6SQ==}
+  '@paysecure-design/tokens@1.0.7':
+    resolution: {integrity: sha512-5eMij66tzZpo1rxYAKTl9+bY6yrWrB7e89O39UykZE4O1VXpGugWXgXItk9CD8EFe7pFE9juasGAWHbfVuYQsw==}
     peerDependencies:
       react: '>=18.0.0'
 
@@ -3910,7 +3910,7 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@paysecure-design/design-system@0.2.4(@fortawesome/fontawesome-svg-core@6.7.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@paysecure-design/design-system@0.2.5(@fortawesome/fontawesome-svg-core@6.7.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.19(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       '@fortawesome/free-solid-svg-icons': 6.7.2
       '@fortawesome/react-fontawesome': 0.2.2(@fortawesome/fontawesome-svg-core@6.7.2)(react@18.3.1)
@@ -3923,7 +3923,7 @@ snapshots:
     transitivePeerDependencies:
       - '@fortawesome/fontawesome-svg-core'
 
-  '@paysecure-design/tokens@1.0.6(react@18.3.1)':
+  '@paysecure-design/tokens@1.0.7(react@18.3.1)':
     dependencies:
       comlink: 4.4.2
       idb: 7.1.1

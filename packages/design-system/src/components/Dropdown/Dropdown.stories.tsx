@@ -629,68 +629,242 @@ export const InteractiveDemo: Story = {
 };
 
 export const SmartPositioning: Story = {
-  render: () => {
-    const [value, setValue] = useState<string | number | (string | number)[] | undefined>();
+  render: (args) => {
+    const [value, setValue] = useState<string | number | (string | number)[] | undefined>(undefined);
     
-    return (
-      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', minHeight: '600px' }}>
-        <h3>Smart Positioning Demo</h3>
-        <p>These Dropdowns will automatically adjust their position based on available viewport space.</p>
+    const DemoFilterPanel = ({ title, description }: { title: string; description: string }) => (
+      <div style={{ 
+        padding: '20px',
+        background: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        minWidth: '400px',
+        maxWidth: '500px',
+      }}>
+        <div>
+          <h4 style={{ margin: '0 0 8px 0' }}>{title}</h4>
+          <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>{description}</p>
+        </div>
         
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
-          <div style={{ width: '200px' }}>
-            <h4>Top Left (auto positioning)</h4>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Categories</label>
             <Dropdown
-              options={basicOptions}
-              value={value}
-              onChange={setValue}
-              placement="auto"
-              align="auto"
-              placeholder="Auto position"
-              searchable={true}
+              options={[
+                { value: 'electronics', label: 'Electronics' },
+                { value: 'clothing', label: 'Clothing' },
+                { value: 'books', label: 'Books' },
+                { value: 'home', label: 'Home & Garden' }
+              ]}
+              placeholder="Select categories"
+              multiple
             />
           </div>
           
-          <div style={{ width: '200px' }}>
-            <h4>Top Right (right aligned)</h4>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Price Range</label>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input 
+                type="number" 
+                placeholder="Min"
+                style={{ 
+                  padding: '8px 12px',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  width: '100px',
+                  fontSize: '14px'
+                }}
+              />
+              <span style={{ alignSelf: 'center', color: '#666' }}>-</span>
+              <input 
+                type="number" 
+                placeholder="Max"
+                style={{ 
+                  padding: '8px 12px',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '6px',
+                  width: '100px',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Rating</label>
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <button
+                  key={rating}
+                  style={{
+                    padding: '6px 12px',
+                    border: '1px solid #E2E8F0',
+                    borderRadius: '4px',
+                    background: 'white',
+                    cursor: 'pointer',
+                    fontSize: '12px',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#f8f9fa';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'white';
+                  }}
+                >
+                  {rating}★+
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <div style={{ display: 'flex', gap: '8px', marginTop: '12px', borderTop: '1px solid #E2E8F0', paddingTop: '16px' }}>
+          <button
+            style={{
+              padding: '8px 16px',
+              background: '#5223BC',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '500'
+            }}
+          >
+            Apply Filters
+          </button>
+          <button
+            style={{
+              padding: '8px 16px',
+              background: 'white',
+              border: '1px solid #E2E8F0',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    );
+
+    return (
+      <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '30px', minHeight: '1000px' }}>
+        <div>
+          <h3>Smart Positioning with Expanded Menu</h3>
+          <p>These expanded dropdown menus will automatically adjust their position based on available viewport space.</p>
+        </div>
+        
+        {/* Row 1: Auto positioning (top area) */}
+        <div style={{ display: 'flex', gap: '50px', justifyContent: 'space-between' }}>
+          <div style={{ flex: 1 }}>
+            <h4>Top Left - Auto/Auto</h4>
+            <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 8px 0' }}>Auto placement & alignment</p>
             <Dropdown
-              options={countryOptions.slice(0, 5)}
-              value={value}
-              onChange={setValue}
+              options={[]}
+              placeholder="Auto position"
+              renderDropdown={() => <DemoFilterPanel title="Auto/Auto" description="Smart positioning adjusts based on viewport space" />}
+              expandedMenu={{
+                enabled: true,
+                minWidth: 400,
+                minHeight: 300
+              }}
+              placement="auto"
+              align="auto"
+            />
+          </div>
+          
+          <div style={{ flex: 1, textAlign: 'right' }}>
+            <h4>Top Right - Auto/Right</h4>
+            <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 8px 0' }}>Auto placement, right aligned</p>
+            <Dropdown
+              options={[]}
+              placeholder="Right aligned"
+              renderDropdown={() => <DemoFilterPanel title="Auto/Right" description="Right aligned with smart vertical positioning" />}
+              expandedMenu={{
+                enabled: true,
+                minWidth: 400,
+                minHeight: 300
+              }}
               placement="auto"
               align="right"
-              placeholder="Right aligned"
-              multiple={true}
-              searchable={true}
             />
           </div>
         </div>
         
-        <div style={{ marginTop: '250px', display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
-          <div style={{ width: '200px' }}>
-            <h4>Bottom Left (forced top)</h4>
+        {/* Row 2: Bottom placement (middle area) */}
+        <div style={{ display: 'flex', gap: '50px', justifyContent: 'space-between', marginTop: '150px' }}>
+          <div style={{ flex: 1 }}>
+            <h4>Middle Left - Bottom/Left</h4>
+            <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 8px 0' }}>Force bottom, left aligned</p>
             <Dropdown
-              options={basicOptions}
-              value={value}
-              onChange={setValue}
-              placement="top"
+              options={[]}
+              placeholder="Bottom left"
+              renderDropdown={() => <DemoFilterPanel title="Bottom/Left" description="Forced bottom placement with left alignment" />}
+              expandedMenu={{
+                enabled: true,
+                minWidth: 400,
+                minHeight: 300
+              }}
+              placement="bottom"
               align="left"
-              placeholder="Top placement"
-              searchable={true}
             />
           </div>
           
-          <div style={{ width: '200px' }}>
-            <h4>Bottom Right (auto adjust)</h4>
+          <div style={{ flex: 1, textAlign: 'right' }}>
+            <h4>Middle Right - Bottom/Right</h4>
+            <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 8px 0' }}>Force bottom, right aligned</p>
             <Dropdown
-              options={countryOptions}
-              value={value}
-              onChange={setValue}
-              placement="auto"
-              align="auto"
-              placeholder="Auto adjust"
-              searchable={true}
-              groupBy={true}
+              options={[]}
+              placeholder="Bottom right"
+              renderDropdown={() => <DemoFilterPanel title="Bottom/Right" description="Forced bottom placement with right alignment" />}
+              expandedMenu={{
+                enabled: true,
+                minWidth: 400,
+                minHeight: 300
+              }}
+              placement="bottom"
+              align="right"
+            />
+          </div>
+        </div>
+        
+        {/* Row 3: Top placement (bottom area) */}
+        <div style={{ display: 'flex', gap: '50px', justifyContent: 'space-between', marginTop: '200px' }}>
+          <div style={{ flex: 1 }}>
+            <h4>Bottom Left - Top/Left</h4>
+            <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 8px 0' }}>Force top, left aligned</p>
+            <Dropdown
+              options={[]}
+              placeholder="Top left"
+              renderDropdown={() => <DemoFilterPanel title="Top/Left" description="Forced top placement with left alignment" />}
+              expandedMenu={{
+                enabled: true,
+                minWidth: 400,
+                minHeight: 300
+              }}
+              placement="top"
+              align="left"
+            />
+          </div>
+          
+          <div style={{ flex: 1, textAlign: 'right' }}>
+            <h4>Bottom Right - Top/Right</h4>
+            <p style={{ fontSize: '12px', color: '#666', margin: '4px 0 8px 0' }}>Force top, right aligned</p>
+            <Dropdown
+              options={[]}
+              placeholder="Top right"
+              renderDropdown={() => <DemoFilterPanel title="Top/Right" description="Forced top placement with right alignment" />}
+              expandedMenu={{
+                enabled: true,
+                minWidth: 400,
+                minHeight: 300
+              }}
+              placement="top"
+              align="right"
             />
           </div>
         </div>
@@ -699,21 +873,44 @@ export const SmartPositioning: Story = {
         
         <div style={{ padding: '16px', backgroundColor: '#f0f9ff', borderRadius: '8px', border: '1px solid #0284c7' }}>
           <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', color: '#0284c7' }}>
-            🎯 Smart Positioning Features:
+            🎯 All Smart Positioning Combinations:
           </h4>
-          <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '13px', color: '#0369a1' }}>
-            <li><strong>Auto placement:</strong> Automatically chooses top/bottom based on available space</li>
-            <li><strong>Auto alignment:</strong> Adjusts left/right alignment to stay within viewport</li>
-            <li><strong>Responsive sizing:</strong> Constrains width/height when space is limited</li>
-            <li><strong>Scroll awareness:</strong> Updates position on scroll events</li>
-            <li><strong>Window resize:</strong> Recalculates position on window resize</li>
-            <li><strong>Viewport constraints:</strong> Never extends outside the visible area</li>
-          </ul>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '12px' }}>
+            <div>
+              <h5 style={{ margin: '0 0 6px 0', fontSize: '12px', fontWeight: '600', color: '#0284c7' }}>Placement Options:</h5>
+              <ul style={{ margin: 0, paddingLeft: '16px', fontSize: '11px', color: '#0369a1' }}>
+                <li><strong>auto:</strong> Smart vertical positioning</li>
+                <li><strong>top:</strong> Force menu above trigger</li>
+                <li><strong>bottom:</strong> Force menu below trigger</li>
+              </ul>
+            </div>
+            <div>
+              <h5 style={{ margin: '0 0 6px 0', fontSize: '12px', fontWeight: '600', color: '#0284c7' }}>Alignment Options:</h5>
+              <ul style={{ margin: 0, paddingLeft: '16px', fontSize: '11px', color: '#0369a1' }}>
+                <li><strong>auto:</strong> Smart horizontal positioning</li>
+                <li><strong>left:</strong> Align menu to left edge</li>
+                <li><strong>right:</strong> Align menu to right edge</li>
+              </ul>
+            </div>
+          </div>
+          <div style={{ marginTop: '12px', padding: '8px', backgroundColor: '#e0f2fe', borderRadius: '4px' }}>
+            <p style={{ margin: 0, fontSize: '11px', color: '#0369a1' }}>
+              💡 <strong>Smart Features:</strong> Auto placement chooses top/bottom based on space. Auto alignment adjusts left/right to stay in viewport. 
+              Expanded menus respect minimum dimensions while adapting to content size.
+            </p>
+          </div>
         </div>
       </div>
-         );
-   },
- };
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Comprehensive demonstration of all smart positioning combinations with expanded menus. Shows how the dropdown automatically adjusts placement (top/bottom) and alignment (left/center/right) based on viewport constraints, following the same pattern as the DatePicker component.',
+      },
+    },
+  },
+};
 
 export const CustomDropdownView: Story = {
   render: () => {
@@ -962,5 +1159,350 @@ export const CustomDropdownGrid: Story = {
         )}
       </div>
     );
+  },
+};
+
+const FilterPanel = () => {
+  return (
+    <div style={{ 
+      padding: '20px',
+      background: 'white',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '16px'
+    }}>
+      <div>
+        <h3 style={{ margin: '0 0 16px 0' }}>Filter Options</h3>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px' }}>Categories</label>
+            <Dropdown
+              options={[
+                { value: 'electronics', label: 'Electronics' },
+                { value: 'clothing', label: 'Clothing' },
+                { value: 'books', label: 'Books' }
+              ]}
+              placeholder="Select categories"
+              multiple
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px' }}>Price Range</label>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input 
+                type="number" 
+                placeholder="Min"
+                style={{ 
+                  padding: '8px',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '4px',
+                  width: '100px'
+                }}
+              />
+              <input 
+                type="number" 
+                placeholder="Max"
+                style={{ 
+                  padding: '8px',
+                  border: '1px solid #E2E8F0',
+                  borderRadius: '4px',
+                  width: '100px'
+                }}
+              />
+            </div>
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: '8px' }}>Rating</label>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <button
+                  key={rating}
+                  style={{
+                    padding: '8px 12px',
+                    border: '1px solid #E2E8F0',
+                    borderRadius: '4px',
+                    background: 'white',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {rating}★
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+        <button
+          style={{
+            padding: '8px 16px',
+            background: '#5223BC',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Apply Filters
+        </button>
+        <button
+          style={{
+            padding: '8px 16px',
+            background: 'white',
+            border: '1px solid #E2E8F0',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  );
+};
+
+
+
+export const ExpandedMenuVariants: Story = {
+  render: () => {
+    const [menuVariant, setMenuVariant] = useState<'small' | 'large' | 'auto'>('large');
+    
+    const menuConfigs = {
+      small: {
+        enabled: true,
+        minWidth: 350,
+        minHeight: 250
+      },
+      large: {
+        enabled: true,
+        minWidth: 500,
+        minHeight: 400
+      },
+      auto: {
+        enabled: true,
+        minWidth: undefined,
+        minHeight: undefined
+        // No min dimensions - let content determine size
+      }
+    };
+
+    const DynamicPanel = ({ position }: { position: string }) => (
+      <div style={{ 
+        padding: '20px',
+        background: 'white',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        // Natural content size for 'auto' variant
+        ...(menuVariant === 'auto' && {
+          minWidth: '350px',
+          maxWidth: '500px',
+        })
+      }}>
+        <h4 style={{ margin: 0 }}>Smart Positioned Menu ({position})</h4>
+        <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
+          Current variant: <strong>{menuVariant}</strong>
+        </p>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '12px'
+        }}>
+          <div style={{ padding: '12px', background: '#f8f9fa', borderRadius: '6px' }}>
+            <strong>Min Width:</strong> {menuConfigs[menuVariant].minWidth || 'Auto'}
+          </div>
+          <div style={{ padding: '12px', background: '#f8f9fa', borderRadius: '6px' }}>
+            <strong>Min Height:</strong> {menuConfigs[menuVariant].minHeight || 'Auto'}
+          </div>
+          <div style={{ padding: '12px', background: '#f8f9fa', borderRadius: '6px' }}>
+            <strong>Position:</strong> {position}
+          </div>
+          <div style={{ padding: '12px', background: '#f8f9fa', borderRadius: '6px' }}>
+            <strong>Viewport Safe:</strong> Yes
+          </div>
+        </div>
+        
+        {/* Dynamic content based on variant */}
+        {menuVariant === 'auto' && (
+          <div style={{ padding: '12px', background: '#e3f2fd', borderRadius: '6px' }}>
+            <p style={{ margin: 0, fontSize: '14px' }}>
+              🎯 <strong>Auto-sizing:</strong> No minimum dimensions set. Content determines size naturally.
+            </p>
+          </div>
+        )}
+        
+        {menuVariant === 'large' && (
+          <div style={{ padding: '12px', background: '#f3e5f5', borderRadius: '6px' }}>
+            <p style={{ margin: 0, fontSize: '14px' }}>
+              📐 <strong>Large preset:</strong> Minimum 500×400px. Great for complex content.
+            </p>
+          </div>
+        )}
+        
+        {menuVariant === 'small' && (
+          <div style={{ padding: '12px', background: '#fff3e0', borderRadius: '6px' }}>
+            <p style={{ margin: 0, fontSize: '14px' }}>
+              📱 <strong>Small preset:</strong> Minimum 350×250px. Perfect for compact interfaces.
+            </p>
+          </div>
+        )}
+
+        <div style={{ 
+          padding: '12px', 
+          background: position === 'Right Side' ? '#e8f5e8' : '#fff3e0', 
+          borderRadius: '6px' 
+        }}>
+          <p style={{ margin: 0, fontSize: '14px' }}>
+            {position === 'Right Side' ? (
+              <>🔄 <strong>Right-aligned:</strong> Menu opens to the left to stay in viewport.</>
+            ) : (
+              <>🔄 <strong>Left-aligned:</strong> Menu opens to the right with available space.</>
+            )}
+          </p>
+        </div>
+      </div>
+    );
+
+    return (
+      <div style={{ 
+        padding: '40px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '30px',
+        width: '100%',
+        minHeight: '600px'
+      }}>
+        {/* Header with controls */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h3 style={{ margin: '0 0 8px 0' }}>Smart Positioning - Left & Right Examples</h3>
+            <p style={{ margin: 0, color: '#666' }}>
+              Dropdowns automatically adjust their alignment based on available viewport space
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            {Object.keys(menuConfigs).map((key) => (
+              <button
+                key={key}
+                onClick={() => setMenuVariant(key as keyof typeof menuConfigs)}
+                style={{
+                  padding: '8px 12px',
+                  background: menuVariant === key ? '#5223BC' : 'white',
+                  color: menuVariant === key ? 'white' : '#333',
+                  border: '1px solid #5223BC',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  textTransform: 'capitalize',
+                  fontSize: '14px'
+                }}
+              >
+                {key}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Left and Right positioned dropdowns */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'flex-start',
+          width: '100%',
+          gap: '40px'
+        }}>
+          {/* Left side - opens to the right */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div>
+              <h4 style={{ margin: '0 0 4px 0' }}>Left Side Trigger</h4>
+              <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+                Opens to the right (default behavior)
+              </p>
+            </div>
+            <Dropdown
+              options={[]}
+              placeholder="Open from Left"
+              renderDropdown={() => <DynamicPanel position="Left Side" />}
+              expandedMenu={menuConfigs[menuVariant]}
+              placement="auto"
+              align="auto"
+            />
+          </div>
+
+          {/* Right side - opens to the left */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'flex-end' }}>
+            <div style={{ textAlign: 'right' }}>
+              <h4 style={{ margin: '0 0 4px 0' }}>Right Side Trigger</h4>
+              <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+                Smart positioning opens to the left
+              </p>
+            </div>
+            <Dropdown
+              options={[]}
+              placeholder="Open from Right"
+              renderDropdown={() => <DynamicPanel position="Right Side" />}
+              expandedMenu={menuConfigs[menuVariant]}
+              placement="auto"
+              align="auto"
+            />
+          </div>
+        </div>
+
+        {/* Center positioned examples */}
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center',
+          marginTop: '20px'
+        }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h4 style={{ margin: '0 0 4px 0' }}>Center Trigger</h4>
+              <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#666' }}>
+                Smart positioning chooses optimal alignment
+              </p>
+            </div>
+            <Dropdown
+              options={[]}
+              placeholder="Open from Center"
+              renderDropdown={() => <DynamicPanel position="Center" />}
+              expandedMenu={menuConfigs[menuVariant]}
+              placement="auto"
+              align="auto"
+            />
+          </div>
+        </div>
+
+        {/* Info box */}
+        <div style={{ 
+          padding: '16px', 
+          backgroundColor: '#f0f9ff', 
+          borderRadius: '8px', 
+          border: '1px solid #0284c7',
+          marginTop: '20px'
+        }}>
+          <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', color: '#0284c7' }}>
+            🎯 Smart Positioning Behavior:
+          </h4>
+          <div style={{ fontSize: '13px', lineHeight: '1.6', color: '#0369a1' }}>
+            <p style={{ margin: '0 0 8px 0' }}>
+              • <strong>Left Side:</strong> Menu opens to the right (standard left alignment)<br/>
+              • <strong>Right Side:</strong> Menu automatically opens to the left to stay in viewport<br/>
+              • <strong>Center:</strong> Chooses optimal alignment based on available space<br/>
+              • <strong>All positions:</strong> Respect minimum dimensions while adapting to content size
+            </p>
+            <p style={{ margin: 0, fontStyle: 'italic' }}>
+              The positioning system automatically detects viewport constraints and adjusts alignment accordingly, 
+              ensuring the expanded menu always remains fully visible and accessible.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Demonstrates smart positioning with expanded menus opening from both left and right sides. The positioning system automatically adjusts alignment based on viewport constraints to ensure the menu stays visible.',
+      },
+    },
   },
 }; 
