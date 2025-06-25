@@ -177,10 +177,28 @@ export const DropdownMenu = styled.div<{
   $align?: 'left' | 'right';
   $zIndex?: number;
   width?: string | number;
+  $expandedMenu?: {
+    enabled: boolean;
+    minWidth?: number;
+    minHeight?: number;
+  };
 }>`
   position: absolute;
-  ${props => props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
-  ${props => props.$align === 'right' ? 'right: 0;' : 'left: 0; right: 0;'}
+  ${props => {
+    if (props.$expandedMenu?.enabled) {
+      // For expanded menu, respect smart positioning alignment
+      return `
+        ${props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
+        ${props.$align === 'right' ? 'right: 0;' : 'left: 0;'}
+      `;
+    } else {
+      // Default positioning for regular dropdowns
+      return `
+        ${props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
+        ${props.$align === 'right' ? 'right: 0;' : 'left: 0; right: 0;'}
+      `;
+    }
+  }}
   z-index: ${props => props.$zIndex || 1000};
   background-color: ${props => props.tokens.backgroundColor};
   border: 1px solid ${props => props.tokens.borderColor};
@@ -188,9 +206,25 @@ export const DropdownMenu = styled.div<{
   box-shadow: ${props => props.tokens.shadowColor};
   display: ${props => props.isOpen ? 'block' : 'none'};
   max-height: ${props => props.tokens.maxHeight};
-  max-width: 90vw;
+  max-width: ${props => props.$expandedMenu?.enabled ? 'none' : '90vw'};
   overflow: hidden;
-  ${props => props.width && `width: ${typeof props.width === 'number' ? props.width + 'px' : props.width};`}
+  ${props => {
+    // Handle width
+    if (props.$expandedMenu?.enabled) {
+      return props.$expandedMenu.minWidth ? `min-width: ${props.$expandedMenu.minWidth}px;` : '';
+    } else if (props.width) {
+      const width = typeof props.width === 'number' ? `${props.width}px` : props.width;
+      return `width: ${width};`;
+    }
+    return '';
+  }}
+  ${props => {
+    // Handle height
+    if (props.$expandedMenu?.enabled && props.$expandedMenu.minHeight) {
+      return `min-height: ${props.$expandedMenu.minHeight}px;`;
+    }
+    return '';
+  }}
 `;
 
 export const DropdownSearch = styled.input<{ tokens: DropdownTokens }>`

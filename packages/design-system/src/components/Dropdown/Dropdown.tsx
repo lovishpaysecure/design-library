@@ -71,6 +71,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   dropdownWidth,
   showSelectAll = false,
   groupBy = false,
+  expandedMenu,
 }) => {
   const tokens = useTokens<DropdownTokens>('dropdown', defaultDropdownTokens);
   const [isOpen, setIsOpen] = useState(false);
@@ -80,7 +81,17 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const searchInputRef = useRef<HTMLInputElement>(null);
   
   // Use smart positioning - use stable object reference
-  const minSpaceRequired = useMemo(() => ({ width: 250, height: 200 }), []);
+  const minSpaceRequired = useMemo(() => {
+    if (expandedMenu?.enabled) {
+      // For expanded menus, set larger minimum space requirements like DatePicker
+      return {
+        width: expandedMenu.minWidth || 400,
+        height: expandedMenu.minHeight || 300
+      };
+    }
+    return { width: 250, height: 200 };
+  }, [expandedMenu]);
+  
   const smartPosition = useSmartPosition(triggerRef, isOpen, {
     placement,
     align,
@@ -441,7 +452,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
         $placement={smartPosition.placement}
         $align={smartPosition.align}
         $zIndex={zIndex}
-        width={dropdownWidth}
+        width={expandedMenu?.enabled ? undefined : dropdownWidth}
+        $expandedMenu={expandedMenu}
         style={smartPosition.adjustments}
       >
         {renderDropdown ? (
