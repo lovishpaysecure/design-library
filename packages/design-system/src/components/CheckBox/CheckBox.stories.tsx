@@ -179,13 +179,16 @@ export const SelectAll: Story = {
     const [items, setItems] = useState([false, false, false]);
     
     const allChecked = items.every(Boolean);
-    const someChecked = items.some(Boolean);
+    const noneChecked = items.every(item => !item);
     
     const handleSelectAll = () => {
-      // If all are checked, unselect all
-      // If some or none are checked, select all
-      const shouldSelectAll = !allChecked;
-      setItems(items.map(() => shouldSelectAll));
+      if (allChecked) {
+        // If all are selected (showing "-"), unselect all (back to empty)
+        setItems(items.map(() => false));
+      } else {
+        // If none or some are selected (showing empty), select all (show "-")
+        setItems(items.map(() => true));
+      }
     };
     
     const handleItemChange = (index: number, checked: boolean) => {
@@ -199,7 +202,7 @@ export const SelectAll: Story = {
         <CheckBox
           label={`Select All (${items.filter(Boolean).length}/${items.length} selected)`}
           checked={false}
-          indeterminate={true}
+          indeterminate={allChecked}
           onChange={handleSelectAll}
         />
         <div style={{ paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -216,6 +219,7 @@ export const SelectAll: Story = {
     );
   },
 };
+
 
 // Size comparison
 export const SizeComparison: Story = {

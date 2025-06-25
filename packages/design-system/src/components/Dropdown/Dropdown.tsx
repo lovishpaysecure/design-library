@@ -339,8 +339,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         .map(option => option.value);
       const allSelected = allFilteredValues.length > 0 && 
         allFilteredValues.every(val => selectedValues.includes(val));
-      const someSelected = allFilteredValues.some(val => selectedValues.includes(val));
-      const indeterminate = someSelected && !allSelected;
+      const selectedCount = allFilteredValues.filter(val => selectedValues.includes(val)).length;
 
       content.push(
         <DropdownSelectAll
@@ -352,11 +351,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
             variant="checkbox"
             size="small"
             color="primary"
-            checked={allSelected}
-            indeterminate={indeterminate}
+            checked={false}
+            indeterminate={allSelected}
             onChange={() => {}} // Handled by parent click
           />
-          <span>Select All</span>
+          <span>Select All ({selectedCount}/{allFilteredValues.length})</span>
         </DropdownSelectAll>
       );
       content.push(<DropdownDivider key="divider" tokens={tokens} />);

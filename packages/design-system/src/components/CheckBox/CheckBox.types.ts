@@ -35,19 +35,23 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
    */
   label?: string;
   /**
-   * Whether the checkbox is checked
+   * Whether the checkbox is checked (controlled component)
+   * @default false
    */
   checked?: boolean;
   /**
    * Whether the checkbox is in an indeterminate state
+   * @default false
    */
   indeterminate?: boolean;
   /**
    * Whether the checkbox is disabled
+   * @default false
    */
   isDisabled?: boolean;
   /**
    * Whether the checkbox is required
+   * @default false
    */
   isRequired?: boolean;
   /**
@@ -64,6 +68,7 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
   value?: string;
   /**
    * Callback fired when the state is changed
+   * Note: This component is stateless - parent must manage checked state
    */
   onChange?: (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => void;
   /**

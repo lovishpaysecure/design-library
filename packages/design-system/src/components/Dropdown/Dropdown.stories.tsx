@@ -232,12 +232,12 @@ export const EnhancedMultiSelectWithSkills: Story = {
 
 export const CheckboxSelectAllDemo: Story = {
   render: () => {
-    const [selectedValue, setSelectedValue] = useState<(string | number)[]>(['apple', 'banana']);
+    const [selectedValue, setSelectedValue] = useState<(string | number)[]>([]);
 
     return (
       <div style={{ width: '300px' }}>
         <h4 style={{ marginBottom: '16px', color: '#333' }}>
-          Select All with Indeterminate State
+          Enhanced Select All Behavior
         </h4>
         <Dropdown
           options={groupedOptions}
@@ -250,11 +250,16 @@ export const CheckboxSelectAllDemo: Story = {
           clearable={true}
           groupBy={true}
         />
-        <div style={{ marginTop: '12px', padding: '8px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
-          <small>
-            <strong>Selected ({selectedValue.length}):</strong>{' '}
-            {selectedValue.length > 0 ? selectedValue.join(', ') : 'None'}
-          </small>
+        <div style={{ marginTop: '12px', padding: '12px', backgroundColor: '#f8f9fa', borderRadius: '6px', border: '1px solid #e9ecef' }}>
+          <div style={{ marginBottom: '8px' }}>
+            <strong>Select All Behavior:</strong>
+          </div>
+          <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
+            • <strong>Empty checkbox:</strong> No items or some items selected<br/>
+            • <strong>"-" icon:</strong> Only when ALL items are selected<br/>
+            • <strong>Selected:</strong> {selectedValue.length}/{groupedOptions.length} items<br/>
+            • <strong>Current:</strong> {selectedValue.length > 0 ? selectedValue.join(', ') : 'None'}
+          </div>
         </div>
       </div>
     );
@@ -262,7 +267,7 @@ export const CheckboxSelectAllDemo: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Shows the "Select All" checkbox functionality with proper indeterminate state when some (but not all) options are selected. The checkbox uses our design system CheckBox component with small size and primary color.',
+        story: 'Demonstrates the enhanced "Select All" checkbox behavior where the "-" icon only appears when ALL items are selected, not for partial selections. Empty checkbox shows for no selection or partial selection.',
       },
     },
   },
@@ -272,10 +277,16 @@ export const PartialSelectionDemo: Story = {
   render: () => {
     const [selectedSkills, setSelectedSkills] = useState<(string | number)[]>(['js', 'react']);
 
+    const getSelectAllState = () => {
+      if (selectedSkills.length === 0) return 'Empty checkbox - No items selected';
+      if (selectedSkills.length === skillOptions.length) return '"-" icon - All items selected';
+      return 'Empty checkbox - Partial selection';
+    };
+
     return (
       <div style={{ width: '320px' }}>
         <h4 style={{ marginBottom: '16px', color: '#333' }}>
-          Partial Selection State
+          Select All States Demo
         </h4>
         <Dropdown
           options={skillOptions}
@@ -292,10 +303,10 @@ export const PartialSelectionDemo: Story = {
           <div style={{ marginBottom: '8px' }}>
             <strong>Selection Status:</strong>
           </div>
-          <div style={{ fontSize: '14px', lineHeight: '1.4' }}>
-            • Selected: {selectedSkills.length}/{skillOptions.length} skills<br/>
-            • Select All state: {selectedSkills.length === 0 ? 'Unchecked' : selectedSkills.length === skillOptions.length ? 'Checked' : 'Indeterminate'}<br/>
-            • Current: {selectedSkills.length > 0 ? selectedSkills.join(', ') : 'None'}
+          <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
+            • <strong>Selected:</strong> {selectedSkills.length}/{skillOptions.length} skills<br/>
+            • <strong>Select All shows:</strong> {getSelectAllState()}<br/>
+            • <strong>Current items:</strong> {selectedSkills.length > 0 ? selectedSkills.join(', ') : 'None'}
           </div>
         </div>
       </div>
@@ -304,7 +315,68 @@ export const PartialSelectionDemo: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Demonstrates how the Select All checkbox properly shows indeterminate state when partially selected, and how individual checkboxes maintain their checked state independently.',
+        story: 'Demonstrates the new Select All behavior where "-" icon only appears when ALL items are selected. Partial selections show an empty checkbox, maintaining consistent behavior with the enhanced CheckBox component.',
+      },
+    },
+  },
+};
+
+export const EnhancedSelectAllWorkflow: Story = {
+  render: () => {
+    const [selectedItems, setSelectedItems] = useState<(string | number)[]>([]);
+
+    const handleReset = () => setSelectedItems([]);
+    const handleSelectHalf = () => setSelectedItems(['apple', 'banana', 'carrot']);
+    const handleSelectAll = () => setSelectedItems(groupedOptions.map(opt => opt.value));
+
+    const getSelectAllDescription = () => {
+      if (selectedItems.length === 0) return 'Empty - Click "Select All" to select all items';
+      if (selectedItems.length === groupedOptions.length) return 'Shows "-" - All items selected';
+      return `Empty - ${selectedItems.length} of ${groupedOptions.length} selected`;
+    };
+
+    return (
+      <div style={{ width: '350px' }}>
+        <h4 style={{ marginBottom: '16px', color: '#333' }}>
+          Enhanced Select All Workflow
+        </h4>
+        
+        <div style={{ marginBottom: '16px', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <button onClick={handleReset} style={{ padding: '4px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #ccc' }}>
+            Reset
+          </button>
+          <button onClick={handleSelectHalf} style={{ padding: '4px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #ccc' }}>
+            Select Half
+          </button>
+          <button onClick={handleSelectAll} style={{ padding: '4px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #ccc' }}>
+            Select All
+          </button>
+        </div>
+
+        <Dropdown
+          options={groupedOptions}
+          value={selectedItems}
+          onChange={(value) => setSelectedItems(value as (string | number)[])}
+          placeholder="Try the Select All behavior..."
+          searchable={true}
+          multiple={true}
+          showSelectAll={true}
+          clearable={true}
+          groupBy={true}
+        />
+        
+        <div style={{ marginTop: '12px', padding: '12px', backgroundColor: '#e8f4fd', borderRadius: '6px', border: '1px solid #b3d9f7' }}>
+          <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
+            <strong>Select All Checkbox:</strong> {getSelectAllDescription()}
+          </div>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive demo showing the complete Select All workflow. Use the buttons to test different states and observe how the Select All checkbox behaves: empty for no/partial selection, "-" icon only when all items are selected.',
       },
     },
   },
