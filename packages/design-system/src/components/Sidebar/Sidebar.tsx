@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faSearch, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { SidebarProps, MenuItemConfig, SidebarTokens } from './Sidebar.types';
+import { SidebarProps, MenuItemConfig, SubMenuItemConfig, SidebarTokens } from './Sidebar.types';
 import { SidebarContainer, SidebarHeader, LogoContainer, ToggleSidebarButton, SidebarContent } from '../../styles/Sidebar.styles';
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography/Typography';
@@ -56,7 +56,8 @@ const NavigationItem: React.FC<{
   isCollapsed: boolean;
   activeSubmenu: string | null;
   onSubmenuClick: (label: string) => void;
-}> = ({ item, isCollapsed, activeSubmenu, onSubmenuClick }) => {
+  onItemClick?: (item: MenuItemConfig | SubMenuItemConfig, isSubItem?: boolean) => void;
+}> = ({ item, isCollapsed, activeSubmenu, onSubmenuClick, onItemClick }) => {
   const isSubmenuOpen = activeSubmenu === item.label;
 
   if (item.header) {
@@ -68,6 +69,18 @@ const NavigationItem: React.FC<{
       </div>
     ) : null;
   }
+
+  const handleMainItemClick = () => {
+    if (item.submenu) {
+      onSubmenuClick(item.label);
+    } else {
+      onItemClick?.(item, false);
+    }
+  };
+
+  const handleSubItemClick = (subItem: SubMenuItemConfig) => {
+    onItemClick?.(subItem, true);
+  };
 
   return (
     <div style={{ position: 'relative' }}>
@@ -86,7 +99,7 @@ const NavigationItem: React.FC<{
           borderRadius: isSubmenuOpen || item.active ? 10 : undefined,
           justifyContent: isCollapsed ? 'center' : undefined
         }}
-        onClick={() => item.submenu && onSubmenuClick(item.label)}
+        onClick={handleMainItemClick}
       >
         {item.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: isCollapsed ? 0 : 8 }}>{item.icon}</span>}
         {!isCollapsed && (
@@ -104,7 +117,20 @@ const NavigationItem: React.FC<{
       {!isCollapsed && item.submenu && isSubmenuOpen && (
         <div style={{ borderRadius: '0 0 10px 10px', marginBottom: 4, overflow: 'hidden' }}>
           {item.submenu.map((subItem, index) => (
-            <div key={index} style={{ display: 'flex', alignItems: 'center', padding: '10px 12px 10px 40px', color: '#666', cursor: 'pointer', transition: 'all 0.3s ease' }}>
+            <div 
+              key={index} 
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                padding: '10px 12px 10px 40px', 
+                color: subItem.active ? '#5022bd' : '#666', 
+                cursor: 'pointer', 
+                transition: 'all 0.3s ease',
+                background: subItem.active ? '#f0f0f0' : undefined,
+                borderRadius: subItem.active ? 8 : undefined
+              }}
+              onClick={() => handleSubItemClick(subItem)}
+            >
               {subItem.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: 8, opacity: 0.8 }}>{subItem.icon}</span>}
               <Typography variant="body2" style={{ color: 'inherit' }}>
                 {subItem.label}
@@ -200,6 +226,7 @@ export const Sidebar: React.FC<SidebarProps & { tokens?: SidebarTokens }> = ({ m
               isCollapsed={collapsed}
               activeSubmenu={activeSubmenu}
               onSubmenuClick={handleSubmenuClick}
+              onItemClick={onMenuClick}
             />
           ))}
         </nav>

@@ -1,10 +1,12 @@
 export interface SubMenuItemConfig {
+  id?: string;
   icon?: React.ReactNode;
   label: string;
   active?: boolean;
 }
 
 export interface MenuItemConfig {
+  id?: string;
   icon?: React.ReactNode;
   label: string;
   active?: boolean;
@@ -17,7 +19,7 @@ export interface SidebarProps {
   logo?: React.ReactNode;
   collapsed: boolean;
   onToggleCollapse: () => void;
-  onMenuClick?: (item: MenuItemConfig) => void;
+  onMenuClick?: (item: MenuItemConfig | SubMenuItemConfig, isSubItem?: boolean) => void;
 }
 
 export interface SidebarTokens {
