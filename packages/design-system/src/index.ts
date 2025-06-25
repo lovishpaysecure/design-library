@@ -14,9 +14,7 @@ export * from './components/Chart';
 export * from './components/DatePicker';
 export * from './components/Dropdown';
 export * from './components/CheckBox';
-export { default as Table } from './components/Table';
-export type { TableProps, TableColumn, TableTokens, TablePaginationConfig, PaginationTokens } from './components/Table';
-export { tableTokens, Pagination, paginationTokens } from './components/Table';
+export * from './components/Table';
 
 // Hooks
 export * from './hooks/useTokens';
