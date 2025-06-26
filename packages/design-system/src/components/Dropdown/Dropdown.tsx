@@ -3,6 +3,8 @@ import { useTokens } from '../../hooks/useTokens';
 import { useSmartPosition } from '../../hooks/useSmartPosition';
 import { DropdownProps, DropdownTokens, DropdownOption } from './Dropdown.types';
 import { CheckBox } from '../CheckBox/CheckBox';
+import { CATags } from '../CATags/CATags';
+import { CATag } from '../CATags/CATags.types';
 import { defaultDropdownTokens } from './Dropdown.tokens';
 import {
   DropdownContainer,
@@ -29,6 +31,8 @@ import {
   DropdownLoadingSpinner,
   DropdownError,
   DropdownSelectAll,
+  DropdownTagsContainer,
+  DropdownWithTagsWrapper,
 } from './Dropdown.styles';
 
 const defaultFilterOption = (option: DropdownOption, searchValue: string): boolean => {
@@ -72,13 +76,17 @@ export const Dropdown: React.FC<DropdownProps> = ({
   showSelectAll = false,
   groupBy = false,
   expandedMenu,
+  enabletags = false,
+  tagsConfig = {},
 }) => {
   const tokens = useTokens<DropdownTokens>('dropdown', defaultDropdownTokens);
   const [isOpen, setIsOpen] = useState(false);
+  const [isPositioned, setIsPositioned] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const tagsRef = useRef<HTMLDivElement>(null);
   
   // Use smart positioning - use stable object reference
   const minSpaceRequired = useMemo(() => {
@@ -97,6 +105,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
     align,
     minSpaceRequired
   });
+
+  // Handle positioning
+  useEffect(() => {
+    setIsPositioned(isOpen);
+  }, [isOpen]);
 
   // Normalize value to array for easier handling
   const selectedValues = useMemo(() => {
@@ -128,6 +141,17 @@ export const Dropdown: React.FC<DropdownProps> = ({
     return groups;
   }, [filteredOptions, groupBy]);
 
+  // Convert selected options to CATags format when enabletags is true
+  const tagsData: CATag[] = useMemo(() => {
+    if (!enabletags || !multiple) return [];
+    
+    return selectedOptions.map(option => ({
+      id: String(option.value),
+      label: option.label,
+      value: option.value,
+    }));
+  }, [enabletags, multiple, selectedOptions]);
+
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -156,10 +180,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const handleTriggerClick = () => {
     if (disabled || loading) return;
     
-    const newIsOpen = !isOpen;
-    setIsOpen(newIsOpen);
+    setIsOpen(!isOpen);
     
-    if (newIsOpen) {
+    if (!isOpen) {
       onOpen?.();
     } else {
       onClose?.();
@@ -223,6 +246,19 @@ export const Dropdown: React.FC<DropdownProps> = ({
     onChange?.(newValues);
   };
 
+  // Handle tag removal for CATags component
+  const handleCATagRemove = (tag: CATag) => {
+    if (!multiple) return;
+    
+    const newValues = selectedValues.filter(v => v !== tag.value);
+    onChange?.(newValues);
+  };
+
+  // Handle tag click for CATags component
+  const handleCATagClick = (tag: CATag) => {
+    tagsConfig.onTagClick?.(selectedOptions.find(opt => opt.value === tag.value)!);
+  };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchValue(value);
@@ -256,7 +292,24 @@ export const Dropdown: React.FC<DropdownProps> = ({
       ) : null;
     }
 
-    // Multiple selection - show tags
+    // Multiple selection with enabletags - show count instead of inline tags
+    if (enabletags) {
+      const count = selectedOptions.length;
+      if (count === 0) {
+        return (
+          <DropdownPlaceholder tokens={tokens}>
+            {placeholder}
+          </DropdownPlaceholder>
+        );
+      }
+      return (
+        <DropdownValue tokens={tokens}>
+          {count === 1 ? `${count} item selected` : `${count} items selected`}
+        </DropdownValue>
+      );
+    }
+
+    // Multiple selection - show tags inline
     const visibleOptions = selectedOptions.slice(0, maxTagCount);
     const remainingCount = Math.max(0, selectedOptions.length - maxTagCount);
 
@@ -321,7 +374,6 @@ export const Dropdown: React.FC<DropdownProps> = ({
       </DropdownOptionContent>
     );
   };
-
   const renderOptions = () => {
     if (loading) {
       return (
@@ -405,8 +457,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   const showClearButton = clearable && selectedValues.length > 0 && !disabled;
 
-  return (
-    <DropdownContainer ref={containerRef} className={className} style={style}>
+  const dropdownElement = (
+    <DropdownContainer ref={containerRef}>
       <DropdownTrigger
         ref={triggerRef}
         tokens={tokens}
@@ -454,7 +506,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
         $zIndex={zIndex}
         width={expandedMenu?.enabled ? undefined : dropdownWidth}
         $expandedMenu={expandedMenu}
-        style={smartPosition.adjustments}
+        style={{
+          ...smartPosition.adjustments,
+          visibility: isPositioned ? 'visible' : 'hidden'
+        }}
       >
         {renderDropdown ? (
           renderDropdown({
@@ -468,7 +523,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
               onSearch?.(value);
             },
             onSelectAll: handleSelectAll,
-            isOpen,
+            isOpen: isOpen,
             loading,
             error,
             errorMessage,
@@ -510,5 +565,42 @@ export const Dropdown: React.FC<DropdownProps> = ({
         )}
       </DropdownMenu>
     </DropdownContainer>
+  );
+
+  // Render with tags container if enabletags is true
+  if (enabletags && multiple) {
+    return (
+      <DropdownWithTagsWrapper className={className} style={style}>
+        {dropdownElement}
+        {tagsData.length > 0 && (
+          <DropdownTagsContainer 
+            ref={tagsRef}
+            $maxHeight={tagsConfig.maxHeight}
+            $wrap={tagsConfig.wrap !== false} // Default to true
+          >
+            <CATags
+              tags={tagsData}
+              variant={tagsConfig.variant || 'default'}
+              size={tagsConfig.size || 'medium'}
+              removable={true}
+              wrap={tagsConfig.wrap !== false}
+              labelMaxWidth={tagsConfig.labelMaxWidth}
+              showTooltip={tagsConfig.showTooltip}
+              autoTooltip={true}
+              onRemove={handleCATagRemove}
+              onTagClick={tagsConfig.onTagClick ? handleCATagClick : undefined}
+              removeIcon={tagsConfig.removeIcon}
+            />
+          </DropdownTagsContainer>
+        )}
+      </DropdownWithTagsWrapper>
+    );
+  }
+
+  // Regular dropdown without tags
+  return (
+    <div className={className} style={style}>
+      {dropdownElement}
+    </div>
   );
 };

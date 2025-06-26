@@ -189,13 +189,13 @@ export const DropdownMenu = styled.div<{
       // For expanded menu, respect smart positioning alignment
       return `
         ${props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
-        ${props.$align === 'right' ? 'right: 0;' : 'left: 0;'}
+        ${props.$align === 'right' ? 'right: 0; left: auto;' : 'left: 0; right: auto;'}
       `;
     } else {
       // Default positioning for regular dropdowns
       return `
         ${props.$placement === 'top' ? 'bottom: 100%; margin-bottom: 4px;' : 'top: 100%; margin-top: 4px;'}
-        ${props.$align === 'right' ? 'right: 0;' : 'left: 0; right: 0;'}
+        ${props.$align === 'right' ? 'right: 0; left: auto;' : 'left: 0; right: 0;'}
       `;
     }
   }}
@@ -225,6 +225,8 @@ export const DropdownMenu = styled.div<{
     }
     return '';
   }}
+  /* Prevent any transitions during positioning to avoid flicker */
+  transition: none;
 `;
 
 export const DropdownSearch = styled.input<{ tokens: DropdownTokens }>`
@@ -405,4 +407,66 @@ export const DropdownError = styled.div<{ tokens: DropdownTokens }>`
   color: ${props => props.tokens.errorColor};
   font-size: 13px;
   border-left: 3px solid ${props => props.tokens.errorColor};
+`;
+
+export const DropdownTagsContainer = styled.div<{ 
+  $maxHeight?: string;
+  $wrap?: boolean;
+}>`
+  margin-top: 8px;
+  border-radius: 6px;
+  border: 1px solid #e1e5e9;
+  background-color: #ffffff;
+  padding: 8px;
+  position: relative;
+  
+  ${props => props.$maxHeight && `
+    max-height: ${props.$maxHeight};
+    overflow-y: auto;
+    
+    /* Custom scrollbar */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f3f4;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #bdc1c6;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #9aa0a6;
+    }
+  `}
+  
+  /* Always disable horizontal scrolling when wrapping is enabled */
+  ${props => props.$wrap && `
+    overflow-x: hidden;
+  `}
+  
+  ${props => !props.$wrap && `
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    
+    /* Custom horizontal scrollbar */
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+  `}
+`;
+
+export const DropdownWithTagsWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  /* Ensure tooltips can appear above other elements */
+  z-index: 1;
+  
+  /* Allow child tooltips to overflow this container */
+  overflow: visible;
 `; 

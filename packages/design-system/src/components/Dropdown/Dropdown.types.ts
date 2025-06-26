@@ -246,4 +246,46 @@ export interface DropdownProps {
      */
     minHeight?: number;
   };
+  /**
+   * Whether to enable tags rendering below the dropdown
+   * When enabled, selected items will be displayed as tags below the trigger
+   */
+  enabletags?: boolean;
+  /**
+   * Configuration for tags display when enabletags is true
+   */
+  tagsConfig?: {
+    /**
+     * Maximum height for the tags container before scrolling
+     */
+    maxHeight?: string;
+    /**
+     * Size of the tags
+     */
+    size?: 'small' | 'medium' | 'large';
+    /**
+     * Visual variant of the tags
+     */
+    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger';
+    /**
+     * Whether tags should wrap to next line or scroll
+     */
+    wrap?: boolean;
+    /**
+     * Maximum width for each tag label before truncation
+     */
+    labelMaxWidth?: string;
+    /**
+     * Whether to show tooltips on tags
+     */
+    showTooltip?: boolean;
+    /**
+     * Custom remove icon for tags
+     */
+    removeIcon?: React.ReactNode;
+    /**
+     * Callback when a tag is clicked (not the remove button)
+     */
+    onTagClick?: (option: DropdownOption) => void;
+  };
 } 

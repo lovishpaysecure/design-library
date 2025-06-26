@@ -1505,4 +1505,116 @@ export const ExpandedMenuVariants: Story = {
       },
     },
   },
+};
+
+// Tags functionality stories
+export const WithTags: Story = {
+  render: DropdownWithState,
+  args: {
+    options: skillOptions,
+    multiple: true,
+    placeholder: 'Select skills',
+    searchable: true,
+    enabletags: true,
+    tagsConfig: {
+      variant: 'primary',
+      size: 'medium',
+      maxHeight: '200px',
+      wrap: true,
+      showTooltip: true,
+      onTagClick: (option) => console.log('Tag clicked:', option),
+    },
+    showSelectAll: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Dropdown with tags enabled below the input. Selected items appear as tags that can be removed individually. Tags support tooltips and custom click handlers.',
+      },
+    },
+  },
+};
+
+export const WithTagsScrolling: Story = {
+  render: (args: any) => {
+    const [selectedValue, setSelectedValue] = useState<string | number | (string | number)[] | undefined>([]);
+    
+    // Generate many options for testing scrolling
+    const manyOptions: DropdownOption[] = Array.from({ length: 150 }, (_, i) => ({
+      label: `Option ${i + 1} - This is a longer option name to test truncation`,
+      value: `option${i + 1}`,
+      description: `Description for option ${i + 1}`,
+    }));
+
+    return (
+      <div style={{ 
+        width: '400px', 
+        height: '500px',
+        // Create a container that allows tooltips to escape
+        position: 'relative'
+      }}>
+        <Dropdown
+          {...args}
+          options={manyOptions}
+          value={selectedValue}
+          onChange={(value) => {
+            setSelectedValue(value);
+            args.onChange?.(value);
+          }}
+          zIndex={2000} // Higher z-index to prevent tooltip clipping
+        />
+        <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
+          <strong>Selected Count:</strong> {Array.isArray(selectedValue) ? selectedValue.length : 0}
+        </div>
+      </div>
+    );
+  },
+  args: {
+    multiple: true,
+    placeholder: 'Select many options to test scrolling',
+    searchable: true,
+    enabletags: true,
+    tagsConfig: {
+      variant: 'default',
+      size: 'small',
+      maxHeight: '150px',
+      wrap: true, // Ensure tags wrap instead of horizontal scroll
+      labelMaxWidth: '120px',
+      showTooltip: true,
+    },
+    showSelectAll: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Dropdown with 150 options to test scrolling behavior. The tags container has a maxHeight and will scroll vertically when many tags are selected. Horizontal scrolling is disabled to prevent layout issues. Supports selecting up to 100+ tags efficiently.',
+      },
+    },
+  },
+};
+
+export const WithTagsNonWrapping: Story = {
+  render: DropdownWithState,
+  args: {
+    options: skillOptions,
+    multiple: true,
+    placeholder: 'Select skills (horizontal scroll)',
+    searchable: true,
+    enabletags: true,
+    tagsConfig: {
+      variant: 'success',
+      size: 'large',
+      maxHeight: '80px',
+      wrap: false, // This will enable horizontal scrolling
+      showTooltip: true,
+    },
+    showSelectAll: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Dropdown with tags that scroll horizontally instead of wrapping. Useful when you want to maintain a fixed height and see all tags in a single row.',
+      },
+    },
+  },
 }; 
