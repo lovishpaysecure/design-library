@@ -172,6 +172,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
+  const closeDropdown = () => {
+    setIsOpen(false);
+    onClose?.();
+  };
+
   const isOptionSelected = (option: DropdownOption): boolean => {
     return selectedValues.includes(option.value);
   };
@@ -477,6 +482,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
               onSearch?.(value);
             },
             onSelectAll: handleSelectAll,
+            closeDropdown,
             isOpen,
             loading,
             error,

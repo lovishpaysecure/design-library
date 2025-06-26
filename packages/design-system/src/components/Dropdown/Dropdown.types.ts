@@ -190,6 +190,7 @@ export interface DropdownProps {
     onOptionClick: (option: DropdownOption) => void;
     onSearchChange: (value: string) => void;
     onSelectAll: () => void;
+    closeDropdown: () => void;
     isOpen: boolean;
     loading: boolean;
     error: boolean;
