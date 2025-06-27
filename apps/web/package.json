@@ -10,7 +10,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@paysecure-design/design-system": "^0.3.7",
+    "@paysecure-design/design-system": "^0.3.8",
     "echarts-countries-js": "^1.0.5",   
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
