@@ -15,6 +15,7 @@ export default defineConfig({
     'Dropdown/index': 'src/components/Dropdown/index.ts',
     'CheckBox/index': 'src/components/CheckBox/index.ts',
     'Table/index': 'src/components/Table/index.ts',
+    'Skeleton/index': 'src/components/Skeleton/index.ts',
   },
   format: ['esm', 'cjs'],
   dts: true,

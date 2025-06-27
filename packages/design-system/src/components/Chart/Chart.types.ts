@@ -172,4 +172,8 @@ export interface ChartProps {
   style?: React.CSSProperties;
   tokens?: Partial<ChartTokens>;
   customOption?: Partial<EChartsOption>;
+  /**
+   * Custom skeleton content shown when loading is true (overrides default skeleton)
+   */
+  skeletonContent?: React.ReactNode;
 } 

@@ -67,6 +67,11 @@
       "import": "./dist/Table/index.js",
       "require": "./dist/Table/index.cjs",
       "types": "./dist/Table/index.d.ts"
+    },
+    "./Skeleton": {
+      "import": "./dist/Skeleton/index.js",
+      "require": "./dist/Skeleton/index.cjs",
+      "types": "./dist/Skeleton/index.d.ts"
     }
   },
   "main": "./dist/index.cjs",
