@@ -1223,4 +1223,94 @@ export const InteractiveCellRenderers: Story = {
       },
     },
   },
+};
+
+// Skeleton Loading Story
+export const SkeletonLoading: Story = {
+  render: (args) => {
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Skeleton Loading State</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          This table shows the skeleton loading state with configurable number of skeleton rows.
+          The header remains visible while the table body shows skeleton placeholders.
+        </p>
+        <Table
+          {...args}
+          columns={bankColumns}
+          data={[]} // Empty data since we're showing skeleton
+          isLoading={true}
+          skeletonRows={5}
+          variant="default"
+          size="medium"
+          showHeader={true}
+          hoverable={false}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: [],
+    variant: 'default',
+    size: 'medium',
+    isLoading: true,
+    skeletonRows: 5,
+    showHeader: true,
+    sortable: true,
+    hoverable: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the skeleton loading state for the table. The skeleton shows placeholder rows while data is being loaded, with the header remaining visible. You can configure the number of skeleton rows and provide custom skeleton content.',
+      },
+    },
+  },
+};
+
+// Skeleton with Row Selection
+export const SkeletonWithRowSelection: Story = {
+  render: (args) => {
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Skeleton Loading with Row Selection</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          This shows the skeleton loading state when row selection is enabled.
+          Notice the skeleton checkboxes in the selection column.
+        </p>
+        <Table
+          {...args}
+          columns={bankColumns}
+          data={[]} // Empty data since we're showing skeleton
+          isLoading={true}
+          skeletonRows={4}
+          isRowSelection={true}
+          variant="striped"
+          size="medium"
+          showHeader={true}
+          hoverable={false}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: [],
+    variant: 'striped',
+    size: 'medium',
+    isLoading: true,
+    skeletonRows: 4,
+    isRowSelection: true,
+    showHeader: true,
+    sortable: true,
+    hoverable: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the skeleton loading state with row selection enabled. The skeleton includes placeholder checkboxes in the selection column along with the regular cell skeletons.',
+      },
+    },
+  },
 }; 

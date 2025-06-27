@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { useTokens } from '../../hooks/useTokens';
 import { Typography } from '../Typography';
 import { CheckBox } from '../CheckBox';
+import { Skeleton } from '../Skeleton';
 import {
   TableProps,
   TableColumn,
@@ -96,6 +97,9 @@ const Table = <T extends Record<string, any>>({
   fixedRightmost = false,
   pagination,
   onPageChange,
+  isLoading = false,
+  skeletonRows = 5,
+  skeletonContent,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
   // Use controlled state for row selection
@@ -349,7 +353,57 @@ const Table = <T extends Record<string, any>>({
           )}
           
           <StyledTableBody tokens={tokens}>
-            {sortedData.map((row, rowIndex) => (
+            {isLoading ? (
+              Array.from({ length: skeletonRows }, (_, rowIndex) => (
+                <StyledTableRow 
+                  key={`skeleton-${rowIndex}`} 
+                  tokens={tokens} 
+                  variant={variant}
+                  hoverable={false}
+                  isStriped={variant === 'striped' && rowIndex % 2 === 1}
+                  clickable={false}
+                >
+                  {isRowSelection && (
+                    <StyledTableCell
+                      tokens={tokens}
+                      size={size}
+                      align="center"
+                      fixed={fixedLeftmost ? 'left' : 'none'}
+                      isLastFixed={fixedLeftmost && columns.length === 0}
+                      style={{ width: '48px', padding: '0 8px' }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Skeleton width="16px" height="16px" variant="rectangular" />
+                      </div>
+                    </StyledTableCell>
+                  )}
+                  {columns.map((column, columnIndex) => {
+                    const fixedPosition = getColumnFixedPosition(columnIndex);
+                    const isLastFixed = isLastFixedColumn(columnIndex);
+                    
+                    return (
+                      <StyledTableCell
+                        key={`skeleton-${rowIndex}-${column.key}`}
+                        tokens={tokens}
+                        size={size}
+                        align={column.align}
+                        fixed={fixedPosition}
+                        isLastFixed={isLastFixed}
+                        isStriped={variant === 'striped' && rowIndex % 2 === 1}
+                      >
+                        {skeletonContent || (
+                          <Skeleton 
+                            width="80%" 
+                            height="16px" 
+                            variant="rectangular" 
+                          />
+                        )}
+                      </StyledTableCell>
+                    );
+                  })}
+                </StyledTableRow>
+              ))
+            ) : sortedData.map((row, rowIndex) => (
               <StyledTableRow
                 key={rowIndex}
                 tokens={tokens}

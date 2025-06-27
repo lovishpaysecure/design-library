@@ -307,3 +307,103 @@ export const MapChart: Story = {
     },
   },
 };
+
+// Skeleton Loading States
+export const SkeletonLoading: Story = {
+  args: {
+    data: generateMerchantData(generateTimeData(25)),
+    categories: generateTimeData(25),
+    title: 'Chart Loading State',
+    subtitle: 'This is a subtitle',
+    height: 420,
+    loading: true,
+    legend: {
+      show: true,
+      position: 'bottom',
+      selectedMode: 'multiple',
+    },
+  },
+};
+
+export const SkeletonBarChart: Story = {
+  args: {
+    data: [
+      {
+        name: 'Revenue',
+        data: [45000, 52000, 48000, 61000, 55000, 67000],
+        color: '#3b82f6',
+      },
+      {
+        name: 'Expenses',
+        data: [32000, 38000, 35000, 45000, 41000, 48000],
+        color: '#ef4444',
+      },
+    ],
+    categories: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'],
+    variant: "bar",
+    title: "Bar Chart Loading State",
+    height: 400,
+    loading: true,
+  },
+};
+
+export const SkeletonPieChart: Story = {
+  args: {
+    data: [
+      { name: 'Direct', value: 320, color: '#3b82f6' },
+      { name: 'Email', value: 240, color: '#ef4444' },
+      { name: 'Union Ads', value: 149, color: '#f59e0b' },
+      { name: 'Video Ads', value: 100, color: '#10b981' },
+    ],
+    categories: [],
+    variant: "pie",
+    title: "Pie Chart Loading State",
+    height: 400,
+    loading: true,
+    legend: {
+      show: true,
+      position: 'bottom',
+    },
+  },
+};
+
+export const SkeletonMapChart: Story = {
+  args: {
+    data: [
+      { name: 'South Africa', value: 95 },
+      { name: 'China', value: 5 },
+      { name: 'India', value: 3 },
+    ],
+    categories: [],
+    variant: "map",
+    mapName: "world",
+    title: "Map Chart Loading State",
+    height: 500,
+    loading: true,
+    legend: {
+      show: false,
+    },
+  },
+};
+
+export const SkeletonWithCustomContent: Story = {
+  args: {
+    data: generateMerchantData(generateTimeData(10)),
+    categories: generateTimeData(10),
+    title: 'Custom Skeleton Content',
+    height: 300,
+    loading: true,
+    skeletonContent: (
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        height: '100%',
+        fontSize: '18px',
+        color: '#6b7280'
+      }}>
+        Loading custom chart content...
+      </div>
+    ),
+  },
+};

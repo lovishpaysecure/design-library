@@ -14,6 +14,18 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   border?: string;
   radius?: string;
   className?: string;
+  /**
+   * Shows skeleton loading state instead of children
+   */
+  isLoading?: boolean;
+  /**
+   * Number of skeleton text lines to show when loading
+   */
+  skeletonLines?: number;
+  /**
+   * Custom skeleton content (overrides default skeleton)
+   */
+  skeletonContent?: React.ReactNode;
 }
 
 export interface CardTokens {

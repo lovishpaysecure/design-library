@@ -15,6 +15,7 @@ export * from './components/DatePicker';
 export * from './components/Dropdown';
 export * from './components/CheckBox';
 export * from './components/Table';
+export * from './components/Skeleton';
 
 // Hooks
 export * from './hooks/useTokens';

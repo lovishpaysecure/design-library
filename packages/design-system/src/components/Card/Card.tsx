@@ -3,6 +3,7 @@ import { useTokens } from '../../hooks/useTokens';
 import { CardProps, CardTokens } from './Card.types';
 import { StyledCard } from '../../styles/Card.styles';
 import { cardTokens } from './Card.tokens';
+import { Skeleton } from '../Skeleton';
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ 
@@ -15,10 +16,24 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     customPadding,
     border,
     radius,
-    className, 
+    className,
+    isLoading = false,
+    skeletonLines = 3,
+    skeletonContent,
     ...props 
   }, ref) => {
     const tokens = useTokens<CardTokens>('card', cardTokens);
+
+    const renderContent = () => {
+      if (isLoading) {
+        if (skeletonContent) {
+          return skeletonContent;
+        }
+        return null;
+      }
+      
+      return children;
+    };
 
     return (
       <StyledCard
@@ -26,7 +41,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         $variant={variant}
         $padding={padding}
         $shadow={shadow}
-        $hoverEffect={hoverEffect}
+        $hoverEffect={hoverEffect && !isLoading}
         $backgroundColor={backgroundColor}
         $customPadding={customPadding}
         $border={border}
@@ -35,7 +50,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         className={className}
         {...props}
       >
-        {children}
+        {renderContent()}
       </StyledCard>
     );
   }

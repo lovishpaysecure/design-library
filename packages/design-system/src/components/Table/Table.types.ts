@@ -101,4 +101,16 @@ export interface TableProps<T> {
   onRowClick?: (row: T, index: number) => void;
   pagination?: TablePaginationConfig;
   onPageChange?: (page: number) => void;
+  /**
+   * Shows skeleton loading state for table rows
+   */
+  isLoading?: boolean;
+  /**
+   * Number of skeleton rows to show when loading
+   */
+  skeletonRows?: number;
+  /**
+   * Custom skeleton content for table cells (overrides default skeleton)
+   */
+  skeletonContent?: React.ReactNode;
 } 

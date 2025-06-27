@@ -5,6 +5,7 @@ import * as echarts from 'echarts';
 import { useTokens } from '../../hooks/useTokens';
 import { ChartProps, ChartTokens, ChartDataPoint, MapDataPoint } from './Chart.types';
 import { chartTokens } from './Chart.tokens';
+import { Skeleton } from '../Skeleton';
 
 const DEFAULT_COLORS = [
   '#5b7dff', '#ff5656', '#ff9f40', '#4bc0c0', '#9966ff',
@@ -47,6 +48,7 @@ export const Chart: React.FC<ChartProps> = ({
   style,
   tokens: customTokens,
   customOption = {},
+  skeletonContent,
 }) => {
   const tokens = useTokens<ChartTokens>('chart', chartTokens, customTokens);
   const [isMapReady, setIsMapReady] = useState(variant !== 'map');
@@ -542,6 +544,242 @@ export const Chart: React.FC<ChartProps> = ({
     'click': handleClick,
   };
 
+  // Render skeleton content based on chart variant
+  const renderSkeletonContent = () => {
+    if (skeletonContent) {
+      return skeletonContent;
+    }
+
+    const containerStyle: React.CSSProperties = {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      padding: '16px',
+    };
+
+    switch (variant) {
+      case 'pie':
+        return (
+          <div style={containerStyle}>
+            {/* Title skeleton */}
+            {(title || subtitle) && (
+              <div style={{ marginBottom: '16px' }}>
+                {title && <Skeleton width="60%" height="24px" style={{ marginBottom: '8px' }} />}
+                {subtitle && <Skeleton width="40%" height="16px" />}
+              </div>
+            )}
+            
+            {/* Pie chart skeleton - circular */}
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              flex: 1,
+              position: 'relative' 
+            }}>
+              <Skeleton 
+                variant="circular" 
+                width="200px" 
+                height="200px" 
+                style={{ position: 'absolute' }}
+              />
+              {/* Inner circle for donut effect */}
+              <div style={{
+                position: 'absolute',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                backgroundColor: 'white',
+                zIndex: 1
+              }} />
+            </div>
+            
+            {/* Legend skeleton */}
+            {legend.show && (
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                gap: '16px', 
+                marginTop: '16px',
+                flexWrap: 'wrap' 
+              }}>
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Skeleton width="12px" height="12px" />
+                    <Skeleton width="60px" height="16px" />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+
+      case 'map':
+        return (
+          <div style={containerStyle}>
+            {/* Title skeleton */}
+            {(title || subtitle) && (
+              <div style={{ marginBottom: '16px' }}>
+                {title && <Skeleton width="60%" height="24px" style={{ marginBottom: '8px' }} />}
+                {subtitle && <Skeleton width="40%" height="16px" />}
+              </div>
+            )}
+            
+            {/* Map skeleton - organic shape */}
+            <div style={{ 
+              flex: 1, 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center',
+              position: 'relative' 
+            }}>
+              <Skeleton 
+                width="80%" 
+                height="70%" 
+                borderRadius="20px"
+                style={{ position: 'absolute' }}
+              />
+              {/* Additional map-like shapes */}
+              <Skeleton 
+                width="30%" 
+                height="20%" 
+                borderRadius="10px"
+                style={{ position: 'absolute', top: '20%', left: '20%' }}
+              />
+              <Skeleton 
+                width="25%" 
+                height="25%" 
+                borderRadius="8px"
+                style={{ position: 'absolute', bottom: '25%', right: '25%' }}
+              />
+            </div>
+          </div>
+        );
+
+      case 'line':
+      case 'bar':
+      default:
+        return (
+          <div style={containerStyle}>
+            {/* Title skeleton */}
+            {(title || subtitle) && (
+              <div style={{ marginBottom: '16px' }}>
+                {title && <Skeleton width="60%" height="24px" style={{ marginBottom: '8px' }} />}
+                {subtitle && <Skeleton width="40%" height="16px" />}
+              </div>
+            )}
+            
+            {/* Chart area skeleton */}
+            <div style={{ 
+              flex: 1, 
+              position: 'relative', 
+              display: 'flex', 
+              flexDirection: 'column',
+              justifyContent: 'flex-end' 
+            }}>
+              {/* Chart content skeleton */}
+              <div style={{ 
+                height: '100%', 
+                display: 'flex', 
+                alignItems: 'flex-end', 
+                justifyContent: 'space-around',
+                padding: '0 20px'
+              }}>
+                {/* Bars/Lines skeleton */}
+                {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                  <div key={i} style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center',
+                    height: '100%',
+                    justifyContent: 'flex-end',
+                    flex: 1,
+                    maxWidth: '60px'
+                  }}>
+                    <Skeleton 
+                      width="80%" 
+                      height={`${Math.random() * 60 + 20}%`}
+                      style={{ marginBottom: '8px' }}
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              {/* X-axis labels skeleton */}
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-around', 
+                marginTop: '12px',
+                padding: '0 20px'
+              }}>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                  <Skeleton key={i} width="40px" height="14px" />
+                ))}
+              </div>
+            </div>
+            
+            {/* Legend skeleton */}
+            {legend.show && (
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                gap: '16px', 
+                marginTop: '16px',
+                flexWrap: 'wrap'
+              }}>
+                {[1, 2, 3].map(i => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Skeleton width="12px" height="12px" />
+                    <Skeleton width="60px" height="16px" />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+    }
+  };
+
+  // Render main content
+  const renderContent = () => {
+    if (loading) {
+      return renderSkeletonContent();
+    }
+
+    if (!isMapReady && variant === 'map') {
+      return (
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          height: '100%',
+          color: tokens.axis.textColor 
+        }}>
+          Loading map...
+        </div>
+      );
+    }
+
+    return (
+      <ReactECharts
+        option={option}
+        style={{ 
+          height: '100%', 
+          width: '100%',
+          border: 'none',
+          padding: 0,
+          margin: 0,
+          outline: 'none',
+          background: 'transparent'
+        }}
+        onEvents={onEvents}
+        opts={{
+          renderer: 'canvas',
+        }}
+      />
+    );
+  };
+
   return (
     <div
       className={`chart-wrapper ${className || ''}`}
@@ -559,35 +797,7 @@ export const Chart: React.FC<ChartProps> = ({
         ...style,
       }}
     >
-      {!isMapReady && variant === 'map' ? (
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          height: '100%',
-          color: tokens.axis.textColor 
-        }}>
-          Loading map...
-        </div>
-      ) : (
-        <ReactECharts
-          option={option}
-          style={{ 
-            height: '100%', 
-            width: '100%',
-            border: 'none',
-            padding: 0,
-            margin: 0,
-            outline: 'none',
-            background: 'transparent'
-          }}
-          showLoading={loading}
-          onEvents={onEvents}
-          opts={{
-            renderer: 'canvas',
-          }}
-        />
-      )}
+      {renderContent()}
     </div>
   );
 };
