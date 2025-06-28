@@ -88,7 +88,7 @@ export const modalTokens: ModalTokens = {
   },
   body: {
     padding: '16px 24px',
-    maxHeight: 'calc(80vh - 200px)',
+    maxHeight: 'calc(80vh - 220px)',
     overflow: 'auto',
   },
   footer: {
