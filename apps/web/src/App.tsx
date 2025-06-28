@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@paysecure-design/design-system/Button';
 import { Typography } from '@paysecure-design/design-system/Typography';
+import { Table } from '@paysecure-design/design-system/Table';
 
 function App() {
   return (
@@ -69,7 +70,8 @@ function App() {
           padding: '24px', 
           backgroundColor: '#f0f9ff', 
           borderRadius: '8px',
-          border: '1px solid #3b82f6'
+          border: '1px solid #3b82f6',
+          marginBottom: '32px'
         }}>
           <Typography variant="h6" style={{ marginBottom: '8px', color: '#1e40af' }}>
             📚 Complete Storybook Documentation
@@ -78,6 +80,43 @@ function App() {
             The Chart component includes comprehensive Storybook stories covering:<br/>
             • All legend interactions • Zoom controls • High data density • Real-time updates
           </Typography>
+        </div>
+
+        {/* New Table with Pagination Skeleton Demo */}
+        <div style={{ 
+          padding: '24px', 
+          backgroundColor: '#f9fafb', 
+          borderRadius: '8px',
+          border: '1px solid #e5e7eb'
+        }}>
+          <Typography variant="h6" style={{ marginBottom: '16px', color: '#374151' }}>
+            🆕 Table with Pagination Skeleton
+          </Typography>
+          <Typography variant="body2" style={{ marginBottom: '16px', color: '#6b7280' }}>
+            Demonstrating the new showPaginationSkeleton prop - a loading state for pagination controls.
+          </Typography>
+          
+          <Table
+            columns={[
+              { key: 'name', header: 'Name', accessor: 'name' as any },
+              { key: 'value', header: 'Value', accessor: 'value' as any },
+            ]}
+            data={[
+              { name: 'Sample Data 1', value: '100' },
+              { name: 'Sample Data 2', value: '200' },
+            ]}
+            pagination={{
+              currentPage: 1,
+              totalPages: 5,
+              pageSize: 10,
+              totalItems: 50,
+              showFirstLast: true,
+              showPrevNext: true,
+              maxVisiblePages: 5,
+            }}
+            showPaginationSkeleton={true}
+            onPageChange={(page) => console.log('Page changed to:', page)}
+          />
         </div>
       </div>
     </div>
