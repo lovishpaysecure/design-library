@@ -1313,4 +1313,132 @@ export const SkeletonWithRowSelection: Story = {
       },
     },
   },
+};
+
+// Pagination Skeleton Story
+export const PaginationSkeleton: Story = {
+  render: (args) => {
+    const paginationConfig = {
+      currentPage: 1,
+      totalPages: 10,
+      pageSize: 10,
+      totalItems: 100,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5,
+    };
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Pagination Skeleton Loading</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          This demonstrates the pagination skeleton loading state. When showPaginationSkeleton is true,
+          a skeleton version of the pagination controls is displayed instead of the actual pagination.
+        </p>
+        <Table
+          {...args}
+          columns={bankColumns}
+          data={sampleBankData}
+          pagination={paginationConfig}
+          showPaginationSkeleton={true}
+          variant="default"
+          size="medium"
+          showHeader={true}
+          hoverable={true}
+          onPageChange={(page) => console.log('Page changed to:', page)}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: sampleBankData,
+    variant: 'default',
+    size: 'medium',
+    showHeader: true,
+    hoverable: true,
+    showPaginationSkeleton: true,
+    pagination: {
+      currentPage: 1,
+      totalPages: 10,
+      pageSize: 10,
+      totalItems: 100,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the pagination skeleton loading state. When the showPaginationSkeleton prop is set to true, the table displays skeleton placeholders for the pagination controls instead of the actual pagination. This is useful for showing a loading state while pagination data is being fetched.',
+      },
+    },
+  },
+};
+
+// Combined Loading States Story
+export const CombinedLoadingStates: Story = {
+  render: (args) => {
+    const paginationConfig = {
+      currentPage: 1,
+      totalPages: 5,
+      pageSize: 5,
+      totalItems: 25,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5,
+    };
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3 style={{ marginBottom: '16px' }}>Combined Table and Pagination Skeleton</h3>
+        <p style={{ marginBottom: '16px', color: '#6B7280' }}>
+          This shows both table skeleton rows and pagination skeleton loading simultaneously.
+          This is useful when both the table data and pagination information are being loaded.
+        </p>
+        <Table
+          {...args}
+          columns={bankColumns}
+          data={[]} // Empty data since we're showing skeleton
+          pagination={paginationConfig}
+          isLoading={true}
+          skeletonRows={5}
+          showPaginationSkeleton={true}
+          variant="bordered"
+          size="medium"
+          showHeader={true}
+          hoverable={false}
+          onPageChange={(page) => console.log('Page changed to:', page)}
+        />
+      </div>
+    );
+  },
+  args: {
+    columns: bankColumns,
+    data: [],
+    variant: 'bordered',
+    size: 'medium',
+    isLoading: true,
+    skeletonRows: 5,
+    showPaginationSkeleton: true,
+    showHeader: true,
+    hoverable: false,
+    pagination: {
+      currentPage: 1,
+      totalPages: 5,
+      pageSize: 5,
+      totalItems: 25,
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates both table and pagination skeleton loading states combined. Both the table rows and pagination controls show skeleton placeholders, providing a complete loading experience when both table data and pagination information are being fetched.',
+      },
+    },
+  },
 }; 

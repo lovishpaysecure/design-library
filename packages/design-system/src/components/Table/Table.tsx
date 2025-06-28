@@ -14,6 +14,7 @@ import {
 import { tableTokens } from './Table.tokens';
 import SortIcon from './SortIcon';
 import Pagination from './Pagination';
+import PaginationSkeleton from './PaginationSkeleton';
 import {
   StyledTableContainer,
   StyledTableWrapper,
@@ -100,6 +101,7 @@ const Table = <T extends Record<string, any>>({
   isLoading = false,
   skeletonRows = 5,
   skeletonContent,
+  showPaginationSkeleton = false,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
   // Use controlled state for row selection
@@ -437,10 +439,14 @@ const Table = <T extends Record<string, any>>({
       </StyledTableWrapper>
       
       {pagination && (
-        <Pagination
-          config={pagination}
-          onPageChange={onPageChange || (() => {})}
-        />
+        showPaginationSkeleton ? (
+          <PaginationSkeleton />
+        ) : (
+          <Pagination
+            config={pagination}
+            onPageChange={onPageChange || (() => {})}
+          />
+        )
       )}
     </StyledTableContainer>
   );

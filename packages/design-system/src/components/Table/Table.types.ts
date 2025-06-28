@@ -113,4 +113,8 @@ export interface TableProps<T> {
    * Custom skeleton content for table cells (overrides default skeleton)
    */
   skeletonContent?: React.ReactNode;
+  /**
+   * Shows skeleton loading state for pagination
+   */
+  showPaginationSkeleton?: boolean;
 } 
