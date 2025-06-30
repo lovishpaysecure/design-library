@@ -53,6 +53,7 @@ export interface DropdownTokens {
   iconColor: string;
   iconSize: string;
   iconSpacing: string;
+  clearButtonColor: string;
 }
 
 export interface StyledDropdownProps {

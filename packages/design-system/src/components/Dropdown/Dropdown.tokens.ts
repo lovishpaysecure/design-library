@@ -32,4 +32,5 @@ export const defaultDropdownTokens: DropdownTokens = {
   iconColor: '#6b7280',
   iconSize: '16px',
   iconSpacing: '8px',
+  clearButtonColor: '#5223BC',
 }; 

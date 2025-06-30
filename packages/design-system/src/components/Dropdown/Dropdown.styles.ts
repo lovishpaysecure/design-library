@@ -165,7 +165,7 @@ export const DropdownClearButton = styled.button<{ tokens: DropdownTokens }>`
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: ${props => props.tokens.errorColor};
+    background-color: ${props => props.tokens.clearButtonColor};
     color: white;
   }
 `;
