@@ -102,6 +102,7 @@ const Table = <T extends Record<string, any>>({
   skeletonRows = 5,
   skeletonContent,
   showPaginationSkeleton = false,
+  paginationDisabled = false,
 }: TableProps<T>) => {
   const tokens = useTokens('Table', tableTokens);
   // Use controlled state for row selection
@@ -445,6 +446,7 @@ const Table = <T extends Record<string, any>>({
           <Pagination
             config={pagination}
             onPageChange={onPageChange || (() => {})}
+            disabled={paginationDisabled}
           />
         )
       )}

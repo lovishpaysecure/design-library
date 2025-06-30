@@ -8,6 +8,7 @@ import { paginationTokens } from './Pagination.tokens';
 interface PaginationProps {
   config: TablePaginationConfig;
   onPageChange: (page: number) => void;
+  disabled?: boolean;
 }
 
 const PaginationContainer = styled.div<{ tokens: PaginationTokens }>`
@@ -78,7 +79,8 @@ const PaginationButton = styled.button<{
 
 const Pagination: React.FC<PaginationProps> = ({ 
   config, 
-  onPageChange
+  onPageChange,
+  disabled = false
 }) => {
   const tokens = useTokens('Pagination', paginationTokens);
   
@@ -132,8 +134,8 @@ const Pagination: React.FC<PaginationProps> = ({
         {showFirstLast && (
           <PaginationButton
             tokens={tokens}
-            disabled={isFirstPage}
-            onClick={() => onPageChange(1)}
+            disabled={disabled || isFirstPage}
+            onClick={() => !disabled && onPageChange(1)}
           >
             First
           </PaginationButton>
@@ -142,8 +144,8 @@ const Pagination: React.FC<PaginationProps> = ({
         {showPrevNext && (
           <PaginationButton
             tokens={tokens}
-            disabled={isFirstPage}
-            onClick={() => onPageChange(currentPage - 1)}
+            disabled={disabled || isFirstPage}
+            onClick={() => !disabled && onPageChange(currentPage - 1)}
           >
             Prev
           </PaginationButton>
@@ -154,7 +156,8 @@ const Pagination: React.FC<PaginationProps> = ({
             key={pageNum}
             tokens={tokens}
             isActive={pageNum === currentPage}
-            onClick={() => onPageChange(pageNum)}
+            disabled={disabled}
+            onClick={() => !disabled && onPageChange(pageNum)}
           >
             {pageNum}
           </PaginationButton>
@@ -163,8 +166,8 @@ const Pagination: React.FC<PaginationProps> = ({
         {showPrevNext && (
           <PaginationButton
             tokens={tokens}
-            disabled={isLastPage}
-            onClick={() => onPageChange(currentPage + 1)}
+            disabled={disabled || isLastPage}
+            onClick={() => !disabled && onPageChange(currentPage + 1)}
           >
             Next
           </PaginationButton>
@@ -173,8 +176,8 @@ const Pagination: React.FC<PaginationProps> = ({
         {showFirstLast && (
           <PaginationButton
             tokens={tokens}
-            disabled={isLastPage}
-            onClick={() => onPageChange(totalPages)}
+            disabled={disabled || isLastPage}
+            onClick={() => !disabled && onPageChange(totalPages)}
           >
             Last
           </PaginationButton>

@@ -117,4 +117,8 @@ export interface TableProps<T> {
    * Shows skeleton loading state for pagination
    */
   showPaginationSkeleton?: boolean;
+  /**
+   * Disables the pagination component
+   */
+  paginationDisabled?: boolean;
 } 
