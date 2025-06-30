@@ -361,6 +361,12 @@ export const Chart: React.FC<ChartProps> = ({
             
             return content;
           }
+          
+          // For pie charts and maps, use param.name instead of param.seriesName
+          if (variant === 'pie' || variant === 'map') {
+            return `${params.name}: ${params.value}`;
+          }
+          
           return `${params.seriesName}: ${params.value}`;
         }),
         axisPointer: {
