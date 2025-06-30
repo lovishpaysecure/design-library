@@ -196,9 +196,10 @@ export const Chart: React.FC<ChartProps> = ({
         const processedData = mapData.map(item => {
           // Ensure we have the required properties
           const mapItem = item as MapDataPoint;
+          const numericValue = Number(mapItem?.value);
           return {
             name: mapItem?.name || '',
-            value: mapItem?.value || 0,
+            value: isNaN(numericValue) ? 0 : numericValue,
             itemStyle: mapItem?.itemStyle || undefined,
           };
         });
@@ -363,8 +364,13 @@ export const Chart: React.FC<ChartProps> = ({
           }
           
           // For pie charts and maps, use param.name instead of param.seriesName
-          if (variant === 'pie' || variant === 'map') {
+          if (variant === 'pie') {
             return `${params.name}: ${params.value}`;
+          }
+          
+          if (variant === 'map') {
+            const safeValue = isNaN(Number(params.value)) ? 0 : Number(params.value);
+            return `${params.name}: ${safeValue}`;
           }
           
           return `${params.seriesName}: ${params.value}`;
