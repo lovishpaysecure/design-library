@@ -12,7 +12,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'tertiary', 'warning', 'danger', 'success', 'link'],
+      options: ['primary', 'tertiary', 'warning', 'danger', 'success', 'link', 'subtle'],
     },
     size: {
       control: 'select',
@@ -254,4 +254,17 @@ export const IconVariants: Story = {
       </div>
     </div>
   ),
+};
+
+export const Subtle: Story = {
+  args: {
+    variant: 'subtle',
+    preIcon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.1"/>
+        <path d="M12 8V16M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    children: 'Add a chart',
+  },
 }; 

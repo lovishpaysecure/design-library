@@ -69,13 +69,15 @@ export const DatePickerIcon = styled.span<{ tokens: DatePickerTokens; position: 
   }
 `;
 
-export const DatePickerTriggerIcon = styled.span<{ tokens: DatePickerTokens }>`
+export const DatePickerTriggerIcon = styled.span<{ tokens: DatePickerTokens; isOpen?: boolean }>`
   color: ${props => props.tokens.iconColor};
   font-size: 16px;
   margin-left: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease-in-out;
+  transform: ${props => props.isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};
 
   svg {
     width: 16px;

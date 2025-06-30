@@ -182,9 +182,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   const handleTriggerClick = () => {
     if (disabled) return;
-    setIsOpen(true);
-    setTempValue(value || null);
-    onOpen?.();
+    
+    if (isOpen) {
+      // Close the picker if it's already open
+      setIsOpen(false);
+      setTempValue(value || null);
+      onClose?.();
+    } else {
+      // Open the picker if it's closed
+      setIsOpen(true);
+      setTempValue(value || null);
+      onOpen?.();
+    }
   };
 
   const handlePresetSelect = (preset: PresetOption) => {
@@ -449,7 +458,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             {postIcon}
           </DatePickerIcon>
         )}
-        <DatePickerTriggerIcon tokens={tokens}>
+        <DatePickerTriggerIcon tokens={tokens} isOpen={isOpen}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9L12 16L5 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>

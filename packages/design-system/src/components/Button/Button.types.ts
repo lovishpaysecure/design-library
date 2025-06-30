@@ -1,7 +1,7 @@
 // Button types and interfaces
 import React from 'react';
 
-export type ButtonVariant = 'primary' | 'tertiary' | 'warning' | 'danger' | 'success' | 'link';
+export type ButtonVariant = 'primary' | 'tertiary' | 'warning' | 'danger' | 'success' | 'link' | 'subtle';
 export type ButtonSize = 'small' | 'medium' | 'large';
 
 export interface StyledButtonProps {

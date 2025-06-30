@@ -87,6 +87,22 @@ export const buttonTokens: ButtonTokens = {
       focus: {
         outline: 'none'
       }
+    },
+    subtle: {
+      background: 'transparent',
+      color: '#8D8E90',
+      hover: {
+        background: '#EEE9F8',
+        color: '#5223BC'
+      },
+      active: {
+        background: '#DDD3F7',
+        color: '#5223BC'
+      },
+      focus: {
+        outline: 'none',
+        ring: '0 0 0 2px rgba(141, 142, 144, 0.25)'
+      }
     }
   },
   sizes: {
