@@ -17,5 +17,10 @@ export const sidebarTokens: SidebarTokens = {
     toggleBorder: '#eee',
     toggleColor: '#666',
     toggleBoxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    navItemDefaultColor: '#757575',
+    navItemActiveColor: '#000',
+    navItemHoverColor: '#000',
+    navItemHoverBg: '#efefef',
+    navItemActiveBg: '#efefef',
   },
 }; 
