@@ -39,5 +39,10 @@ export interface SidebarTokens {
     toggleBorder: string;
     toggleColor: string;
     toggleBoxShadow: string;
+    navItemDefaultColor: string;
+    navItemActiveColor: string;
+    navItemHoverColor: string;
+    navItemHoverBg: string;
+    navItemActiveBg: string;
   };
 } 

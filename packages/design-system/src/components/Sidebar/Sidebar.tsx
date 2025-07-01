@@ -57,13 +57,15 @@ const NavigationItem: React.FC<{
   activeSubmenu: string | null;
   onSubmenuClick: (label: string) => void;
   onItemClick?: (item: MenuItemConfig | SubMenuItemConfig, isSubItem?: boolean) => void;
-}> = ({ item, isCollapsed, activeSubmenu, onSubmenuClick, onItemClick }) => {
+  tokens: SidebarTokens;
+}> = ({ item, isCollapsed, activeSubmenu, onSubmenuClick, onItemClick, tokens }) => {
   const isSubmenuOpen = activeSubmenu === item.label;
+  const [isHovered, setIsHovered] = useState(false);
 
   if (item.header) {
     return !isCollapsed ? (
       <div style={{ padding: '12px 20px', marginTop: '10px' }}>
-        <Typography variant="caption" weight="semibold" style={{ color: '#666', textTransform: 'uppercase' }}>
+        <Typography variant="caption" weight="semibold" style={{ color: tokens.sidebar.navItemDefaultColor, textTransform: 'uppercase' }}>
           {item.label}
         </Typography>
       </div>
@@ -82,6 +84,40 @@ const NavigationItem: React.FC<{
     onItemClick?.(subItem, true);
   };
 
+  const SubMenuItem: React.FC<{ subItem: SubMenuItemConfig; index: number }> = ({ subItem, index }) => {
+    const [isSubHovered, setIsSubHovered] = useState(false);
+
+    return (
+      <div 
+        key={index} 
+        style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          padding: '10px 12px 10px 40px', 
+          color: subItem.active ? tokens.sidebar.navItemActiveColor : tokens.sidebar.navItemHoverColor, 
+          cursor: 'pointer', 
+          transition: 'all 0.3s ease',
+          background: subItem.active ? '#f0f0f0' : undefined,
+          borderRadius: subItem.active ? 8 : undefined
+        }}
+        onClick={() => handleSubItemClick(subItem)}
+        onMouseEnter={() => setIsSubHovered(true)}
+        onMouseLeave={() => setIsSubHovered(false)}
+      >
+        {subItem.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: 8, opacity: 0.8 }}>{subItem.icon}</span>}
+        <Typography 
+          variant="body2" 
+          style={{ 
+            color: isSubHovered ? tokens.sidebar.navItemDefaultColor : 'inherit',
+            transition: 'color 0.3s ease'
+          }}
+        >
+          {subItem.label}
+        </Typography>
+      </div>
+    );
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       <div
@@ -89,17 +125,19 @@ const NavigationItem: React.FC<{
           display: 'flex',
           alignItems: 'center',
           padding: isCollapsed ? 12 : '12px 12px',
-          color: isSubmenuOpen || item.active ? '#5022bd' : '#666',
+          color: isHovered ? tokens.sidebar.navItemHoverColor : (isSubmenuOpen || item.active ? tokens.sidebar.navItemActiveColor : tokens.sidebar.navItemDefaultColor),
           cursor: 'pointer',
           transition: 'all 0.3s ease',
           position: 'relative',
           whiteSpace: 'nowrap',
           marginBottom: 4,
-          background: isSubmenuOpen || item.active ? '#efefef' : undefined,
-          borderRadius: isSubmenuOpen || item.active ? 10 : undefined,
+          background: isHovered ? tokens.sidebar.navItemHoverBg : (isSubmenuOpen || item.active ? tokens.sidebar.navItemActiveBg : undefined),
+          borderRadius: isSubmenuOpen || item.active || isHovered ? 10 : undefined,
           justifyContent: isCollapsed ? 'center' : undefined
         }}
         onClick={handleMainItemClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         {item.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: isCollapsed ? 0 : 8 }}>{item.icon}</span>}
         {!isCollapsed && (
@@ -117,25 +155,7 @@ const NavigationItem: React.FC<{
       {!isCollapsed && item.submenu && isSubmenuOpen && (
         <div style={{ borderRadius: '0 0 10px 10px', marginBottom: 4, overflow: 'hidden' }}>
           {item.submenu.map((subItem, index) => (
-            <div 
-              key={index} 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                padding: '10px 12px 10px 40px', 
-                color: subItem.active ? '#5022bd' : '#666', 
-                cursor: 'pointer', 
-                transition: 'all 0.3s ease',
-                background: subItem.active ? '#f0f0f0' : undefined,
-                borderRadius: subItem.active ? 8 : undefined
-              }}
-              onClick={() => handleSubItemClick(subItem)}
-            >
-              {subItem.icon && <span style={{ display: 'flex', alignItems: 'center', marginRight: 8, opacity: 0.8 }}>{subItem.icon}</span>}
-              <Typography variant="body2" style={{ color: 'inherit' }}>
-                {subItem.label}
-              </Typography>
-            </div>
+            <SubMenuItem key={index} subItem={subItem} index={index} />
           ))}
         </div>
       )}
@@ -227,6 +247,7 @@ export const Sidebar: React.FC<SidebarProps & { tokens?: SidebarTokens }> = ({ m
               activeSubmenu={activeSubmenu}
               onSubmenuClick={handleSubmenuClick}
               onItemClick={onMenuClick}
+              tokens={mergedTokens}
             />
           ))}
         </nav>
